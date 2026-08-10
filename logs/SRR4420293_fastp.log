@@ -1,0 +1,46 @@
+Read1 before filtering:
+total reads: 16473386
+total bases: 1647338600
+Q20 bases: 1604931739(97.4257%)
+Q30 bases: 1551158110(94.1615%)
+Q40 bases: 518976838(31.504%)
+
+Read2 before filtering:
+total reads: 16473386
+total bases: 1647338600
+Q20 bases: 1548611348(94.0069%)
+Q30 bases: 1488189340(90.339%)
+Q40 bases: 507222656(30.7904%)
+
+Read1 after filtering:
+total reads: 15383779
+total bases: 1536697207
+Q20 bases: 1516443942(98.682%)
+Q30 bases: 1473359467(95.8783%)
+Q40 bases: 500967476(32.6003%)
+
+Read2 after filtering:
+total reads: 15383779
+total bases: 1536697207
+Q20 bases: 1514366243(98.5468%)
+Q30 bases: 1462664401(95.1823%)
+Q40 bases: 503728705(32.78%)
+
+Filtering result:
+reads passed filter: 30767558
+reads failed due to low quality: 2159638
+reads failed due to too many N: 19576
+reads failed due to too short: 0
+reads failed due to adapter dimer: 0
+reads with adapter trimmed: 339932
+bases trimmed due to adapters: 3476666
+
+Duplication rate: 49.2571%
+
+Insert size peak (evaluated by paired-end reads): 165
+
+JSON report: reports/real_fastp/SRR4420293_fastp.json
+HTML report: reports/real_fastp/SRR4420293_fastp.html
+
+fastp -i data/public_dataset/SRR4420293_1.fastq.gz -I data/public_dataset/SRR4420293_2.fastq.gz -o data/real_trimmed_fastq/SRR4420293_1.trimmed.fastq.gz -O data/real_trimmed_fastq/SRR4420293_2.trimmed.fastq.gz -h reports/real_fastp/SRR4420293_fastp.html -j reports/real_fastp/SRR4420293_fastp.json 
+fastp v1.3.3, time used: 160 seconds

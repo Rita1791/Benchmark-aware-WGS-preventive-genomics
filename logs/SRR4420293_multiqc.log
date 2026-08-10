@@ -1,0 +1,8 @@
+
+/// MultiQC 🔍 v1.35
+
+       file_search | Search path: /home/ritika/NAINFIT_NGS_RESEARCH_PIPELINE/reports/real_fastqc
+            fastqc | Found 2 reports
+     write_results | Data        : reports/real_multiqc/multiqc_data
+     write_results | Report      : reports/real_multiqc/multiqc_report.html
+           multiqc | MultiQC complete

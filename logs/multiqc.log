@@ -1,0 +1,9 @@
+
+/// MultiQC 🔍 v1.35
+
+       file_search | Search path: /home/ritika/NAINFIT_NGS_RESEARCH_PIPELINE/reports/fastqc
+            fastqc | Found 1 reports
+     write_results | Existing reports found, adding suffix to filenames. Use '--force' to overwrite.
+     write_results | Data        : reports/multiqc/multiqc_data_1_2_3_4
+     write_results | Report      : reports/multiqc/multiqc_report_4.html
+           multiqc | MultiQC complete

@@ -1,0 +1,81 @@
+Looking to launch executable "/home/ritika/miniconda3/envs/nainfit_align/bin/bwa-mem2.avx2", simd = .avx2
+Launching executable "/home/ritika/miniconda3/envs/nainfit_align/bin/bwa-mem2.avx2"
+-----------------------------
+Executing in AVX2 mode!!
+-----------------------------
+* SA compression enabled with xfactor: 8
+* Ref file: data/reference/test_ref.fa
+* Entering FMI_search
+* Index file found. Loading index from data/reference/test_ref.fa.bwt.2bit.64
+* Reference seq len for bi-index = 137
+* sentinel-index: 81
+* Count:
+0,	1
+1,	35
+2,	69
+3,	103
+4,	137
+
+* Reading other elements of the index from files data/reference/test_ref.fa
+* Index prefix: data/reference/test_ref.fa
+* Read 0 ALT contigs
+* Done reading Index!!
+* Reading reference genome..
+* Binary seq file = data/reference/test_ref.fa.0123
+* Reference genome size: 136 bp
+* Done reading reference genome !!
+
+------------------------------------------
+1. Memory pre-allocation for Chaining: 139.3584 MB
+2. Memory pre-allocation for BSW: 239.6170 MB
+3. Memory pre-allocation for BWT: 77.3142 MB
+------------------------------------------
+* Threads used (compute): 1
+* No. of pipeline threads: 2
+
+[0000] read_chunk: 10000000, work_chunk_size: 116, nseq: 2
+	[0000][ M::kt_pipeline] read 2 sequences (116 bp)...
+[0000] Calling mem_process_seqs.., task: 0
+[0000] 1. Calling kt_for - worker_bwt
+[0000] read_chunk: 10000000, work_chunk_size: 0, nseq: 0
+[0000] 2. Calling kt_for - worker_aln
+[0000] 3. Calling kt_for - worker_sam
+	[0000][ M::mem_process_seqs] Processed 2 reads in 0.002 CPU sec, 0.004 real sec
+[0000] read_chunk: 10000000, work_chunk_size: 0, nseq: 0
+[0000] Computation ends..
+No. of OMP threads: 1
+Processor is running @2097.980036 MHz
+Runtime profile:
+
+	Time taken for main_mem function: 0.01 sec
+
+	IO times (sec) :
+	Reading IO time (reads) avg: 0.00, (0.00, 0.00)
+	Writing IO time (SAM) avg: 0.00, (0.00, 0.00)
+	Reading IO time (Reference Genome) avg: 0.00, (0.00, 0.00)
+	Index read time avg: 0.00, (0.00, 0.00)
+
+	Overall time (sec) (Excluding Index reading time):
+	PROCESS() (Total compute time + (read + SAM) IO time) : 0.01
+	MEM_PROCESS_SEQ() (Total compute time (Kernel + SAM)), avg: 0.00, (0.00, 0.00)
+
+	 SAM Processing time (sec):
+	--WORKER_SAM avg: 0.00, (0.00, 0.00)
+
+	Kernels' compute time (sec):
+	Total kernel (smem+sal+bsw) time avg: 0.00, (0.00, 0.00)
+		SMEM compute avg: 0.00, (0.00, 0.00)
+		SAL compute avg: 0.00, (0.00, 0.00)
+				MEM_SA avg: 0.00, (0.00, 0.00)
+
+		BSW time, avg: 0.00, (0.00, 0.00)
+
+Important parameter settings: 
+	BATCH_SIZE: 512
+	MAX_SEQ_LEN_REF: 256
+	MAX_SEQ_LEN_QER: 128
+	MAX_SEQ_LEN8: 128
+	SEEDS_PER_READ: 500
+	SIMD_WIDTH8 X: 32
+	SIMD_WIDTH16 X: 16
+	AVG_SEEDS_PER_READ: 64

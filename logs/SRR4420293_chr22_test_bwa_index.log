@@ -1,0 +1,17 @@
+Looking to launch executable "/home/ritika/miniconda3/bin/bwa-mem2.avx2", simd = .avx2
+Launching executable "/home/ritika/miniconda3/bin/bwa-mem2.avx2"
+[bwa_index] Pack FASTA... 0.97 sec
+* Entering FMI_search
+init ticks = 5013968159
+ref seq len = 101636936
+binary seq ticks = 3404016935
+build suffix-array ticks = 48366434938
+ref_seq_len = 101636936
+count = 0, 26582201, 50818468, 75054735, 101636936
+BWT[42474369] = 4
+CP_SHIFT = 6, CP_MASK = 63
+sizeof CP_OCC = 64
+pos: 12704618, ref_seq_len__: 12704617
+max_occ_ind = 1588077
+build fm-index ticks = 11206887085
+Total time taken: 33.8245
