@@ -1,0 +1,2 @@
+run_accession	study_accession	sample_accession	experiment_accession	scientific_name	tax_id	library_strategy	library_source	library_selection	library_layout	instrument_platform	instrument_model	read_count	base_count	fastq_ftp
+ERR6090673	PRJEB36284	SAMEA2622766	ERX5728776	marine metagenome	408172	AMPLICON	METAGENOMIC	PCR	PAIRED	ILLUMINA	Illumina HiSeq 2500	688900	172913900	ftp.sra.ebi.ac.uk/vol1/fastq/ERR609/003/ERR6090673/ERR6090673_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/ERR609/003/ERR6090673/ERR6090673_2.fastq.gz
