@@ -1,0 +1,8 @@
+This file was produced by vcfisec.
+The command line was:	bcftools isec  -p results/benchmark_readiness_chr22_isec reference_datasets/giab_truth/HG001_GRCh38_chr22/HG001_GRCh38_chr22_v4.2.1_benchmark_CONFIDENT.vcf.gz results/human_wgs_variant_calling_1M_chr22/SRR2052337_1M_chr22.filtered_CONFIDENT_REGIONS.vcf.gz
+
+Using the following file names:
+results/benchmark_readiness_chr22_isec/0000.vcf	for records private to	reference_datasets/giab_truth/HG001_GRCh38_chr22/HG001_GRCh38_chr22_v4.2.1_benchmark_CONFIDENT.vcf.gz
+results/benchmark_readiness_chr22_isec/0001.vcf	for records private to	results/human_wgs_variant_calling_1M_chr22/SRR2052337_1M_chr22.filtered_CONFIDENT_REGIONS.vcf.gz
+results/benchmark_readiness_chr22_isec/0002.vcf	for records from reference_datasets/giab_truth/HG001_GRCh38_chr22/HG001_GRCh38_chr22_v4.2.1_benchmark_CONFIDENT.vcf.gz shared by both	reference_datasets/giab_truth/HG001_GRCh38_chr22/HG001_GRCh38_chr22_v4.2.1_benchmark_CONFIDENT.vcf.gz results/human_wgs_variant_calling_1M_chr22/SRR2052337_1M_chr22.filtered_CONFIDENT_REGIONS.vcf.gz
+results/benchmark_readiness_chr22_isec/0003.vcf	for records from results/human_wgs_variant_calling_1M_chr22/SRR2052337_1M_chr22.filtered_CONFIDENT_REGIONS.vcf.gz shared by both	reference_datasets/giab_truth/HG001_GRCh38_chr22/HG001_GRCh38_chr22_v4.2.1_benchmark_CONFIDENT.vcf.gz results/human_wgs_variant_calling_1M_chr22/SRR2052337_1M_chr22.filtered_CONFIDENT_REGIONS.vcf.gz
