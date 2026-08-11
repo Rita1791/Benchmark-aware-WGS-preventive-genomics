@@ -1,1 +1,2 @@
-
+Benchmark	TP baseline	TP call	False positives	False negatives	Precision	Sensitivity	F-measure
+RTG vcfeval — 50-region chr22	2465	2465	4	127	99.84%	95.10%	97.41%
