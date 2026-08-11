@@ -602,7 +602,7 @@ See [`LICENSE`](LICENSE).
 
 I acknowledge the **Genome in a Bottle (GIAB) Consortium** and the developers and maintainers of the open-source tools used throughout this project.
 
-I also acknowledge **Nasense Labs Private Limited** for the professional environment and practical research exposure that supported the development of this work.
+I also acknowledge **Nainsense Labs Private Limited** for the professional environment and practical research exposure that supported the development of this work.
 
 Finally, I acknowledge the broader open-source bioinformatics community whose software, benchmark resources and reproducibility practices make computational genomics research possible.
 
