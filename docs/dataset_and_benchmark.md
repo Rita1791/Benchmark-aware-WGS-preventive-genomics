@@ -36,6 +36,12 @@ Three regional configurations were evaluated:
 
 The final 50-region evaluation is the principal regional benchmark.
 
+## Benchmark interpretation
+
+The 5-, 25-, and 50-region analyses represent nested or progressively expanded regional evaluations only if the underlying region definitions were constructed accordingly.
+
+The repository therefore reports these configurations as distinct benchmark scopes and does not assume statistical independence between them.
+
 ## Data categories
 
 | Data/resource | Repository | Local analysis |
