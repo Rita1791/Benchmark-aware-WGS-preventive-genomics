@@ -1,59 +1,36 @@
-# Master Research Log
-
 ## Project
-WGS/NGS-to-Variant Interpretation Research Framework
 
-## Research Identity
-This project develops a reproducible WGS/NGS pipeline that converts raw sequencing reads into variant-level outputs for future evidence-graded interpretation in precision preventive health research.
-
-## Long-Term Research Direction
-Translational computational genomics integrating:
-- raw sequencing data processing
-- variant discovery
-- SNP interpretation
-- biomarker context
-- lifestyle and phenotype signals
-- clinician-reviewed decision support
-
-## Swiss PhD-Level Research Principle
-Every step must be:
-- reproducible
-- documented
-- version-controlled
-- scientifically justified
-- computationally transparent
-- clinically cautious
-- validated wherever possible
+**Benchmark-aware regional validation of a reproducible WGS variant-calling workflow using GIAB HG001 chr22 reference regions**
 
 ---
 
-# Daily Log Template
+## Research Objective
 
-## Date
+The project evaluates the performance and reproducibility of a WGS variant-calling workflow through regional benchmarking against the Genome in a Bottle (GIAB) HG001 truth set on GRCh38 chromosome 22.
 
-## Research Goal for Today
+The central research objective is to determine:
 
-## Step Performed
+1. how variant-calling performance changes as benchmark scope expands,
+2. which variant classes contribute most to missed variants,
+3. which genomic regions show reduced recall,
+4. how normalized record-level comparison differs from formal RTG vcfeval benchmarking,
+5. and whether conclusions remain stable across progressively larger regional validation sets.
 
-## Why This Step Was Needed Scientifically
+---
 
-## Why This Step Matters for Swiss PhD-Level Research
+## Current Benchmark Design
 
-## Commands Run
+| Benchmark | Scope |
+|---|---|
+| 5-region | Initial regional validation |
+| 25-region | Expanded regional validation |
+| 50-region | Primary expanded validation |
 
-## Output Files Generated
+The benchmark uses:
 
-## Key Results
-
-## Interpretation
-
-## Error / Problem Faced
-
-## Solution Applied
-
-## Limitation
-
-## Next Step
-
-## Reflection
-What did this step teach me as a computational genomics researcher?
+```text
+Sample: HG001
+Alternate identifier: NA12878
+Assembly: GRCh38
+Chromosome: chr22
+GIAB release: v4.2.1
