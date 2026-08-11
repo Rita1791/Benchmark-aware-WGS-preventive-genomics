@@ -978,7 +978,7 @@ See [`LICENSE`](LICENSE).
 
 ## Ritika Rajendra Rawat
 
-**MSc Bioinformatics | Bioinformatics Researcher**
+**Bioinformatics Research Assistant | MSc Bioinformatics | Bioinformatics Researcher**
 
 **Computational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics**
 
