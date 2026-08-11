@@ -1,110 +1,162 @@
+#!/usr/bin/env python3
+
+"""
+Create benchmark-scale comparison results from the compact benchmark CSV.
+
+Input:
+    results/benchmark_metrics.csv
+
+Output:
+    results/final_comparison/benchmark_scale_comparison.tsv
+    results/final_comparison/benchmark_scale_comparison.md
+"""
+
 from pathlib import Path
+import csv
 
-outdir = Path("results/final_comparison")
-outdir.mkdir(parents=True, exist_ok=True)
 
-tsv = outdir / "benchmark_scale_comparison.tsv"
-md = outdir / "benchmark_scale_comparison.md"
+RESULTS_DIR = Path("results")
+OUT_DIR = RESULTS_DIR / "final_comparison"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-rows = [
-    {
-        "benchmark": "5-region chr22",
-        "truth_total": 444,
-        "project_total": 428,
-        "shared": 428,
-        "truth_only": 16,
-        "project_only": 0,
-        "recall": 96.40,
-        "precision": 100.00,
-        "f1": 98.17,
-        "missed_deletion": 10,
-        "missed_insertion": 6,
-        "missed_snv": 0,
-        "difficult_missed": 8,
-    },
-    {
-        "benchmark": "25-region chr22",
-        "truth_total": 1504,
-        "project_total": 1421,
-        "shared": 1421,
-        "truth_only": 83,
-        "project_only": 0,
-        "recall": 94.48,
-        "precision": 100.00,
-        "f1": 97.16,
-        "missed_deletion": 45,
-        "missed_insertion": 37,
-        "missed_snv": 1,
-        "difficult_missed": 50,
-    },
-    {
-        "benchmark": "50-region chr22",
-        "truth_total": 2592,
-        "project_total": 2469,
-        "shared": 2469,
-        "truth_only": 123,
-        "project_only": 0,
-        "recall": 95.25,
-        "precision": 100.00,
-        "f1": 97.57,
-        "missed_deletion": 66,
-        "missed_insertion": 56,
-        "missed_snv": 1,
-        "difficult_missed": 77,
-    },
-]
+INPUT = RESULTS_DIR / "benchmark_metrics.csv"
+
+OUT_TSV = OUT_DIR / "benchmark_scale_comparison.tsv"
+OUT_MD = OUT_DIR / "benchmark_scale_comparison.md"
+
+
+def read_csv(path):
+    if not path.exists():
+        raise FileNotFoundError(f"Input file not found: {path}")
+
+    with path.open("r", newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+
+rows = read_csv(INPUT)
+
+if not rows:
+    raise ValueError("benchmark_metrics.csv contains no data rows.")
+
+
+# ------------------------------------------------------------
+# Validate required columns
+# ------------------------------------------------------------
+
+required_columns = {
+    "benchmark",
+    "truth_variants",
+    "shared_variants",
+    "truth_only_missed",
+    "project_only_extra",
+    "recall_percent",
+    "precision_percent",
+    "f1_percent",
+}
+
+missing = required_columns - set(rows[0].keys())
+
+if missing:
+    raise ValueError(
+        "benchmark_metrics.csv is missing columns: "
+        + ", ".join(sorted(missing))
+    )
+
+
+# ------------------------------------------------------------
+# Write TSV
+# ------------------------------------------------------------
 
 headers = [
-    "benchmark", "truth_total", "project_total", "shared",
-    "truth_only", "project_only", "recall", "precision", "f1",
-    "missed_deletion", "missed_insertion", "missed_snv", "difficult_missed"
+    "benchmark",
+    "truth_variants",
+    "shared_variants",
+    "truth_only_missed",
+    "project_only_extra",
+    "recall_percent",
+    "precision_percent",
+    "f1_percent",
 ]
 
-with open(tsv, "w") as f:
-    f.write("\t".join(headers) + "\n")
-    for r in rows:
-        f.write("\t".join(str(r[h]) for h in headers) + "\n")
+with OUT_TSV.open("w", newline="", encoding="utf-8") as handle:
 
-with open(md, "w") as f:
-    f.write("# Benchmark Scale Comparison — GIAB HG001 chr22 Regional Validation\n\n")
-
-    f.write("## Goal\n")
-    f.write("To compare benchmark performance across 5-region, 25-region, and 50-region GIAB HG001 chr22 validation experiments.\n\n")
-
-    f.write("## Performance Comparison\n\n")
-    f.write("| Benchmark | Truth Variants | Project Variants | Shared | Missed Truth | Extra Project | Recall | Precision | F1 |\n")
-    f.write("|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
-    for r in rows:
-        f.write(
-            f"| {r['benchmark']} | {r['truth_total']} | {r['project_total']} | {r['shared']} | "
-            f"{r['truth_only']} | {r['project_only']} | {r['recall']:.2f}% | "
-            f"{r['precision']:.2f}% | {r['f1']:.2f}% |\n"
-        )
-
-    f.write("\n## Missed Variant Pattern\n\n")
-    f.write("| Benchmark | Deletions | Insertions | SNVs | Difficult-Region Missed |\n")
-    f.write("|---|---:|---:|---:|---:|\n")
-    for r in rows:
-        f.write(
-            f"| {r['benchmark']} | {r['missed_deletion']} | {r['missed_insertion']} | "
-            f"{r['missed_snv']} | {r['difficult_missed']} |\n"
-        )
-
-    f.write("\n## Scientific Interpretation\n")
-    f.write(
-        "The benchmark remained stable as the validation expanded from 5 to 25 and then 50 chr22 regions. "
-        "The 50-region benchmark achieved 95.25% recall, 100.00% precision, and 97.57% F1 across 2592 normalized truth variants. "
-        "The absence of project-only extra variants across all scales indicates strong precision after normalization. "
-        "Missed variants were consistently dominated by insertions and deletions, with very few missed SNVs, suggesting that remaining limitations are mainly related to indel detection in difficult genomic contexts.\n\n"
+    writer = csv.DictWriter(
+        handle,
+        fieldnames=headers,
+        delimiter="\t",
     )
 
-    f.write("## Conclusion\n")
-    f.write(
-        "The 50-region result provides the strongest current evidence for regional benchmark validity. "
-        "This result is more robust than the 5-region and 25-region analyses because it covers more truth variants and more genomic contexts while maintaining high recall and perfect precision.\n"
+    writer.writeheader()
+
+    for row in rows:
+        writer.writerow(
+            {
+                key: row[key]
+                for key in headers
+            }
+        )
+
+
+# ------------------------------------------------------------
+# Write Markdown report
+# ------------------------------------------------------------
+
+with OUT_MD.open("w", encoding="utf-8") as handle:
+
+    handle.write(
+        "# Benchmark Scale Comparison — GIAB HG001 chr22 Regional Validation\n\n"
     )
+
+    handle.write("## Goal\n\n")
+
+    handle.write(
+        "To compare benchmark performance across progressively expanded "
+        "GIAB HG001 GRCh38 chromosome 22 regional validation scopes.\n\n"
+    )
+
+    handle.write("## Performance Comparison\n\n")
+
+    handle.write(
+        "| Benchmark | Truth Variants | Shared | Missed Truth | "
+        "Extra Project | Recall | Precision | F1 |\n"
+    )
+
+    handle.write(
+        "|---|---:|---:|---:|---:|---:|---:|---:|\n"
+    )
+
+    for row in rows:
+
+        handle.write(
+            f"| {row['benchmark']} "
+            f"| {row['truth_variants']} "
+            f"| {row['shared_variants']} "
+            f"| {row['truth_only_missed']} "
+            f"| {row['project_only_extra']} "
+            f"| {row['recall_percent']}% "
+            f"| {row['precision_percent']}% "
+            f"| {row['f1_percent']}% |\n"
+        )
+
+    handle.write("\n## Interpretation\n\n")
+
+    final_row = rows[-1]
+
+    handle.write(
+        f"The largest evaluated benchmark scope contained "
+        f"{final_row['truth_variants']} truth variants and achieved "
+        f"{final_row['recall_percent']}% recall, "
+        f"{final_row['precision_percent']}% precision, and "
+        f"{final_row['f1_percent']}% F1 in the normalized comparison.\n\n"
+    )
+
+    handle.write(
+        "The benchmark configurations represent progressively expanded "
+        "regional validation scopes and should not be interpreted as "
+        "independent biological replicates.\n"
+    )
+
 
 print("Created:")
-print(tsv)
-print(md)
-print(md.read_text())
+print(OUT_TSV)
+print(OUT_MD)
