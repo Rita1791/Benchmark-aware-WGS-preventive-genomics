@@ -2,6 +2,7 @@ project:
   name: "Benchmark-aware regional validation of a reproducible WGS variant-calling workflow"
   sample: "HG001"
   alternate_sample_name: "NA12878"
+  scope: "Regional validation on selected GRCh38 chr22 benchmark regions"
 
 reference:
   genome_build: "GRCh38"
@@ -10,6 +11,11 @@ reference:
 benchmark:
   provider: "Genome in a Bottle"
   sample: "HG001"
+  truth_set:
+    version: "v4.2.1"
+    assembly: "GRCh38"
+    chromosome: "chr22"
+
   region_sets:
     - name: "5-region"
       n_regions: 5
@@ -18,23 +24,55 @@ benchmark:
     - name: "50-region"
       n_regions: 50
 
+  selection:
+    strategy: "variant-rich high-confidence regions"
+    minimum_region_length_bp: 5000
+    maximum_region_length_bp: 25000
+    minimum_truth_variants: 20
+
 comparison:
   normalized:
     tool: "bcftools isec"
+    purpose: "record-level concordance comparison after VCF normalization"
 
   formal:
     tool: "RTG vcfeval"
+    purpose: "formal benchmark comparison"
+
+normalization:
+  tool: "bcftools norm"
+  reference_required: true
+  split_multiallelics: true
+
+variant_calling:
+  caller: "bcftools mpileup/call"
+  model: "multiallelic"
+  minimum_quality: 30
+  minimum_depth: 10
 
 analysis:
   missed_variant_analysis: true
   difficult_region_analysis: true
   low_recall_analysis: true
   discrepancy_analysis: true
+  benchmark_scale_comparison: true
 
 thresholds:
+  variant_quality: 30
+  read_depth: 10
   low_recall_percent: 92
 
 outputs:
   results_directory: "results"
   figures_directory: "figures"
   manuscript_directory: "manuscript"
+  reports_directory: "reports"
+  logs_directory: "logs"
+
+reproducibility:
+  random_seed: null
+  note: >
+    Region selection is deterministic and based on benchmark-region
+    characteristics rather than random sampling. The 5-, 25-, and
+    50-region configurations represent progressively expanded
+    regional validation scopes and are not biological replicates.
