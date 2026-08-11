@@ -1,80 +1,79 @@
 # WGS/NGS Pipeline Methodology
 
 ## Project Aim
-To build a reproducible computational genomics workflow for processing raw sequencing reads into variant-level outputs suitable for downstream SNP interpretation and precision health research.
 
-## Pipeline Overview
+This project develops and evaluates a reproducible whole-genome sequencing (WGS) variant-calling workflow using regional benchmarking against the Genome in a Bottle (GIAB) HG001 truth set.
 
-FASTQ
-↓
-Quality Control
-↓
-Read Trimming
-↓
-Post-Trimming QC
-↓
-Reference Genome Preparation
-↓
-Alignment
-↓
-BAM Sorting and Indexing
-↓
-Alignment Quality Assessment
-↓
-Variant Calling
-↓
-VCF Filtering
-↓
-Variant Annotation
-↓
-SNP Extraction
-↓
-Evidence-Graded Interpretation
+The primary methodological objective is to determine how reliably the workflow identifies benchmark variants across selected GRCh38 chromosome 22 regions and to characterize the sources and patterns of remaining discrepancies.
 
-## Core Tools
+The project focuses on:
 
-| Stage | Tool |
-|---|---|
-| Raw FASTQ Quality Control | FastQC |
-| QC Aggregation | MultiQC |
-| Read Trimming | fastp |
-| Alignment | bwa-mem2 |
-| BAM Processing | samtools |
-| Variant Calling | bcftools / GATK / DeepVariant |
-| Annotation | SnpEff / VEP |
-| Benchmarking | GIAB / hap.py later |
-
-## Research Design Principle
-The pipeline will be developed in stages:
-
-1. Small controlled test
-2. Subsampled dataset
-3. Full reference alignment
-4. Variant calling
-5. Annotation
-6. Validation
-
-This staged strategy reduces computational failure and improves reproducibility.
-
-## Current Development Stage
-The chr22 alignment test has confirmed that the alignment module can generate a sorted BAM, BAM index, flagstat, and samtools statistics under low-memory local conditions.
-
-## Next Stage
-Controlled subsampling followed by full-reference alignment strategy.
+- reproducible WGS preprocessing,
+- read alignment,
+- variant calling,
+- VCF normalization,
+- benchmark-aware variant comparison,
+- formal benchmarking,
+- regional performance evaluation,
+- missed-variant analysis,
+- low-recall region analysis,
+- and comparison of record-level and formal benchmarking approaches.
 
 ---
 
-## Human WGS Benchmark Dataset Requirement
+## 1. Pipeline Overview
 
-After metadata verification, SRR4420293 was excluded from the human WGS workflow because it was Arabidopsis thaliana RNA-seq.
+The principal workflow is:
 
-The main WGS/NGS variant discovery workflow will now use a verified human benchmark dataset.
-
-Preferred benchmark resource:
-- Genome in a Bottle (GIAB)
-
-Preferred first sample:
-- HG001 / NA12878
-
-Reason:
-GIAB datasets are designed for benchmarking human genome sequencing workflows and allow future comparison against high-confidence variant truth sets.
+```text
+FASTQ
+  |
+  v
+Raw Read Quality Control
+  |
+  v
+Read Trimming / Preprocessing
+  |
+  v
+Post-processing Quality Control
+  |
+  v
+Reference Genome Preparation
+  |
+  v
+Read Alignment
+  |
+  v
+BAM Sorting and Indexing
+  |
+  v
+Alignment Quality Assessment
+  |
+  v
+Variant Calling
+  |
+  v
+VCF Normalization
+  |
+  +-----------------------------+
+  |                             |
+  v                             v
+bcftools isec              RTG vcfeval
+  |                             |
+  +-------------+---------------+
+                |
+                v
+        Benchmark Comparison
+                |
+                v
+   Missed-Variant Analysis
+                |
+                v
+    Low-Recall Region Analysis
+                |
+                v
+    Benchmark-Scale Comparison
+                |
+                v
+       Publication-Ready
+       Tables and Figures
