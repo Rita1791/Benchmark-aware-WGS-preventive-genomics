@@ -2,7 +2,7 @@ cff-version: 1.2.0
 
 title: "Benchmark-aware regional validation of a reproducible WGS variant-calling workflow using GIAB HG001 chr22 reference regions"
 
-message: "If you use this repository or derived analyses, please cite this work."
+message: "If you use this repository or any derived analyses, please cite this work."
 
 type: software
 
@@ -13,6 +13,8 @@ authors:
 repository-code: "https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics"
 
 license: MIT
+
+date-released: "2026-08-11"
 
 keywords:
   - whole-genome sequencing
@@ -26,13 +28,17 @@ keywords:
   - chromosome 22
   - bcftools
   - RTG vcfeval
-  - benchmarking
-  - bioinformatics
+  - variant benchmarking
+  - reproducible bioinformatics
+  - benchmark-aware analysis
+  - genomic validation
 
 abstract: >
   A reproducible benchmark-aware workflow for regional validation of
-  whole-genome sequencing variant calling using GIAB HG001/NA12878
-  and GRCh38 chromosome 22 high-confidence regions. The workflow
-  combines normalized bcftools isec comparison, formal RTG vcfeval
-  benchmarking, benchmark-scale evaluation, and systematic analysis
-  of missed variants and difficult genomic regions.
+  whole-genome sequencing variant calling using the Genome in a Bottle
+  HG001 benchmark and GRCh38 chromosome 22 high-confidence regions.
+  The workflow combines normalized bcftools isec comparison, formal
+  RTG vcfeval benchmarking, benchmark-scale evaluation across
+  progressively expanded regional sets, and systematic analysis of
+  missed variants, low-recall regions, difficult genomic contexts,
+  and discrepancies between benchmarking approaches.
