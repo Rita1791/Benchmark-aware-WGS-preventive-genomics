@@ -1,13 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-mkdir -p reports/fastqc reports/multiqc logs
+RAW_DIR="${RAW_DIR:-data/raw_fastq}"
+QC_DIR="${QC_DIR:-results/qc}"
 
-FASTQ_DIR="data/raw_fastq"
+FASTQC_DIR="${QC_DIR}/fastqc"
+MULTIQC_DIR="${QC_DIR}/multiqc"
 
-fastqc ${FASTQ_DIR}/*.fastq.gz -o reports/fastqc 2>&1 | tee logs/fastqc.log
+mkdir -p "${FASTQC_DIR}" "${MULTIQC_DIR}"
 
-multiqc reports/fastqc -o reports/multiqc 2>&1 | tee logs/multiqc.log
+shopt -s nullglob
+FASTQ_FILES=("${RAW_DIR}"/*.fastq.gz)
+
+if [ "${#FASTQ_FILES[@]}" -eq 0 ]; then
+    echo "ERROR: No FASTQ files found in ${RAW_DIR}" >&2
+    exit 1
+fi
+
+fastqc \
+    "${FASTQ_FILES[@]}" \
+    --outdir "${FASTQC_DIR}"
+
+multiqc \
+    "${FASTQC_DIR}" \
+    --outdir "${MULTIQC_DIR}"
 
 echo "QC completed successfully."
