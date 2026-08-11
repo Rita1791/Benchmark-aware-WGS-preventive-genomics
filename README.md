@@ -552,8 +552,8 @@ My broader research goal is to develop rigorous computational approaches that ca
 
 ### Connect
 
-* **Email:** `ritika.rawat27@outlook.com`
-* **LinkedIn:** [Ritika Rajendra Rawat](YOUR_LINKEDIN_URL)
+* **Email:** `[ritika.rawat27@outlook.com](ritika.rawat27@outlook.com)`
+* **LinkedIn:** [Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)
 * **GitHub:** [@Rita1791](https://github.com/Rita1791)
 
 ---
@@ -637,8 +637,8 @@ Potential extensions include:
 I acknowledge **Nainsense Labs Private Limited** for the professional environment and practical exposure that supported the development of this research work.
 
 **Organization:** Nainsense Labs Private Limited
-**Website:** `nainsense.com`
-**Email:** `admin@nainsense.com`
+**Website:** `[nainsense.com](https://nainsense.com/)`
+**Email:** `[admin@nainsense.com](admin@nainsense.com)`
 
 This acknowledgement recognizes the professional environment and exposure associated with the development of the work and does not imply institutional endorsement of the scientific methodology, results, conclusions, or interpretations presented in this repository.
 
@@ -704,9 +704,9 @@ See [`LICENSE`](LICENSE).
 MSc Bioinformatics | Bioinformatics Researcher
 Computational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics
 
-**Email:** `ritika.rawat27@outlook.com`
-**LinkedIn:** `https://www.linkedin.com/in/ritika-rawat-551107219/`
-**GitHub:** [github.com/Rita1791](https://github.com/Rita1791)
+**Email:** `[ritika.rawat27@outlook.com](ritika.rawat27@outlook.com)`
+**LinkedIn:** `[Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)`
+**GitHub:** [Ritika Rajednra Rawat](https://github.com/Rita1791)
 
 ---
 
