@@ -1,1 +1,2 @@
-
+Region	Coordinates	Truth total	Project total	Missed	Shared	Recall	Precision	F1
+[generated region]	[generated coordinates]	[truth]	[project]	[missed]	[shared]	[recall]	[precision]	[F1]
