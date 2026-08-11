@@ -1,1 +1,4 @@
-
+Benchmark	Truth variants	Project variants	Shared	Missed truth	Extra project	Recall	Precision	F1
+5-region chr22	444	428	428	16	0	96.40%	100.00%	98.17%
+25-region chr22	1504	1421	1421	83	0	94.48%	100.00%	97.16%
+50-region chr22	2592	2469	2469	123	0	95.25%	100.00%	97.57%
