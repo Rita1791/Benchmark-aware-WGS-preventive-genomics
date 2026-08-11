@@ -1,131 +1,317 @@
+#!/usr/bin/env python3
+
 from pathlib import Path
 import csv
 from collections import defaultdict
 
-BASE = Path("results/benchmark_valid_chr22_50_region")
+
+BASE = Path(
+    "results/benchmark_valid_chr22_50_region"
+)
+
 REPORT_DIR = BASE / "reports"
 
-summary_file = REPORT_DIR / "clean_multi_region_benchmark_summary.tsv"
-missed_file = REPORT_DIR / "missed_truth_variant_analysis.tsv"
+SUMMARY_FILE = (
+    REPORT_DIR /
+    "clean_multi_region_benchmark_summary.tsv"
+)
 
-low_recall_summary_out = REPORT_DIR / "low_recall_region_summary.tsv"
-low_recall_missed_out = REPORT_DIR / "low_recall_missed_variants.tsv"
-low_recall_report_out = REPORT_DIR / "low_recall_region_interpretation.md"
+MISSED_FILE = (
+    REPORT_DIR /
+    "missed_truth_variant_analysis.tsv"
+)
+
+LOW_SUMMARY_OUT = (
+    REPORT_DIR /
+    "low_recall_region_summary.tsv"
+)
+
+LOW_MISSED_OUT = (
+    REPORT_DIR /
+    "low_recall_missed_variants.tsv"
+)
+
+LOW_REPORT_OUT = (
+    REPORT_DIR /
+    "low_recall_region_interpretation.md"
+)
 
 RECALL_THRESHOLD = 92.0
 
-low_regions = set()
-low_summary_rows = []
 
-with open(summary_file) as f:
-    reader = csv.DictReader(f, delimiter="\t")
-    for row in reader:
-        recall = float(row["recall_pct"])
-        if recall < RECALL_THRESHOLD:
-            low_regions.add(row["region_id"])
-            low_summary_rows.append(row)
+with SUMMARY_FILE.open() as handle:
 
-missed_rows = []
-with open(missed_file) as f:
-    reader = csv.DictReader(f, delimiter="\t")
-    for row in reader:
-        if row["region_id"] in low_regions:
-            missed_rows.append(row)
+    summary_rows = list(
+        csv.DictReader(
+            handle,
+            delimiter="\t",
+        )
+    )
 
-with open(low_recall_summary_out, "w", newline="") as f:
-    fieldnames = list(low_summary_rows[0].keys())
-    writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter="\t")
+
+low_summary_rows = [
+    row
+    for row in summary_rows
+    if float(row["recall_pct"]) < RECALL_THRESHOLD
+]
+
+
+low_regions = {
+    row["region_id"]
+    for row in low_summary_rows
+}
+
+
+with MISSED_FILE.open() as handle:
+
+    missed_rows = [
+        row
+        for row in csv.DictReader(
+            handle,
+            delimiter="\t",
+        )
+        if row["region_id"] in low_regions
+    ]
+
+
+# ------------------------------------------------------------
+# Output tables
+# ------------------------------------------------------------
+
+summary_fields = list(
+    summary_rows[0].keys()
+)
+
+with LOW_SUMMARY_OUT.open(
+    "w",
+    newline="",
+) as handle:
+
+    writer = csv.DictWriter(
+        handle,
+        fieldnames=summary_fields,
+        delimiter="\t",
+    )
+
     writer.writeheader()
     writer.writerows(low_summary_rows)
 
-with open(low_recall_missed_out, "w", newline="") as f:
-    fieldnames = list(missed_rows[0].keys())
-    writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter="\t")
+
+missed_fields = (
+    list(missed_rows[0].keys())
+    if missed_rows
+    else [
+        "region_id",
+        "chrom",
+        "pos",
+        "ref",
+        "alt",
+        "variant_type",
+        "qual",
+        "filter",
+        "difficultregion",
+        "platforms",
+        "datasets",
+    ]
+)
+
+with LOW_MISSED_OUT.open(
+    "w",
+    newline="",
+) as handle:
+
+    writer = csv.DictWriter(
+        handle,
+        fieldnames=missed_fields,
+        delimiter="\t",
+    )
+
     writer.writeheader()
     writer.writerows(missed_rows)
 
-type_by_region = defaultdict(lambda: defaultdict(int))
+
+# ------------------------------------------------------------
+# Error analysis
+# ------------------------------------------------------------
+
+type_by_region = defaultdict(
+    lambda: defaultdict(int)
+)
+
 difficult_by_region = defaultdict(int)
 total_by_region = defaultdict(int)
 
 overall_type_counts = defaultdict(int)
 overall_difficult = 0
 
+
 for row in missed_rows:
+
     rid = row["region_id"]
-    vtype = row["variant_type"]
-    difficult = row["difficultregion"]
 
-    type_by_region[rid][vtype] += 1
+    variant_type = row["variant_type"]
+
+    type_by_region[rid][variant_type] += 1
+
     total_by_region[rid] += 1
-    overall_type_counts[vtype] += 1
 
-    if difficult:
+    overall_type_counts[variant_type] += 1
+
+    if row["difficultregion"]:
+
         difficult_by_region[rid] += 1
+
         overall_difficult += 1
 
-with open(low_recall_report_out, "w") as f:
-    f.write("# Low-Recall Region Error Analysis — 25-Region chr22 Benchmark\n\n")
 
-    f.write("## Goal\n")
-    f.write("To analyze regions with recall below 92% in the expanded 25-region GIAB HG001 GRCh38 chr22 benchmark.\n\n")
+# ------------------------------------------------------------
+# Report
+# ------------------------------------------------------------
 
-    f.write("## Low-Recall Regions\n\n")
-    f.write("| Region | Coordinates | Truth Total | Project Total | Missed | Shared | Recall | Precision | F1 |\n")
-    f.write("|---|---|---:|---:|---:|---:|---:|---:|---:|\n")
+with LOW_REPORT_OUT.open("w") as handle:
+
+    handle.write(
+        "# Low-Recall Region Error Analysis — "
+        "50-Region chr22 Benchmark\n\n"
+    )
+
+    handle.write(
+        f"Recall threshold: < {RECALL_THRESHOLD:.1f}%\n\n"
+    )
+
+    handle.write(
+        f"Regions evaluated: {len(summary_rows)}\n"
+    )
+
+    handle.write(
+        f"Low-recall regions: {len(low_summary_rows)}\n\n"
+    )
+
+    handle.write(
+        "## Low-Recall Regions\n\n"
+    )
+
+    handle.write(
+        "| Region | Coordinates | Truth | Project | "
+        "Missed | Shared | Recall | Precision | F1 |\n"
+    )
+
+    handle.write(
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|\n"
+    )
 
     for row in low_summary_rows:
-        f.write(
-            f"| {row['region_id']} | {row['region']} | "
-            f"{row['normalized_truth_total']} | {row['normalized_project_total']} | "
-            f"{row['truth_only_missed']} | {row['shared']} | "
-            f"{row['recall_pct']}% | {row['precision_pct']}% | {row['f1_pct']}% |\n"
+
+        handle.write(
+            f"| {row['region_id']} "
+            f"| {row['region']} "
+            f"| {row['normalized_truth_total']} "
+            f"| {row['normalized_project_total']} "
+            f"| {row['truth_only_missed']} "
+            f"| {row['shared']} "
+            f"| {row['recall_pct']}% "
+            f"| {row['precision_pct']}% "
+            f"| {row['f1_pct']}% |\n"
         )
 
-    f.write("\n## Missed Variant Types in Low-Recall Regions\n\n")
-    for vtype, count in sorted(overall_type_counts.items()):
-        f.write(f"- {vtype}: {count}\n")
+    handle.write(
+        "\n## Missed Variant Types\n\n"
+    )
 
-    f.write(f"\nTotal missed variants in low-recall regions: {len(missed_rows)}\n")
-    f.write(f"Missed variants with difficult-region annotation: {overall_difficult}\n\n")
+    if overall_type_counts:
 
-    f.write("## Region-wise Missed Variant Pattern\n\n")
-    f.write("| Region | Total Missed | Difficult-Region Missed | Variant Type Counts |\n")
-    f.write("|---|---:|---:|---|\n")
+        for variant_type, count in sorted(
+            overall_type_counts.items()
+        ):
 
-    for rid in sorted(low_regions, key=lambda x: int(x.split('_')[1])):
-        type_text = ", ".join(f"{k}: {v}" for k, v in sorted(type_by_region[rid].items()))
-        f.write(
-            f"| {rid} | {total_by_region[rid]} | {difficult_by_region[rid]} | {type_text} |\n"
+            handle.write(
+                f"- {variant_type}: {count}\n"
+            )
+
+    else:
+
+        handle.write(
+            "No missed variants were associated with "
+            "low-recall regions.\n"
         )
 
-    f.write("\n## Scientific Interpretation\n")
-    f.write(
-        "The lower-recall regions are mainly affected by missed indels, especially deletions and insertions. "
-        "Several missed variants occur in difficult genomic contexts such as homopolymers, simple repeats, "
-        "and tandem repeats. The presence of only one missed SNV, located in a tandem-repeat context, suggests "
-        "that the workflow is not broadly failing on SNVs. Instead, the remaining limitation is concentrated "
-        "in indel and repeat-context variant detection.\n\n"
+    handle.write(
+        f"\nTotal missed variants in low-recall regions: "
+        f"{len(missed_rows)}\n"
     )
 
-    f.write("## Conclusion\n")
-    f.write(
-        "The 25-region benchmark remains strong because precision is 100% and missed variants are biologically "
-        "explainable. The next improvement should focus on indel-sensitive benchmarking and comparison using "
-        "formal tools such as hap.py or vcfeval, rather than simply rerunning the same bcftools workflow.\n"
+    handle.write(
+        f"Difficult-region annotated missed variants: "
+        f"{overall_difficult}\n\n"
     )
 
-print("Created:")
-print(low_recall_summary_out)
-print(low_recall_missed_out)
-print(low_recall_report_out)
+    handle.write(
+        "## Region-wise Error Pattern\n\n"
+    )
 
-print("\nLow-recall regions:")
-for r in low_summary_rows:
-    print(f"{r['region_id']}: recall={r['recall_pct']}%, missed={r['truth_only_missed']}")
+    handle.write(
+        "| Region | Missed | Difficult | Variant Types |\n"
+    )
 
-print("\nMissed variant types in low-recall regions:")
-for k, v in sorted(overall_type_counts.items()):
-    print(f"{k}: {v}")
+    handle.write(
+        "|---|---:|---:|---|\n"
+    )
 
-print(f"\nDifficult-region missed variants in low-recall regions: {overall_difficult}/{len(missed_rows)}")
+    for rid in sorted(
+        low_regions,
+        key=lambda value: int(
+            value.split("_")[1]
+        ),
+    ):
+
+        type_text = ", ".join(
+            f"{key}: {value}"
+            for key, value in sorted(
+                type_by_region[rid].items()
+            )
+        )
+
+        handle.write(
+            f"| {rid} "
+            f"| {total_by_region[rid]} "
+            f"| {difficult_by_region[rid]} "
+            f"| {type_text or 'None'} |\n"
+        )
+
+    handle.write(
+        "\n## Interpretation\n\n"
+    )
+
+    handle.write(
+        "The low-recall analysis identifies individual benchmark "
+        "regions requiring closer examination. Variant type and "
+        "difficult-region annotations are used to characterize "
+        "discordant calls. These annotations describe associations "
+        "with benchmark context and should not be interpreted as "
+        "proof of a specific causal mechanism.\n\n"
+    )
+
+    handle.write(
+        "## Limitation\n\n"
+    )
+
+    handle.write(
+        "The analysis is restricted to selected chr22 regions "
+        "within the 50-region benchmark and does not establish "
+        "whole-genome error characteristics.\n"
+    )
+
+
+print("[DONE]")
+print(
+    f"Evaluated regions: {len(summary_rows)}"
+)
+print(
+    f"Low-recall regions: {len(low_summary_rows)}"
+)
+print(
+    f"Missed variants: {len(missed_rows)}"
+)
+print(
+    f"Report: {LOW_REPORT_OUT}"
+)
