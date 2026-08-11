@@ -552,7 +552,7 @@ My broader research goal is to develop rigorous computational approaches that ca
 
 ### Connect
 
-* **Email:** `YOUR_EMAIL@example.com`
+* **Email:** `ritika.rawat27@outlook.com`
 * **LinkedIn:** [Ritika Rajendra Rawat](YOUR_LINKEDIN_URL)
 * **GitHub:** [@Rita1791](https://github.com/Rita1791)
 
