@@ -80,10 +80,4 @@ A future reproduction of the study should use the same:
 5. software versions,
 6. workflow parameters.
 
-## Benchmark-scope interpretation
-
-The 5-, 25-, and 50-region analyses represent different benchmark scopes and should not be interpreted as independent biological replicates.
-
-The reported comparisons evaluate how the workflow performs as the evaluated regional benchmark is expanded.
-
 The exact provenance information should be updated before the repository is considered publication-ready.
