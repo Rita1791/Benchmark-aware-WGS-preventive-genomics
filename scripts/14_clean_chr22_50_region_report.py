@@ -1,7 +1,30 @@
 from pathlib import Path
 import csv
 
-BASE = Path("results/benchmark_valid_chr22_50_region")
+handle.write(
+    "## Interpretation\n\n"
+)
+
+handle.write(
+    "The 50-region benchmark provides the broadest regional "
+    "validation scope currently evaluated in this workflow. "
+    "The aggregate metrics quantify concordance between the "
+    "normalized project callset and GIAB HG001 truth variants "
+    "across the selected chromosome 22 benchmark regions. "
+    "The missed-variant analysis provides an additional "
+    "characterization of discordant calls.\n\n"
+)
+
+handle.write(
+    "## Limitation\n\n"
+)
+
+handle.write(
+    "The benchmark consists of 50 selected chromosome 22 regions "
+    "rather than exhaustive chromosome-wide or whole-genome "
+    "validation. Results should therefore be described as "
+    "50-region regional validation.\n"
+)
 ISEC_DIR = BASE / "isec"
 REGION_FILE = BASE / "regions" / "selected_chr22_regions.tsv"
 REPORT_DIR = BASE / "reports"
