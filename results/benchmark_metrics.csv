@@ -1,1 +1,4 @@
-
+benchmark,truth_variants,shared_variants,truth_only_missed,project_only_extra,recall_percent,precision_percent,f1_percent
+5-region,444,428,16,0,96.40,100.00,98.17
+25-region,1504,1421,83,0,94.48,100.00,97.16
+50-region,2592,2469,123,0,95.25,100.00,97.57
