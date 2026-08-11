@@ -1,8 +1,3 @@
-Yes. The problem is that I was still giving you explanatory text **outside** the Markdown code block.
-
-From this point, **everything I provide for the README is Markdown source**. No prose before it, no prose after it, and no sections rendered outside the code block.
-
-````markdown
 # 🧬 Benchmark-Aware Regional Validation of a Reproducible WGS Variant-Calling Workflow
 
 <p align="center">
