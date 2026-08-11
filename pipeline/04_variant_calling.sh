@@ -1,23 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-mkdir -p data/vcf logs
+REFERENCE="${REFERENCE:-references/GRCh38.fa}"
+BAM_DIR="${BAM_DIR:-data/bam}"
+VCF_DIR="${VCF_DIR:-data/vcf}"
+REGION="${REGION:-chr22}"
 
-REF="data/reference/test_ref.fa"
-BAM_DIR="data/bam"
-VCF_DIR="data/vcf"
+mkdir -p "${VCF_DIR}"
 
-for BAM in ${BAM_DIR}/*.sorted.bam
-do
-    SAMPLE=$(basename "$BAM" .sorted.bam)
+if [ ! -f "${REFERENCE}" ]; then
+    echo "ERROR: Reference genome not found: ${REFERENCE}" >&2
+    exit 1
+fi
 
-    bcftools mpileup -Ou -f ${REF} ${BAM} 2> logs/${SAMPLE}_mpileup.log | \
-    bcftools call -mv -Oz -o ${VCF_DIR}/${SAMPLE}.raw.vcf.gz 2> logs/${SAMPLE}_bcftools_call.log
+shopt -s nullglob
+BAM_FILES=("${BAM_DIR}"/*.sorted.bam)
 
-    tabix -p vcf ${VCF_DIR}/${SAMPLE}.raw.vcf.gz
+if [ "${#BAM_FILES[@]}" -eq 0 ]; then
+    echo "ERROR: No BAM files found in ${BAM_DIR}" >&2
+    exit 1
+fi
 
-    bcftools view ${VCF_DIR}/${SAMPLE}.raw.vcf.gz > ${VCF_DIR}/${SAMPLE}.raw.vcf
+for BAM in "${BAM_FILES[@]}"; do
+
+    SAMPLE="$(basename "${BAM}" .sorted.bam)"
+
+    bcftools mpileup \
+        --fasta-ref "${REFERENCE}" \
+        --regions "${REGION}" \
+        --output-type u \
+        "${BAM}" \
+    | bcftools call \
+        --multiallelic-caller \
+        --variants-only \
+        --output-type z \
+        --output "${VCF_DIR}/${SAMPLE}.${REGION}.vcf.gz"
+
+    bcftools index \
+        "${VCF_DIR}/${SAMPLE}.${REGION}.vcf.gz"
+
 done
 
 echo "Variant calling completed successfully."
