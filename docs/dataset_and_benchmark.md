@@ -93,3 +93,12 @@ The formal RTG benchmark produced:
 ## Data provenance
 
 The final repository should record the exact source URL, accession, release/version, and checksum for each externally obtained dataset or reference resource used in the final analysis.
+
+## Benchmark-scope interpretation
+
+The 5-, 25-, and 50-region analyses represent different benchmark scopes and should not be interpreted as independent biological replicates.
+
+The reported comparisons evaluate how the workflow performs as the evaluated regional benchmark is expanded.
+
+
+
