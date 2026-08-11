@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# =========================================================
-# Nainfit WGS/NGS Research Pipeline
-# Step 04: Controlled FASTQ Subsampling
+# ============================================================
+# Benchmark-aware WGS Preventive Genomics
+# Step 04: Controlled FASTQ subsampling
 #
-# Purpose:
-# Create a 1-million-read-pair subset from trimmed paired-end FASTQ files.
-#
-# Why:
-# This creates a smaller paired-end dataset for controlled testing of
-# alignment and variant calling under limited compute resources.
-# =========================================================
+# Creates a deterministic 1-million-read-pair subset.
+# ============================================================
 
 SAMPLE="SRR4420293"
 
@@ -19,127 +14,151 @@ R1_IN="data/real_trimmed_fastq/SRR4420293_1.trimmed.fastq.gz"
 R2_IN="data/real_trimmed_fastq/SRR4420293_2.trimmed.fastq.gz"
 
 OUTDIR="data/subsampled_fastq"
-REPORTDIR="reports/subsampling"
+REPORTDIR="results/subsampling"
 
-R1_OUT="${OUTDIR}/SRR4420293_1.subsample_1M.fastq.gz"
-R2_OUT="${OUTDIR}/SRR4420293_2.subsample_1M.fastq.gz"
+READS="${READS:-1000000}"
 
-READS=1000000
+R1_OUT="${OUTDIR}/${SAMPLE}_1.subsample_1M.fastq.gz"
+R2_OUT="${OUTDIR}/${SAMPLE}_2.subsample_1M.fastq.gz"
 
 mkdir -p "${OUTDIR}" "${REPORTDIR}"
 
-echo "[INFO] Starting controlled paired-end FASTQ subsampling"
+echo "============================================================"
+echo "Controlled FASTQ subsampling"
+echo "============================================================"
 echo "[INFO] Sample: ${SAMPLE}"
-echo "[INFO] Number of read pairs: ${READS}"
-echo "[INFO] R1 input: ${R1_IN}"
-echo "[INFO] R2 input: ${R2_IN}"
+echo "[INFO] Read pairs: ${READS}"
 
-if [[ ! -f "${R1_IN}" ]]; then
-  echo "[ERROR] R1 input file not found: ${R1_IN}"
-  exit 1
-fi
+for file in "${R1_IN}" "${R2_IN}"; do
+    if [[ ! -f "${file}" ]]; then
+        echo "[ERROR] Input file not found: ${file}"
+        exit 1
+    fi
+done
 
-if [[ ! -f "${R2_IN}" ]]; then
-  echo "[ERROR] R2 input file not found: ${R2_IN}"
-  exit 1
-fi
-
-python3 - <<EOF
+python3 - <<PY
 import gzip
 
 r1_in = "${R1_IN}"
 r2_in = "${R2_IN}"
+
 r1_out = "${R1_OUT}"
 r2_out = "${R2_OUT}"
+
 reads = ${READS}
 
-def copy_fastq_records(input_path, output_path, n_reads):
+
+def copy_records(input_path, output_path, n_reads):
     written = 0
-    with gzip.open(input_path, "rt") as fin, gzip.open(output_path, "wt") as fout:
+
+    with gzip.open(input_path, "rt") as fin, \
+         gzip.open(output_path, "wt") as fout:
+
         for _ in range(n_reads):
+
             record = [fin.readline() for _ in range(4)]
+
             if not record[0]:
                 break
+
             if any(line == "" for line in record):
-                raise ValueError(f"Incomplete FASTQ record found in {input_path}")
+                raise RuntimeError(
+                    f"Incomplete FASTQ record in {input_path}"
+                )
+
             fout.writelines(record)
             written += 1
+
     return written
 
-r1_written = copy_fastq_records(r1_in, r1_out, reads)
-r2_written = copy_fastq_records(r2_in, r2_out, reads)
+
+r1_written = copy_records(r1_in, r1_out, reads)
+r2_written = copy_records(r2_in, r2_out, reads)
 
 if r1_written != reads:
-    raise RuntimeError(f"R1 wrote {r1_written} reads, expected {reads}")
+    raise RuntimeError(
+        f"R1 contains only {r1_written} reads; "
+        f"{reads} were requested."
+    )
 
 if r2_written != reads:
-    raise RuntimeError(f"R2 wrote {r2_written} reads, expected {reads}")
+    raise RuntimeError(
+        f"R2 contains only {r2_written} reads; "
+        f"{reads} were requested."
+    )
 
 if r1_written != r2_written:
-    raise RuntimeError("R1 and R2 read counts do not match")
+    raise RuntimeError(
+        "R1 and R2 read counts are not synchronized."
+    )
 
-print(f"[PYTHON] R1 reads written: {r1_written}")
-print(f"[PYTHON] R2 reads written: {r2_written}")
-EOF
+print(f"R1 reads written: {r1_written}")
+print(f"R2 reads written: {r2_written}")
+PY
 
-echo "[INFO] Counting output lines..."
+EXPECTED_LINES=$((READS * 4))
 
 R1_LINES=$(zcat "${R1_OUT}" | wc -l)
 R2_LINES=$(zcat "${R2_OUT}" | wc -l)
 
-EXPECTED_LINES=$((READS * 4))
-
-echo "[INFO] Expected lines per FASTQ: ${EXPECTED_LINES}"
-echo "[INFO] R1 output lines: ${R1_LINES}"
-echo "[INFO] R2 output lines: ${R2_LINES}"
-
 if [[ "${R1_LINES}" -ne "${EXPECTED_LINES}" ]]; then
-  echo "[ERROR] R1 line count mismatch"
-  exit 1
+    echo "[ERROR] R1 FASTQ line count mismatch."
+    exit 1
 fi
 
 if [[ "${R2_LINES}" -ne "${EXPECTED_LINES}" ]]; then
-  echo "[ERROR] R2 line count mismatch"
-  exit 1
+    echo "[ERROR] R2 FASTQ line count mismatch."
+    exit 1
 fi
 
-cat > "${REPORTDIR}/subsample_1M_summary.md" <<REPORT
-# Subsampled FASTQ Summary
+cat > "${REPORTDIR}/subsample_1M_summary.md" <<EOF
+# 1M Paired-End FASTQ Subsample
 
-## Project
-Nainfit WGS/NGS Research Pipeline
+## Dataset
 
-## Purpose
-A 1-million-read-pair subset was created from trimmed paired-end FASTQ files to enable controlled downstream alignment and variant-calling tests under limited local compute resources.
+Sample: ${SAMPLE}
 
-## Input Files
+## Input
+
 - ${R1_IN}
 - ${R2_IN}
 
-## Output Files
+## Output
+
 - ${R1_OUT}
 - ${R2_OUT}
 
 ## Method
-A Python gzip-based streaming script copied the first ${READS} complete FASTQ records from both R1 and R2. Each FASTQ record contains 4 lines.
+
+A deterministic first-N-record extraction was performed using
+Python gzip streaming.
+
+Requested read pairs: ${READS}
 
 ## Validation
-- Expected lines per file: ${EXPECTED_LINES}
-- R1 output lines: ${R1_LINES}
-- R2 output lines: ${R2_LINES}
-- R1 and R2 read-pair counts match.
 
-## Scientific Reasoning
-Subsampling allows controlled testing of pipeline modules before scaling to larger WGS datasets. It reduces computational burden, improves debugging, and preserves paired-end synchronization.
+Expected FASTQ lines per file: ${EXPECTED_LINES}
+
+R1 lines: ${R1_LINES}
+
+R2 lines: ${R2_LINES}
+
+R1 and R2 read counts were verified to be equal.
 
 ## Limitation
-This is a deterministic first-N-read subset, not a random subsample. For formal benchmarking, random subsampling with seqtk or equivalent tools should be used later.
+
+This is a deterministic first-N-read subset rather than a
+randomized subsample. It is intended for computationally
+controlled pipeline testing and not for estimating population-level
+sampling properties.
 
 ## Next Step
-Use the 1M read-pair subset for full-reference alignment testing.
-REPORT
 
-echo "[DONE] FASTQ subsampling completed successfully."
+The resulting paired-end subset can be used for controlled
+alignment and variant-calling experiments.
+EOF
+
+echo "[DONE] FASTQ subsampling completed."
 echo "[OUTPUT] ${R1_OUT}"
 echo "[OUTPUT] ${R2_OUT}"
 echo "[REPORT] ${REPORTDIR}/subsample_1M_summary.md"
