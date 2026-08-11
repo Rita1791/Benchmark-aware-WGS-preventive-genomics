@@ -552,9 +552,9 @@ My broader research goal is to develop rigorous computational approaches that ca
 
 ### Connect
 
-* **Email:** `[ritika.rawat27@outlook.com](ritika.rawat27@outlook.com)`
+* **Email:** `[ritika.rawat27@outlook.com]("Ritika Rawat" <ritika.rawat27@outlook.com>)`
 * **LinkedIn:** [Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)
-* **GitHub:** [@Rita1791](https://github.com/Rita1791)
+* **GitHub:** [Rita1791](https://github.com/Rita1791)
 
 ---
 
@@ -704,7 +704,7 @@ See [`LICENSE`](LICENSE).
 MSc Bioinformatics | Bioinformatics Researcher
 Computational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics
 
-**Email:** `[ritika.rawat27@outlook.com](ritika.rawat27@outlook.com)`
+**Email:** `[ritika.rawat27@outlook.com]("Ritika Rawat" <ritika.rawat27@outlook.com>)`
 **LinkedIn:** `[Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)`
 **GitHub:** [Ritika Rajednra Rawat](https://github.com/Rita1791)
 
