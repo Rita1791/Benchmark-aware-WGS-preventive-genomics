@@ -1,28 +1,134 @@
-# Benchmark-Aware Regional Validation of a Reproducible WGS Variant-Calling Workflow
+Yes. The problem is that I was still giving you explanatory text **outside** the Markdown code block.
 
-### GIAB HG001 • GRCh38 • chr22 • WGS • Variant Calling • Benchmarking • Reproducible Bioinformatics
+From this point, **everything I provide for the README is Markdown source**. No prose before it, no prose after it, and no sections rendered outside the code block.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)[![Benchmark](https://img.shields.io/badge/Benchmark-GIAB%20HG001-blue.svg)](config/benchmark.yaml)[![Reference](https://img.shields.io/badge/Reference-GRCh38-orange.svg)](config/benchmark.yaml)[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](environment.yml)
+````markdown
+# 🧬 Benchmark-Aware Regional Validation of a Reproducible WGS Variant-Calling Workflow
 
-> A reproducible computational genomics study evaluating WGS variant-calling performance against the Genome in a Bottle (GIAB) HG001 benchmark across progressively expanded high-confidence regions of GRCh38 chromosome 22.
+<p align="center">
+
+**GIAB HG001 • GRCh38 • chr22 • Whole-Genome Sequencing • Variant Calling • Benchmarking • Reproducible Bioinformatics**
+
+</p>
+
+<p align="center">
+
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Benchmark](https://img.shields.io/badge/Benchmark-GIAB%20HG001-blue.svg)](config/benchmark.yaml)
+[![Reference](https://img.shields.io/badge/Reference-GRCh38-orange.svg)](config/benchmark.yaml)
+[![Chromosome](https://img.shields.io/badge/Chromosome-chr22-purple.svg)](config/benchmark.yaml)
+[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](environment.yml)
+[![Status](https://img.shields.io/badge/Status-Active%20Research-success.svg)](#-project-status)
+
+</p>
+
+<p align="center">
+
+**A benchmark-aware regional validation framework for reproducible WGS variant-calling analysis**
+
+</p>
 
 ---
 
-## 🔬 About This Research
+## 🧭 Table of Contents
 
-Whole-genome sequencing (WGS) variant calling is a fundamental component of modern computational genomics. However, generating a VCF file is not sufficient to establish that the detected variants are reliable.
+- [🔬 About This Research](#-about-this-research)
+- [🎯 Research Question](#-research-question)
+- [🧬 Research Objectives](#-research-objectives)
+- [🧪 Study Design](#-study-design)
+- [🔬 Computational Workflow](#-computational-workflow)
+- [📏 Benchmark-Scale Evaluation](#-benchmark-scale-evaluation)
+- [📊 Key Results](#-key-results)
+- [🧪 Formal RTG vcfeval Benchmark](#-formal-rtg-vcfeval-benchmark)
+- [⚖️ Normalized Comparison vs Formal Benchmarking](#️-normalized-comparison-vs-formal-benchmarking)
+- [🔎 Missed-Variant Analysis](#-missed-variant-analysis)
+- [📍 Low-Recall Regional Analysis](#-low-recall-regional-analysis)
+- [🧩 Error and Discrepancy Analysis](#-error-and-discrepancy-analysis)
+- [📈 Publication-Ready Outputs](#-publication-ready-outputs)
+- [🧰 Software and Tools](#-software-and-tools)
+- [♻️ Reproducibility](#️-reproducibility)
+- [🗂️ Repository Structure](#️-repository-structure)
+- [👩‍🔬 About the Researcher](#-about-the-researcher)
+- [🧭 Research Perspective](#-research-perspective)
+- [⚠️ Scope and Limitations](#️-scope-and-limitations)
+- [🚀 Future Research](#-future-research)
+- [🏢 Acknowledgement](#-acknowledgement)
+- [📚 Documentation](#-documentation)
+- [📖 Citation](#-citation)
+- [📄 License](#-license)
+- [📊 Project Status](#-project-status)
 
-A variant-calling workflow must be evaluated against an independent benchmark to determine:
+---
 
-* how many expected variants are recovered,* how many incorrect variants are introduced,* whether performance changes across genomic regions,* which variant classes contribute to residual errors,* and whether simple VCF concordance agrees with formal benchmark evaluation.
+## 🧭 Project at a Glance
 
-This project was developed to investigate these questions through a **benchmark-aware, regional validation framework**.
+| Category | Details |
+|---|---|
+| **Research Area** | Computational Genomics |
+| **Primary Application** | WGS Variant Calling and Benchmarking |
+| **Benchmark Resource** | Genome in a Bottle (GIAB) |
+| **Benchmark Sample** | HG001 |
+| **Alternate Identifier** | NA12878 |
+| **Reference Genome** | GRCh38 |
+| **Primary Chromosome** | chr22 |
+| **Benchmark Release** | GIAB v4.2.1 |
+| **Validation Scales** | 5, 25, and 50 regions |
+| **Normalized Comparison** | `bcftools isec` |
+| **Formal Benchmark** | RTG `vcfeval` |
+| **Low-Recall Threshold** | 92% |
+| **Primary Analysis** | Regional Benchmark Validation |
+| **Research Status** | Active Computational Research |
 
-The study uses the **Genome in a Bottle (GIAB) HG001 benchmark**, the **GRCh38 reference genome**, and selected high-confidence regions of **chromosome 22**.
+---
 
-Rather than reporting only one aggregate accuracy value, the analysis progressively evaluates:
+# 🔬 About This Research
 
-```text5 benchmark regions↓25 benchmark regions↓50 benchmark regions↓Formal RTG benchmarking↓Missed-variant analysis↓Low-recall regional analysis↓Benchmark-method discrepancy analysis```
+Whole-genome sequencing (WGS) variant calling is a fundamental component of modern computational genomics. However, successfully generating a VCF file does not establish that the detected variants are reliable.
+
+A variant-calling workflow needs to be evaluated against an independent benchmark to determine:
+
+- how many expected variants are recovered;
+- how many incorrect variants are introduced;
+- whether performance changes across genomic regions;
+- which variant classes contribute to residual errors;
+- whether difficult genomic contexts affect sensitivity;
+- and whether simple VCF concordance agrees with formal benchmark evaluation.
+
+This project was developed as a **benchmark-aware regional validation framework** for evaluating WGS variant-calling performance.
+
+The study uses:
+
+- **Genome in a Bottle (GIAB) HG001**
+- **GRCh38**
+- **chromosome 22**
+- selected GIAB high-confidence benchmark regions.
+
+Rather than reporting only a single aggregate accuracy value, the analysis progressively evaluates the workflow across increasingly expanded regional benchmark scopes.
+
+```text
+5-region validation
+        │
+        ▼
+25-region validation
+        │
+        ▼
+50-region validation
+        │
+        ▼
+Formal RTG vcfeval benchmarking
+        │
+        ▼
+Missed-variant analysis
+        │
+        ▼
+Low-recall regional analysis
+        │
+        ▼
+bcftools vs RTG discrepancy analysis
+        │
+        ▼
+Publication-ready tables and figures
+````
 
 The central idea is to move beyond:
 
@@ -36,61 +142,166 @@ toward:
 
 # 🎯 Research Question
 
-### Primary research question
+## Primary Research Question
 
 > **How does WGS variant-calling performance change as benchmark evaluation expands across genomic regions, and what explains the remaining discrepancies between the project callset and the GIAB truth set?**
 
-### Supporting questions
+## Supporting Questions
 
-1. Does benchmark performance remain stable when the number of evaluated regions increases?2. How does normalized VCF comparison compare with formal RTG benchmarking?3. Which variant classes account for missed truth variants?4. Which genomic regions show reduced recall?5. Are discrepancies concentrated in difficult genomic contexts?6. Can regional benchmark analysis reveal limitations that are hidden by aggregate performance metrics?
+1. Does benchmark performance remain stable when the number of evaluated regions increases?
+2. How does normalized VCF comparison compare with formal RTG benchmarking?
+3. Which variant classes account for missed truth variants?
+4. Which genomic regions show reduced recall?
+5. Are discrepancies concentrated in difficult genomic contexts?
+6. Can regional benchmark analysis reveal limitations that are hidden by aggregate performance metrics?
 
 ---
 
 # 🧬 Research Objectives
 
-The project was designed around five major objectives:
+The project was designed around five major objectives.
 
-### Objective 1 — Build a reproducible WGS workflow
+## Objective 1 — Build a Reproducible WGS Workflow
 
 Develop a documented computational workflow covering:
 
-* sequencing-read quality control,* read preprocessing,* alignment,* BAM processing,* variant calling,* VCF processing,* and benchmark comparison.
+* sequencing-read quality control;
+* read preprocessing;
+* alignment;
+* BAM processing;
+* variant calling;
+* VCF processing;
+* benchmark comparison.
 
-### Objective 2 — Establish benchmark-aware validation
+## Objective 2 — Establish Benchmark-Aware Validation
 
-Use GIAB HG001 as an independent truth benchmark rather than evaluating the workflow only through internal pipeline metrics.
+Use **GIAB HG001** as an independent truth benchmark rather than evaluating the workflow only through internal pipeline metrics.
 
-### Objective 3 — Evaluate multiple benchmark scales
+## Objective 3 — Evaluate Multiple Benchmark Scales
 
 Compare performance across:
 
-* 5 selected regions,* 25 selected regions,* 50 selected regions.
+* **5 selected regions**
+* **25 selected regions**
+* **50 selected regions**
 
-### Objective 4 — Compare benchmarking methodologies
+## Objective 4 — Compare Benchmarking Methodologies
 
 Evaluate the relationship between:
 
-* normalized `bcftools isec` comparison, and* formal RTG `vcfeval` benchmarking.
+* normalized `bcftools isec` comparison;
+* formal RTG `vcfeval` benchmarking.
 
-### Objective 5 — Characterize residual errors
+## Objective 5 — Characterize Residual Errors
 
 Investigate:
 
-* missed variants,* variant classes,* low-recall regions,* difficult genomic contexts,* and discrepancies between benchmark methods.
+* missed variants;
+* variant classes;
+* low-recall regions;
+* difficult genomic contexts;
+* discrepancies between benchmark methods.
 
 ---
 
 # 🧪 Study Design
 
-| Component             | Configuration             || --------------------- | ------------------------- || Benchmark resource    | Genome in a Bottle (GIAB) || Benchmark sample      | HG001                     || Alternate identifier  | NA12878                   || Reference build       | GRCh38                    || Primary chromosome    | chr22                     || Benchmark release     | GIAB v4.2.1               || Regional validation   | 5, 25, 50 regions         || Normalized comparison | `bcftools isec`           || Formal benchmark      | RTG `vcfeval`             || Low-recall threshold  | 92%                       |
+| Component                 | Configuration             |
+| ------------------------- | ------------------------- |
+| **Benchmark Resource**    | Genome in a Bottle (GIAB) |
+| **Benchmark Sample**      | HG001                     |
+| **Alternate Identifier**  | NA12878                   |
+| **Reference Build**       | GRCh38                    |
+| **Primary Chromosome**    | chr22                     |
+| **Benchmark Release**     | GIAB v4.2.1               |
+| **Regional Validation**   | 5, 25, 50 regions         |
+| **Normalized Comparison** | `bcftools isec`           |
+| **Formal Benchmark**      | RTG `vcfeval`             |
+| **Low-Recall Threshold**  | 92%                       |
 
-The 5-, 25-, and 50-region analyses represent **progressively expanded regional validation scopes** and should not be interpreted as independent biological replicates.
+> **Important:** The 5-, 25-, and 50-region analyses represent progressively expanded regional validation scopes and should not be interpreted as independent biological replicates.
 
 ---
 
 # 🔬 Computational Workflow
 
-```textWGS SEQUENCING DATA│▼┌───────────────┐│ Quality       ││ Control       ││ FastQC/MultiQC│└───────┬───────┘│▼┌───────────────┐│ Read          ││ preprocessing ││ fastp         │└───────┬───────┘│▼┌───────────────┐│ Alignment     ││ BWA-MEM2      │└───────┬───────┘│▼┌───────────────┐│ BAM sorting    ││ + indexing     ││ samtools       │└───────┬───────┘│▼┌───────────────┐│ Variant       ││ calling       ││ bcftools      │└───────┬───────┘│▼┌───────────────┐│ VCF processing ││ & normalization│└───────┬───────┘│▼┌──────────────────────┐│ GIAB HG001 Truth Set │└──────────┬───────────┘│┌─────────────┴─────────────┐▼                           ▼┌──────────────┐            ┌──────────────┐│ bcftools     │            │ RTG          ││ isec         │            │ vcfeval      ││ normalized   │            │ formal       ││ comparison   │            │ benchmark    │└──────┬───────┘            └──────┬───────┘│                           │└─────────────┬─────────────┘▼┌────────────────────┐│ Error & Regional   ││ Characterization   │└─────────┬──────────┘│┌─────────────┼─────────────┐▼             ▼             ▼Missed variants  Low recall   Methodregions      discrepancies│             │             │└─────────────┼─────────────┘▼Publication-readytables and figures```
+## Workflow Overview
+
+```text
+                         WGS SEQUENCING DATA
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │  QUALITY CONTROL   │
+                       │    FastQC/MultiQC  │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │ READ PREPROCESSING │
+                       │       fastp         │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │     ALIGNMENT      │
+                       │      BWA-MEM2      │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │   BAM PROCESSING   │
+                       │ sort + index       │
+                       │     samtools       │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │   VARIANT CALLING  │
+                       │      bcftools      │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                       ┌────────────────────┐
+                       │   VCF PROCESSING   │
+                       │  & NORMALIZATION   │
+                       └──────────┬─────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │    GIAB HG001 TRUTH SET  │
+                    └─────────────┬─────────────┘
+                                  │
+                    ┌─────────────┴─────────────┐
+                    │                           │
+                    ▼                           ▼
+          ┌──────────────────┐        ┌──────────────────┐
+          │   bcftools isec  │        │   RTG vcfeval    │
+          │    Normalized    │        │      Formal      │
+          │    Comparison    │        │    Benchmark     │
+          └─────────┬────────┘        └─────────┬────────┘
+                    │                           │
+                    └─────────────┬─────────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │ ERROR & REGIONAL ANALYSIS │
+                    └─────────────┬─────────────┘
+                                  │
+                 ┌────────────────┼────────────────┐
+                 │                │                │
+                 ▼                ▼                ▼
+          Missed Variants    Low-Recall       Method
+                              Regions       Discrepancies
+                 │                │                │
+                 └────────────────┼────────────────┘
+                                  │
+                                  ▼
+                    ┌───────────────────────────┐
+                    │ PUBLICATION-READY OUTPUTS │
+                    │      Tables + Figures     │
+                    └───────────────────────────┘
+```
 
 ---
 
@@ -98,23 +309,67 @@ The 5-, 25-, and 50-region analyses represent **progressively expanded regional 
 
 The project evaluates the same general benchmarking framework at three regional scales.
 
-| Benchmark | Regions | Purpose                              || --------- | ------: | ------------------------------------ || 5-region  |       5 | Controlled initial validation        || 25-region |      25 | Expanded validation                  || 50-region |      50 | Primary expanded regional validation |
+| Benchmark Scale | Number of Regions | Purpose                              |
+| --------------- | ----------------: | ------------------------------------ |
+| **5-region**    |                 5 | Controlled initial validation        |
+| **25-region**   |                25 | Expanded validation                  |
+| **50-region**   |                50 | Primary expanded regional validation |
 
-This progressive design allows performance to be examined as the validation scope increases.
+The progressive design allows performance to be examined as the validation scope increases.
+
+```text
+              VALIDATION SCOPE
+                    │
+                    ▼
+             ┌─────────────┐
+             │ 5 REGIONS   │
+             └──────┬──────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │ 25 REGIONS  │
+             └──────┬──────┘
+                    │
+                    ▼
+             ┌─────────────┐
+             │ 50 REGIONS  │
+             └──────┬──────┘
+                    │
+                    ▼
+          FORMAL BENCHMARKING
+                    │
+                    ▼
+             ERROR ANALYSIS
+```
 
 ---
 
 # 📊 Key Results
 
-## Normalized benchmark comparison
+## Normalized Benchmark Comparison
 
-| Benchmark       | Truth Variants | Project Variants | Shared | Missed Truth | Extra Project | Recall | Precision |     F1 || --------------- | -------------: | ---------------: | -----: | -----------: | ------------: | -----: | --------: | -----: || 5-region chr22  |            444 |              428 |    428 |           16 |             0 | 96.40% |   100.00% | 98.17% || 25-region chr22 |          1,504 |            1,421 |  1,421 |           83 |             0 | 94.48% |   100.00% | 97.16% || 50-region chr22 |          2,592 |            2,469 |  2,469 |          123 |             0 | 95.25% |   100.00% | 97.57% |
+| Benchmark           | Truth Variants | Project Variants | Shared | Missed Truth | Extra Project | Recall | Precision |     F1 |
+| ------------------- | -------------: | ---------------: | -----: | -----------: | ------------: | -----: | --------: | -----: |
+| **5-region chr22**  |            444 |              428 |    428 |           16 |             0 | 96.40% |   100.00% | 98.17% |
+| **25-region chr22** |          1,504 |            1,421 |  1,421 |           83 |             0 | 94.48% |   100.00% | 97.16% |
+| **50-region chr22** |          2,592 |            2,469 |  2,469 |          123 |             0 | 95.25% |   100.00% | 97.57% |
 
-### Primary expanded benchmark
+---
+
+## 🏆 Primary Expanded Benchmark
 
 The 50-region normalized comparison produced:
 
-* **2,592 truth variants*** **2,469 project variants*** **2,469 shared variants*** **123 missed truth variants*** **0 project-only variants*** **95.25% recall*** **100.00% precision*** **97.57% F1**
+| Metric                    |      Result |
+| ------------------------- | ----------: |
+| **Truth Variants**        |   **2,592** |
+| **Project Variants**      |   **2,469** |
+| **Shared Variants**       |   **2,469** |
+| **Missed Truth Variants** |     **123** |
+| **Project-Only Variants** |       **0** |
+| **Recall**                |  **95.25%** |
+| **Precision**             | **100.00%** |
+| **F1 Score**              |  **97.57%** |
 
 The 50-region benchmark provides the broadest regional validation within the current study design.
 
@@ -124,9 +379,17 @@ The 50-region benchmark provides the broadest regional validation within the cur
 
 The 50-region analysis was additionally evaluated using RTG `vcfeval`.
 
-| Metric          |     Result || --------------- | ---------: || TP baseline     |      2,465 || TP call         |      2,465 || False positives |          4 || False negatives |        127 || Precision       | **99.84%** || Sensitivity     | **95.10%** || F-measure       | **97.41%** |
+| Metric              |     Result |
+| ------------------- | ---------: |
+| **TP baseline**     |      2,465 |
+| **TP call**         |      2,465 |
+| **False positives** |          4 |
+| **False negatives** |        127 |
+| **Precision**       | **99.84%** |
+| **Sensitivity**     | **95.10%** |
+| **F-measure**       | **97.41%** |
 
-The formal RTG benchmark therefore produced:
+### Formal Benchmark Summary
 
 > **95.10% sensitivity · 99.84% precision · 97.41% F-measure**
 
@@ -136,13 +399,22 @@ The formal RTG benchmark therefore produced:
 
 The two approaches showed strong agreement but were not identical.
 
-| Metric                | `bcftools isec` | RTG `vcfeval` || --------------------- | --------------: | ------------: || True/shared positives |           2,469 |         2,465 || False positives       |               0 |             4 || False negatives       |             123 |           127 || Recall / sensitivity  |          95.25% |        95.10% || Precision             |         100.00% |        99.84% || F1 / F-measure        |          97.57% |        97.41% |
+| Metric                      | `bcftools isec` | RTG `vcfeval` |
+| --------------------------- | --------------: | ------------: |
+| **True / Shared Positives** |           2,469 |         2,465 |
+| **False Positives**         |               0 |             4 |
+| **False Negatives**         |             123 |           127 |
+| **Recall / Sensitivity**    |          95.25% |        95.10% |
+| **Precision**               |         100.00% |        99.84% |
+| **F1 / F-measure**          |          97.57% |        97.41% |
 
 The formal benchmark was slightly stricter than the normalized record-level comparison.
 
-This difference demonstrates an important methodological point:
+### 🔬 Methodological Interpretation
 
 > **Simple record-level VCF concordance should not automatically be interpreted as equivalent to formal benchmark performance.**
+
+The small numerical discrepancy between the methods demonstrates why benchmark methodology matters when evaluating variant-calling performance.
 
 ---
 
@@ -150,15 +422,28 @@ This difference demonstrates an important methodological point:
 
 The 50-region normalized comparison identified **123 truth variants that were not recovered by the project callset**.
 
-Their observed composition was:
+## Missed Variant Composition
 
-| Variant class | Missed variants || ------------- | --------------: || Deletions     |              66 || Insertions    |              56 || SNVs          |               1 || **Total**     |         **123** |
+| Variant Class  | Missed Variants |
+| -------------- | --------------: |
+| **Deletions**  |              66 |
+| **Insertions** |              56 |
+| **SNVs**       |               1 |
+| **Total**      |         **123** |
 
-The residual missed variants were therefore overwhelmingly indel events.
+The residual missed variants were therefore overwhelmingly **indel events**.
 
-This observation motivates further investigation of:
+### 🔍 Areas Requiring Further Investigation
 
-* indel representation,* alignment complexity,* local sequence context,* difficult genomic regions,* and variant-calling sensitivity.
+The observed pattern motivates investigation of:
+
+* indel representation;
+* alignment complexity;
+* local sequence context;
+* difficult genomic regions;
+* variant-calling sensitivity;
+* normalization behavior;
+* and benchmark representation differences.
 
 ---
 
@@ -172,9 +457,25 @@ A dedicated regional analysis was therefore implemented using a configured low-r
 
 Regions below this threshold are examined independently to determine whether reduced performance is associated with particular genomic contexts.
 
-This creates an additional analytical layer:
+## Analytical Hierarchy
 
-```textGlobal benchmark performance↓Regional performance↓Low-recall regions↓Potential difficult genomic contexts↓Targeted error interpretation```
+```text
+Global Benchmark Performance
+             │
+             ▼
+Regional Performance
+             │
+             ▼
+Low-Recall Regions
+             │
+             ▼
+Potential Difficult Genomic Contexts
+             │
+             ▼
+Targeted Error Interpretation
+```
+
+This approach allows the analysis to move beyond an overall recall value and investigate **where performance decreases**.
 
 ---
 
@@ -182,31 +483,48 @@ This creates an additional analytical layer:
 
 The project does not stop at reporting recall and precision.
 
-It explicitly examines discrepancies through:
+It explicitly examines discrepancies through four analytical layers.
 
-### Missed-variant analysis
+## 1. Missed-Variant Analysis
 
 Identifies variants present in the benchmark but absent from the project callset.
 
-### Variant-class analysis
+## 2. Variant-Class Analysis
 
-Determines whether residual errors are dominated by SNVs, insertions, deletions, or other variant classes.
+Determines whether residual errors are dominated by:
 
-### Low-recall analysis
+* SNVs;
+* insertions;
+* deletions;
+* or other variant classes.
 
-Identifies regions where performance falls below the predefined threshold.
+## 3. Low-Recall Analysis
 
-### Benchmark-method comparison
+Identifies genomic regions where performance falls below the predefined threshold.
 
-Compares normalized `bcftools isec` results with formal RTG `vcfeval` results.
+## 4. Benchmark-Method Comparison
+
+Compares:
+
+```text
+bcftools isec
+      │
+      │ normalized record-level comparison
+      ▼
+Benchmark Concordance
+      ▲
+      │ formal benchmark evaluation
+      │
+RTG vcfeval
+```
 
 The resulting framework therefore moves from:
 
-> **performance measurement**
+> **Performance Measurement**
 
 to:
 
-> **performance diagnosis**
+> **Performance Diagnosis**
 
 ---
 
@@ -216,25 +534,73 @@ The final structured outputs are organized under:
 
 [`results/publication_ready/`](results/publication_ready/)
 
-They include:
+## 📋 Tables
 
-### Tables
+1. Benchmark-scale comparison
+2. Formal RTG `vcfeval` result
+3. Missed-variant summary
+4. Low-recall regions
+5. `bcftools` vs RTG discrepancy regions
 
-1. Benchmark-scale comparison2. Formal RTG vcfeval result3. Missed-variant summary4. Low-recall regions5. bcftools vs RTG discrepancy regions
+## 📊 Figures
 
-### Figures
+1. Benchmark-scale performance
+2. `bcftools isec` vs RTG `vcfeval`
+3. Missed-variant composition
+4. Low-recall regional analysis
+5. Benchmark-aware workflow overview
 
-1. Benchmark-scale performance2. bcftools isec vs RTG vcfeval3. Missed-variant composition4. Low-recall regional analysis5. Benchmark-aware workflow overview
+## Expected Output Organization
+
+```text
+results/
+└── publication_ready/
+    │
+    ├── tables/
+    │   ├── benchmark_scale_comparison.tsv
+    │   ├── benchmark_scale_comparison.md
+    │   ├── formal_rtg_vcfeval_result.tsv
+    │   ├── formal_rtg_vcfeval_result.md
+    │   ├── missed_variant_summary.tsv
+    │   ├── missed_variant_summary.md
+    │   ├── low_recall_regions.tsv
+    │   ├── low_recall_regions.md
+    │   ├── bcftools_vs_rtg_discrepancy.tsv
+    │   └── bcftools_vs_rtg_discrepancy.md
+    │
+    └── figures/
+        ├── benchmark_scale_performance.png
+        ├── bcftools_vs_rtg_vcfeval.png
+        ├── missed_variant_composition.png
+        ├── low_recall_regions.png
+        └── workflow_overview.png
+```
 
 ---
 
 # 🧰 Software and Tools
 
-| Analysis stage      | Software          || ------------------- | ----------------- || Programming         | Python            || Quality control     | FastQC            || QC aggregation      | MultiQC           || Read preprocessing  | fastp             || Alignment           | BWA-MEM2          || BAM processing      | samtools          || Variant processing  | bcftools / HTSlib || Formal benchmarking | RTG Tools         || Data analysis       | pandas / NumPy    || Visualization       | matplotlib        || Configuration       | YAML              |
+| Analysis Stage          | Software          |
+| ----------------------- | ----------------- |
+| **Programming**         | Python            |
+| **Quality Control**     | FastQC            |
+| **QC Aggregation**      | MultiQC           |
+| **Read Preprocessing**  | fastp             |
+| **Alignment**           | BWA-MEM2          |
+| **BAM Processing**      | samtools          |
+| **Variant Processing**  | bcftools / HTSlib |
+| **Formal Benchmarking** | RTG Tools         |
+| **Data Analysis**       | pandas / NumPy    |
+| **Visualization**       | matplotlib        |
+| **Configuration**       | YAML              |
+
+## Computational Environment
 
 The computational environment is specified in:
 
 [`environment.yml`](environment.yml)
+
+## Benchmark Configuration
 
 The benchmark configuration is specified in:
 
@@ -248,23 +614,96 @@ Reproducibility is treated as a core research requirement.
 
 The repository contains:
 
-* workflow scripts,* analysis scripts,* benchmark configuration,* software environment specification,* provenance documentation,* analytical reports,* research records,* compact derived results,* publication-ready tables,* and figures.
+* workflow scripts;
+* analysis scripts;
+* benchmark configuration;
+* software environment specification;
+* provenance documentation;
+* analytical reports;
+* research records;
+* compact derived results;
+* publication-ready tables;
+* figures.
+
+## Large Data Policy
 
 Large external sequencing and reference files are intentionally excluded from version control.
 
 Excluded resources include:
 
-* FASTQ/FASTQ.GZ* BAM/BAI* CRAM/CRAI* large VCF/BCF files* reference FASTA files* genome indexes* large intermediate outputs
+* `FASTQ`
+* `FASTQ.GZ`
+* `BAM`
+* `BAI`
+* `CRAM`
+* `CRAI`
+* large `VCF`
+* large `BCF`
+* reference `FASTA`
+* genome indexes
+* large intermediate outputs
 
-See:
+## Reproducibility Resources
 
-* [`environment.yml`](environment.yml)* [`config/benchmark.yaml`](config/benchmark.yaml)* [`docs/`](docs/)* [`scripts/`](scripts/)* [`results/`](results/)* [`.gitignore`](.gitignore)
+* [`environment.yml`](environment.yml)
+* [`config/benchmark.yaml`](config/benchmark.yaml)
+* [`docs/`](docs/)
+* [`scripts/`](scripts/)
+* [`results/`](results/)
+* [`.gitignore`](.gitignore)
 
 ---
 
 # 🗂️ Repository Structure
 
-```textBenchmark-aware-WGS-preventive-genomics/│├── config/│   └── benchmark.yaml│├── data/│   └── External / excluded sequencing data│├── docs/│   ├── lab_notebook/│   ├── metadata/│   ├── methodology/│   ├── phd_positioning/│   └── research_tracking/│├── figures/│├── logs/│├── manuscript/│├── pipeline/│├── reference/│├── reference_datasets/│├── reports/│├── results/│   ├── benchmark analyses│   ├── formal benchmarking│   ├── discrepancy analysis│   └── publication_ready/│       ├── tables/│       └── figures/│├── scripts/│├── tests/│├── CITATION.cff├── LICENSE├── README.md├── environment.yml└── .gitignore```
+```text
+Benchmark-aware-WGS-preventive-genomics/
+│
+├── config/
+│   └── benchmark.yaml
+│
+├── data/
+│   └── External / excluded sequencing data
+│
+├── docs/
+│   ├── lab_notebook/
+│   ├── metadata/
+│   ├── methodology/
+│   ├── phd_positioning/
+│   └── research_tracking/
+│
+├── figures/
+│
+├── logs/
+│
+├── manuscript/
+│
+├── pipeline/
+│
+├── reference/
+│
+├── reference_datasets/
+│
+├── reports/
+│
+├── results/
+│   ├── benchmark analyses
+│   ├── formal benchmarking
+│   ├── discrepancy analysis
+│   └── publication_ready/
+│       ├── tables/
+│       └── figures/
+│
+├── scripts/
+│
+├── tests/
+│
+├── CITATION.cff
+├── LICENSE
+├── README.md
+├── environment.yml
+└── .gitignore
+```
 
 ---
 
@@ -274,39 +713,84 @@ See:
 
 **Bioinformatics Researcher | Computational Genomics | WGS Variant Benchmarking**
 
-I am an MSc Bioinformatics graduate and early-career bioinformatics researcher working at the intersection of **computational genomics, NGS analysis, variant benchmarking, reproducible bioinformatics, and translational health research**.
+I am an MSc Bioinformatics graduate and early-career bioinformatics researcher working at the intersection of:
 
-My current research interests include:
+* **Computational Genomics**
+* **NGS Analysis**
+* **Variant Benchmarking**
+* **Reproducible Bioinformatics**
+* **Translational Health Research**
 
-* whole-genome sequencing* variant discovery and validation* genomic benchmarking* computational genomics* reproducible analysis workflows* variant interpretation* precision and preventive genomics* computational approaches to biological and health research
+### Research Interests
 
-This project represents my effort to develop a research workflow that goes beyond executing standard bioinformatics tools and instead emphasizes **benchmark design, reproducibility, quantitative validation, error analysis, and scientific interpretation**.
+* Whole-genome sequencing
+* Variant discovery and validation
+* Genomic benchmarking
+* Computational genomics
+* Reproducible analysis workflows
+* Variant interpretation
+* Precision genomics
+* Preventive genomics
+* Computational approaches to biological and health research
 
-My broader research goal is to develop rigorous computational approaches that can connect genomic data analysis with meaningful biological and translational questions while maintaining appropriate scientific and clinical boundaries.
+This project represents an effort to develop a research workflow that goes beyond executing standard bioinformatics tools and instead emphasizes:
 
-### Connect
+> **Benchmark Design → Reproducibility → Quantitative Validation → Error Analysis → Scientific Interpretation**
 
-* **Email:** `[ritika.rawat27@outlook.com]("Ritika Rawat" <ritika.rawat27@outlook.com>)`* **LinkedIn:** [Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)* **GitHub:** [Rita1791](https://github.com/Rita1791)
+The broader research goal is to develop rigorous computational approaches that can connect genomic data analysis with meaningful biological and translational questions while maintaining appropriate scientific and clinical boundaries.
+
+---
+
+# 🔗 Connect With the Researcher
+
+| Platform        | Link                                                                         |
+| --------------- | ---------------------------------------------------------------------------- |
+| 📧 **Email**    | [ritika.rawat27@outlook.com](mailto:ritika.rawat27@outlook.com)              |
+| 💼 **LinkedIn** | [Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/) |
+| 💻 **GitHub**   | [Rita1791](https://github.com/Rita1791)                                      |
 
 ---
 
 # 🧭 Research Perspective
 
-I approach computational genomics through four principles:
+I approach computational genomics through four principles.
 
-### Reproducibility
+## ♻️ Reproducibility
 
-A computational result should be traceable to the data, parameters, software and analysis used to produce it.
+A computational result should be traceable to the:
 
-### Benchmarking
+```text
+Data
+  ↓
+Parameters
+  ↓
+Software
+  ↓
+Workflow
+  ↓
+Analysis
+  ↓
+Result
+```
+
+## 🧪 Benchmarking
 
 Performance should be evaluated against an appropriate independent reference rather than assumed from successful pipeline execution.
 
-### Error characterization
+## 🔎 Error Characterization
 
-A single accuracy number is insufficient. Understanding where and why a workflow fails is equally important.
+A single accuracy number is insufficient.
 
-### Scientific restraint
+Understanding:
+
+* **where** a workflow fails;
+* **what type** of variants are missed;
+* **how frequently** they are missed;
+* and **which genomic contexts** contribute to the error
+
+is equally important.
+
+## ⚠️ Scientific Restraint
 
 Computational benchmark performance should not automatically be translated into clinical claims without appropriate validation.
 
@@ -318,17 +802,38 @@ These principles guide the design and interpretation of this repository.
 
 This repository represents a **computational regional validation study**, not a clinical validation study.
 
+## Current Scope
+
 The current analysis is limited to:
 
-* HG001* GRCh38* chromosome 22* selected GIAB high-confidence regions* the evaluated sequencing dataset* the implemented workflow configuration
+* **HG001**
+* **GRCh38**
+* **chromosome 22**
+* selected GIAB high-confidence regions
+* the evaluated sequencing dataset
+* the implemented workflow configuration
 
-Therefore, the current results should not be interpreted as evidence of:
+## What the Results Do Not Establish
 
-* clinical diagnostic accuracy,* clinical sensitivity or specificity,* genome-wide performance,* population-wide generalizability,* universal variant-caller performance,* or direct clinical decision-making capability.
+The current results should **not** be interpreted as evidence of:
+
+* clinical diagnostic accuracy;
+* clinical sensitivity or specificity;
+* genome-wide performance;
+* population-wide generalizability;
+* universal variant-caller performance;
+* direct clinical decision-making capability.
+
+## Requirements for Broader Generalization
 
 Broader conclusions would require validation across additional:
 
-* samples,* chromosomes,* benchmark regions,* sequencing technologies,* variant classes,* and independent datasets.
+* samples;
+* chromosomes;
+* benchmark regions;
+* sequencing technologies;
+* variant classes;
+* independent datasets.
 
 ---
 
@@ -336,7 +841,36 @@ Broader conclusions would require validation across additional:
 
 Potential extensions include:
 
-1. Expansion to additional chromosomes.2. Genome-wide GIAB benchmarking.3. Validation across additional GIAB samples.4. Comparison of multiple variant callers.5. Variant-class-specific benchmarking.6. Systematic difficult-region stratification.7. Platform-aware benchmarking.8. Reproducibility testing across computational environments.9. Larger and more diverse benchmark datasets.10. Extension toward population-scale and translational genomics research.
+1. **Expansion to additional chromosomes**
+2. **Genome-wide GIAB benchmarking**
+3. **Validation across additional GIAB samples**
+4. **Comparison of multiple variant callers**
+5. **Variant-class-specific benchmarking**
+6. **Systematic difficult-region stratification**
+7. **Platform-aware benchmarking**
+8. **Reproducibility testing across computational environments**
+9. **Larger and more diverse benchmark datasets**
+10. **Extension toward population-scale and translational genomics research**
+
+## Long-Term Direction
+
+```text
+Regional Validation
+        ↓
+Multi-Chromosome Validation
+        ↓
+Genome-Wide Benchmarking
+        ↓
+Multi-Sample Validation
+        ↓
+Multi-Caller Comparison
+        ↓
+Variant-Class Stratification
+        ↓
+Platform-Aware Benchmarking
+        ↓
+Population-Scale Genomics
+```
 
 ---
 
@@ -344,15 +878,31 @@ Potential extensions include:
 
 I acknowledge **Nainsense Labs Private Limited** for the professional environment and practical exposure that supported the development of this research work.
 
-**Organization:** Nainsense Labs Private Limited**Website:** `[nainsense.com](https://nainsense.com/)`**Email:** `[admin@nainsense.com](admin@nainsense.com)`
+| Information      | Details                                           |
+| ---------------- | ------------------------------------------------- |
+| **Organization** | Nainsense Labs Private Limited                    |
+| **Website**      | [nainsense.com](https://nainsense.com/)           |
+| **Email**        | [admin@nainsense.com](mailto:admin@nainsense.com) |
 
-This acknowledgement recognizes the professional environment and exposure associated with the development of the work and does not imply institutional endorsement of the scientific methodology, results, conclusions, or interpretations presented in this repository.
+> This acknowledgement recognizes the professional environment and exposure associated with the development of the work and does **not** imply institutional endorsement of the scientific methodology, results, conclusions, or interpretations presented in this repository.
 
 ---
 
 # 📚 Documentation
 
-| Resource                                                   | Description                       || ---------------------------------------------------------- | --------------------------------- || [`config/benchmark.yaml`](config/benchmark.yaml)           | Benchmark configuration           || [`environment.yml`](environment.yml)                       | Computational environment         || [`docs/`](docs/)                                           | Research documentation            || [`pipeline/`](pipeline/)                                   | Core workflow                     || [`scripts/`](scripts/)                                     | Analysis and benchmarking scripts || [`reports/`](reports/)                                     | Detailed analytical reports       || [`results/`](results/)                                     | Computational results             || [`results/publication_ready/`](results/publication_ready/) | Final tables and figures          || [`manuscript/`](manuscript/)                               | Manuscript development            || [`tests/`](tests/)                                         | Test resources                    || [`CITATION.cff`](CITATION.cff)                             | Citation information              |
+| Resource                                                   | Description                       |
+| ---------------------------------------------------------- | --------------------------------- |
+| [`config/benchmark.yaml`](config/benchmark.yaml)           | Benchmark configuration           |
+| [`environment.yml`](environment.yml)                       | Computational environment         |
+| [`docs/`](docs/)                                           | Research documentation            |
+| [`pipeline/`](pipeline/)                                   | Core workflow                     |
+| [`scripts/`](scripts/)                                     | Analysis and benchmarking scripts |
+| [`reports/`](reports/)                                     | Detailed analytical reports       |
+| [`results/`](results/)                                     | Computational results             |
+| [`results/publication_ready/`](results/publication_ready/) | Final tables and figures          |
+| [`manuscript/`](manuscript/)                               | Manuscript development            |
+| [`tests/`](tests/)                                         | Test resources                    |
+| [`CITATION.cff`](CITATION.cff)                             | Citation information              |
 
 ---
 
@@ -361,6 +911,25 @@ This acknowledgement recognizes the professional environment and exposure associ
 If you use this repository, its computational workflow, derived analyses, or methodological framework, please cite the project using the information provided in:
 
 [`CITATION.cff`](CITATION.cff)
+
+```text
+Benchmark-Aware Regional Validation of a Reproducible WGS Variant-Calling Workflow
+
+Author:
+Ritika Rajendra Rawat
+
+Research Area:
+Computational Genomics
+
+Primary Benchmark:
+GIAB HG001
+
+Reference:
+GRCh38
+
+Primary Chromosome:
+chr22
+```
 
 ---
 
@@ -372,32 +941,75 @@ See [`LICENSE`](LICENSE).
 
 ---
 
-## Project Status
+# 📊 Project Status
 
-**Status:** Active research / benchmark validation
+| Parameter                 | Current Status                                                                 |
+| ------------------------- | ------------------------------------------------------------------------------ |
+| **Status**                | Active research / benchmark validation                                         |
+| **Primary Benchmark**     | GIAB HG001                                                                     |
+| **Reference**             | GRCh38                                                                         |
+| **Primary Chromosome**    | chr22                                                                          |
+| **Regional Scales**       | 5, 25, 50 regions                                                              |
+| **Normalized Comparison** | `bcftools isec`                                                                |
+| **Formal Benchmark**      | RTG `vcfeval`                                                                  |
+| **Research Focus**        | Reproducible computational genomics and benchmark-aware WGS variant validation |
 
-**Primary benchmark:** GIAB HG001
+## Current Research Milestones
 
-**Reference:** GRCh38
-
-**Primary chromosome:** chr22
-
-**Regional scales:** 5, 25, 50 regions
-
-**Normalized comparison:** `bcftools isec`
-
-**Formal benchmark:** RTG `vcfeval`
-
-**Research focus:** Reproducible computational genomics and benchmark-aware WGS variant validation
+```text
+✓ WGS workflow development
+✓ Dataset evaluation
+✓ GIAB HG001 benchmark selection
+✓ GRCh38 chr22 benchmark preparation
+✓ 5-region validation
+✓ 25-region validation
+✓ 50-region validation
+✓ Normalized bcftools isec comparison
+✓ Formal RTG vcfeval benchmarking
+✓ Missed-variant analysis
+✓ Low-recall regional analysis
+✓ Benchmark-method discrepancy analysis
+✓ Publication-ready tables
+✓ Publication-ready figures
+✓ Reproducibility documentation
+✓ Research documentation
+✓ Citation metadata
+✓ Repository structure
+```
 
 ---
 
-### Researcher
+# 👩‍🔬 Researcher
 
-**Ritika Rajendra Rawat**MSc Bioinformatics | Bioinformatics ResearcherComputational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics
+## Ritika Rajendra Rawat
 
-**Email:** `[ritika.rawat27@outlook.com]("Ritika Rawat" <ritika.rawat27@outlook.com>)`**LinkedIn:** `[Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)`**GitHub:** [Ritika Rajednra Rawat](https://github.com/Rita1791)
+**MSc Bioinformatics | Bioinformatics Researcher**
+
+**Computational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics**
+
+### Contact
+
+* 📧 **Email:** [ritika.rawat27@outlook.com](mailto:ritika.rawat27@outlook.com)
+* 💼 **LinkedIn:** [Ritika Rajendra Rawat](https://www.linkedin.com/in/ritika-rawat-551107219/)
+* 💻 **GitHub:** [Rita1791](https://github.com/Rita1791)
 
 ---
 
-> **Core contribution:** A benchmark-aware and reproducible framework for evaluating WGS variant-calling performance through progressively expanded regional validation, formal benchmarking, and systematic error characterization.
+## 🧬 Core Contribution
+
+> **A benchmark-aware and reproducible framework for evaluating WGS variant-calling performance through progressively expanded regional validation, formal benchmarking, and systematic error characterization.**
+
+---
+
+<p align="center">
+
+### 🧬 Benchmark → Validate → Diagnose → Reproduce
+
+</p>
+
+<p align="center">
+
+**Computational Genomics • WGS • Variant Benchmarking • Reproducible Bioinformatics**
+
+</p>
+```
