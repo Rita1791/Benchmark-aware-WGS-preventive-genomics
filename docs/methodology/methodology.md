@@ -2,76 +2,81 @@
 
 ## 1. Study framework
 
-The workflow was developed as a reproducible WGS variant-calling validation framework using Genome in a Bottle (GIAB) HG001/NA12878 benchmark material.
+This study evaluates a reproducible whole-genome sequencing (WGS) variant-calling workflow using Genome in a Bottle (GIAB) HG001/NA12878 benchmark material and the GRCh38 reference genome.
 
-The analysis uses the GRCh38 reference genome and focuses on chromosome 22 high-confidence benchmark regions.
+The current public analysis focuses on selected high-confidence regions on chromosome 22 rather than the complete genome.
 
 ## 2. Benchmark material
 
 The primary benchmark sample is GIAB HG001, also known as NA12878.
 
-The benchmark consists of:
+The analysis uses:
 
-- HG001 sequencing data,
-- GRCh38 reference sequence,
-- GIAB truth variants,
-- high-confidence benchmark regions.
+- HG001 sequencing data
+- GRCh38 reference sequence
+- GIAB truth variants
+- GIAB high-confidence benchmark regions
 
-Large reference and sequencing files are intentionally excluded from this repository because of their size and because they can be obtained independently from their respective public sources.
+Large reference, sequencing, alignment, and benchmark files are excluded from the public repository because of their size. The repository documents their provenance and computational use instead.
 
-## 3. Regional benchmark construction
+## 3. Regional benchmark design
 
-The analysis was performed using progressively expanded chromosome 22 benchmark region sets:
+Three progressively larger chromosome 22 benchmark configurations were evaluated:
 
-- 5 regions,
-- 25 regions,
-- 50 regions.
+- 5 regions
+- 25 regions
+- 50 regions
 
-The regional approach was used to permit iterative workflow development, controlled benchmarking, and detailed error analysis.
+The 50-region evaluation is the principal regional benchmark because it contains the largest number of evaluated benchmark variants among the configurations reported here.
 
-## 4. Sequencing data processing
+## 4. WGS processing workflow
 
-The computational workflow includes the following major stages:
+The computational workflow comprises the following major stages:
 
 1. sequencing-data quality control,
-2. adapter/quality trimming,
-3. read alignment,
+2. adapter and quality trimming,
+3. read alignment to GRCh38,
 4. alignment processing and indexing,
 5. variant calling,
 6. VCF normalization,
-7. benchmark comparison.
+7. benchmark comparison,
+8. error and regional analysis.
 
-The exact software versions and command-line parameters used for the final analysis should be recorded in the repository environment and pipeline documentation.
+The public pipeline scripts should document the computational logic used by the study without embedding machine-specific paths or large input files.
 
 ## 5. Alignment
 
-Reads were aligned against the GRCh38 reference genome.
+Sequencing reads are aligned against the GRCh38 reference genome.
 
-Alignment outputs were sorted and indexed before variant calling and downstream analysis.
+Alignment files are sorted and indexed before downstream variant calling and evaluation.
+
+The final public pipeline must use the same alignment software, parameters, reference build, and read-group conventions used to generate the reported results.
 
 ## 6. Variant calling
 
-Variant calling was performed using the project WGS variant-calling workflow.
+Variant calling is performed using the project WGS variant-calling workflow.
 
-The final repository should preserve the exact scripts and parameters used for the reported benchmark so that the public implementation corresponds to the reported analysis.
+The exact final caller and command-line parameters must correspond to the analysis that generated the reported benchmark results.
+
+No software parameter is claimed here unless it is supported by the executed project workflow.
 
 ## 7. VCF normalization
 
-Truth and project VCF files were normalized before direct comparison.
+Truth and project VCF representations are normalized before direct record-level comparison.
 
-Normalization was used to reduce differences caused by alternative representations of the same variant, particularly for indels.
+This reduces representation differences, particularly for indels, before `bcftools isec` evaluation.
 
 ## 8. Normalized comparison
 
-Normalized project and truth VCFs were compared using `bcftools isec`.
+Normalized truth and project callsets are compared using `bcftools isec`.
 
-For each benchmark region, the following categories were evaluated:
+The comparison tracks:
 
 - shared variants,
 - truth-only variants,
 - project-only variants.
 
-These categories were used to calculate:
+For the normalized comparison:
 
 $$
 Recall = \frac{TP}{TP + FN}
@@ -87,23 +92,15 @@ $$
 
 ## 9. Formal benchmarking
 
-RTG `vcfeval` was used as an independent benchmark evaluation method.
+RTG `vcfeval` is used as the independent formal benchmarking method for the final 50-region evaluation.
 
-The analysis was performed across the final 50 benchmark regions.
+The resulting true-positive, false-positive, and false-negative counts are used to calculate precision, sensitivity, and F-measure.
 
-The resulting true-positive, false-positive, and false-negative counts were aggregated to obtain:
+## 10. Benchmark-method comparison
 
-- precision,
-- sensitivity,
-- F-measure.
+Results from normalized `bcftools isec` comparison are compared with RTG `vcfeval` to identify discrepancies caused by differences in variant representation and benchmarking methodology.
 
-## 10. Discrepancy analysis
-
-Results from normalized `bcftools isec` comparison were compared with RTG `vcfeval`.
-
-Regions showing differences in TP, FP, or FN counts were identified for further investigation.
-
-Four regions showed discrepancies between the two approaches:
+Four regions were reported as showing discrepancies between the approaches:
 
 - region_14
 - region_20
@@ -112,9 +109,9 @@ Four regions showed discrepancies between the two approaches:
 
 ## 11. Missed-variant analysis
 
-Truth-only variants from the 50-region benchmark were classified according to variant type.
+Truth-only variants from the normalized 50-region comparison are classified by variant type.
 
-The observed missed variants included:
+The reported missed variants comprise:
 
 - deletions,
 - insertions,
@@ -122,28 +119,26 @@ The observed missed variants included:
 
 ## 12. Difficult-region analysis
 
-Missed variants were examined for overlap with difficult-region annotations.
-
-This analysis was used to determine whether reduced recall was associated with challenging genomic contexts.
+Missed variants are examined for overlap with difficult-region annotations to determine whether challenging genomic contexts contribute to reduced sensitivity.
 
 ## 13. Low-recall analysis
 
-Benchmark regions with recall below 92% were separately evaluated.
+Regions with recall below the project-defined threshold of 92% are evaluated separately.
 
-Ten regions met this criterion and contained 56 missed variants.
+Their missed-variant composition and difficult-region annotations are summarized.
 
 ## 14. Reproducibility principle
 
-Raw sequencing data, BAM files, reference genomes, and large benchmark resources are not stored in the repository.
+The repository separates computational provenance from large input data.
 
-Instead, the repository should contain:
+Publicly version-controlled material should include:
 
-- processing scripts,
+- pipeline scripts,
+- analysis scripts,
 - configuration,
 - documentation,
-- analysis code,
 - compact result tables,
-- publication-ready summaries,
-- instructions for obtaining required public resources.
+- figure-generation code,
+- manuscript material.
 
-This design separates computational provenance from large input datasets.
+Raw FASTQ files, BAM/CRAM files, large VCF/BCF files, reference genomes, indexes, and large intermediate outputs remain outside the public repository.
