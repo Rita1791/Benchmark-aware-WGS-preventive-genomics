@@ -70,6 +70,14 @@ Differences were observed in:
 
 The formal RTG benchmark was slightly stricter.
 
+## Difficult-region overlap
+
+Of the 123 missed variants, 77 had difficult-region annotations, corresponding to 62.6% of the missed variants.
+
+This observation indicates substantial overlap between missed variants and annotated difficult genomic contexts.
+
+A formal enrichment analysis would require an appropriate background set and is not claimed here.
+
 ## Key conclusion
 
 The principal optimization target is indel sensitivity in difficult genomic contexts.
