@@ -1,23 +1,33 @@
 name: benchmark-aware-wgs
+
 channels:
   - conda-forge
   - bioconda
   - defaults
 
 dependencies:
+  # Core Python
   - python=3.11
   - pandas
   - numpy
   - matplotlib
   - pyyaml
 
+  # Quality control
   - fastqc
   - multiqc
   - fastp
 
+  # Alignment
   - bwa-mem2
+
+  # BAM/VCF processing
   - samtools
   - bcftools
   - htslib
 
+  # Formal variant benchmarking
   - rtg-tools
+
+  # Reproducibility / utilities
+  - pip
