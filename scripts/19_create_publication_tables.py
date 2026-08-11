@@ -1,139 +1,408 @@
+#!/usr/bin/env python3
+
+"""
+Generate publication-ready tables from compact repository result files.
+
+Input files:
+    results/benchmark_metrics.csv
+    results/final_summary.csv
+    results/variant_class_summary.csv
+
+Optional input files:
+    results/low_recall_regions.csv
+    results/discrepancy_regions.csv
+
+Outputs:
+    results/publication_ready/tables/
+"""
+
 from pathlib import Path
 import csv
-from collections import Counter
+import sys
 
-OUT = Path("results/publication_ready/tables")
-OUT.mkdir(parents=True, exist_ok=True)
 
-# ---------- Table 1: benchmark scale comparison ----------
-scale_rows = [
-    ["5-region chr22", 444, 428, 428, 16, 0, "96.40%", "100.00%", "98.17%"],
-    ["25-region chr22", 1504, 1421, 1421, 83, 0, "94.48%", "100.00%", "97.16%"],
-    ["50-region chr22", 2592, 2469, 2469, 123, 0, "95.25%", "100.00%", "97.57%"],
+# ---------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------
+
+RESULTS_DIR = Path("results")
+OUT_DIR = RESULTS_DIR / "publication_ready" / "tables"
+
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+# ---------------------------------------------------------------------
+# Utility functions
+# ---------------------------------------------------------------------
+
+def read_csv(path: Path):
+    """Read a CSV file and return a list of dictionaries."""
+    if not path.exists():
+        raise FileNotFoundError(f"Required input file not found: {path}")
+
+    with path.open("r", newline="", encoding="utf-8") as handle:
+        return list(csv.DictReader(handle))
+
+
+def write_tsv(path: Path, headers, rows):
+    """Write rows to a TSV file."""
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle, delimiter="\t")
+        writer.writerow(headers)
+        writer.writerows(rows)
+
+
+def write_markdown_table(path: Path, headers, rows, title):
+    """Write a Markdown table."""
+    with path.open("w", encoding="utf-8") as handle:
+        handle.write(f"# {title}\n\n")
+
+        handle.write("| " + " | ".join(headers) + " |\n")
+        handle.write(
+            "|"
+            + "|".join("---:" if i > 0 else "---" for i in range(len(headers)))
+            + "|\n"
+        )
+
+        for row in rows:
+            handle.write("| " + " | ".join(map(str, row)) + " |\n")
+
+
+# ---------------------------------------------------------------------
+# Table 1 — Benchmark scale comparison
+# ---------------------------------------------------------------------
+
+benchmark_rows = read_csv(
+    RESULTS_DIR / "benchmark_metrics.csv"
+)
+
+table_1_headers = [
+    "Benchmark",
+    "Truth variants",
+    "Shared variants",
+    "Missed truth",
+    "Extra project",
+    "Recall",
+    "Precision",
+    "F1",
 ]
 
-with open(OUT / "table_1_benchmark_scale_comparison.tsv", "w") as f:
-    f.write("Benchmark\tTruth variants\tProject variants\tShared\tMissed truth\tExtra project\tRecall\tPrecision\tF1\n")
-    for r in scale_rows:
-        f.write("\t".join(map(str, r)) + "\n")
+table_1_rows = []
 
-with open(OUT / "table_1_benchmark_scale_comparison.md", "w") as f:
-    f.write("# Table 1. Benchmark Scale Comparison\n\n")
-    f.write("| Benchmark | Truth variants | Project variants | Shared | Missed truth | Extra project | Recall | Precision | F1 |\n")
-    f.write("|---|---:|---:|---:|---:|---:|---:|---:|---:|\n")
-    for r in scale_rows:
-        f.write(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} | {r[5]} | {r[6]} | {r[7]} | {r[8]} |\n")
+for row in benchmark_rows:
+    table_1_rows.append(
+        [
+            row["benchmark"],
+            row["truth_variants"],
+            row["shared_variants"],
+            row["truth_only_missed"],
+            row["project_only_extra"],
+            f'{row["recall_percent"]}%',
+            f'{row["precision_percent"]}%',
+            f'{row["f1_percent"]}%',
+        ]
+    )
 
-# ---------- Table 2: formal RTG vcfeval result ----------
-vcfeval_rows = [
-    ["RTG vcfeval 50-region chr22", 2465, 2465, 4, 127, "99.84%", "95.10%", "97.41%"]
+write_tsv(
+    OUT_DIR / "table_1_benchmark_scale_comparison.tsv",
+    table_1_headers,
+    table_1_rows,
+)
+
+write_markdown_table(
+    OUT_DIR / "table_1_benchmark_scale_comparison.md",
+    table_1_headers,
+    table_1_rows,
+    "Table 1. Benchmark Scale Comparison",
+)
+
+
+# ---------------------------------------------------------------------
+# Table 2 — Formal RTG vcfeval result
+# ---------------------------------------------------------------------
+
+final_rows = read_csv(
+    RESULTS_DIR / "final_summary.csv"
+)
+
+rtg_rows = [
+    row
+    for row in final_rows
+    if row["benchmark_method"].lower() == "rtg_vcfeval"
 ]
 
-with open(OUT / "table_2_formal_rtg_vcfeval_result.tsv", "w") as f:
-    f.write("Benchmark\tTP baseline\tTP call\tFalse positives\tFalse negatives\tPrecision\tSensitivity\tF-measure\n")
-    for r in vcfeval_rows:
-        f.write("\t".join(map(str, r)) + "\n")
+if not rtg_rows:
+    raise ValueError(
+        "No RTG_vcfeval row found in results/final_summary.csv"
+    )
 
-with open(OUT / "table_2_formal_rtg_vcfeval_result.md", "w") as f:
-    f.write("# Table 2. Formal RTG vcfeval Benchmark Result\n\n")
-    f.write("| Benchmark | TP baseline | TP call | False positives | False negatives | Precision | Sensitivity | F-measure |\n")
-    f.write("|---|---:|---:|---:|---:|---:|---:|---:|\n")
-    for r in vcfeval_rows:
-        f.write(f"| {r[0]} | {r[1]} | {r[2]} | {r[3]} | {r[4]} | {r[5]} | {r[6]} | {r[7]} |\n")
+rtg = rtg_rows[0]
 
-# ---------- Table 3: missed variant summary ----------
-missed_file = Path("results/benchmark_valid_chr22_50_region/reports/missed_truth_variant_analysis.tsv")
-type_counts = Counter()
-difficult_count = 0
-total_missed = 0
+table_2_headers = [
+    "Benchmark",
+    "True positives",
+    "False positives",
+    "False negatives",
+    "Precision",
+    "Sensitivity",
+    "F-measure",
+]
 
-with open(missed_file) as f:
-    reader = csv.reader(f, delimiter="\t")
-    header = next(reader)
-    for row in reader:
-        if not row:
-            continue
-        total_missed += 1
-        # field 6 from earlier analysis = variant type
-        if len(row) > 5:
-            type_counts[row[5]] += 1
-        # field 9 from earlier analysis = difficult annotation
-        if len(row) > 8 and row[8].strip():
-            difficult_count += 1
+table_2_rows = [
+    [
+        rtg["benchmark_method"],
+        rtg["true_positives"],
+        rtg["false_positives"],
+        rtg["false_negatives"],
+        f'{rtg["precision_percent"]}%',
+        f'{rtg["sensitivity_percent"]}%',
+        f'{rtg["f_measure_percent"]}%',
+    ]
+]
 
-with open(OUT / "table_3_missed_variant_summary.tsv", "w") as f:
-    f.write("Category\tCount\n")
-    f.write(f"Total missed variants\t{total_missed}\n")
-    for k, v in sorted(type_counts.items()):
-        f.write(f"{k}\t{v}\n")
-    f.write(f"Difficult-region missed variants\t{difficult_count}\n")
+write_tsv(
+    OUT_DIR / "table_2_formal_rtg_vcfeval_result.tsv",
+    table_2_headers,
+    table_2_rows,
+)
 
-with open(OUT / "table_3_missed_variant_summary.md", "w") as f:
-    f.write("# Table 3. Missed Variant Summary\n\n")
-    f.write("| Category | Count |\n")
-    f.write("|---|---:|\n")
-    f.write(f"| Total missed variants | {total_missed} |\n")
-    for k, v in sorted(type_counts.items()):
-        f.write(f"| {k} | {v} |\n")
-    f.write(f"| Difficult-region missed variants | {difficult_count} |\n")
+write_markdown_table(
+    OUT_DIR / "table_2_formal_rtg_vcfeval_result.md",
+    table_2_headers,
+    table_2_rows,
+    "Table 2. Formal RTG vcfeval Benchmark Result",
+)
 
-# ---------- Table 4: low-recall regions ----------
-low_file = Path("results/benchmark_valid_chr22_50_region/reports/low_recall_region_summary.tsv")
-low_rows = []
-with open(low_file) as f:
-    reader = csv.DictReader(f, delimiter="\t")
-    for row in reader:
-        low_rows.append(row)
 
-with open(OUT / "table_4_low_recall_regions.tsv", "w") as f:
-    f.write("Region\tCoordinates\tTruth total\tProject total\tMissed\tShared\tRecall\tPrecision\tF1\n")
-    for r in low_rows:
-        f.write(
-            f"{r['region_id']}\t{r['region']}\t{r['normalized_truth_total']}\t"
-            f"{r['normalized_project_total']}\t{r['truth_only_missed']}\t{r['shared']}\t"
-            f"{r['recall_pct']}%\t{r['precision_pct']}%\t{r['f1_pct']}%\n"
+# ---------------------------------------------------------------------
+# Table 3 — Missed variant summary
+# ---------------------------------------------------------------------
+
+variant_rows = read_csv(
+    RESULTS_DIR / "variant_class_summary.csv"
+)
+
+table_3_headers = [
+    "Variant class",
+    "Missed variants",
+]
+
+table_3_rows = [
+    [
+        row["variant_class"],
+        row["missed_count"],
+    ]
+    for row in variant_rows
+]
+
+total_missed = sum(
+    int(row["missed_count"])
+    for row in variant_rows
+)
+
+table_3_rows.append(
+    [
+        "Total",
+        total_missed,
+    ]
+)
+
+write_tsv(
+    OUT_DIR / "table_3_missed_variant_summary.tsv",
+    table_3_headers,
+    table_3_rows,
+)
+
+write_markdown_table(
+    OUT_DIR / "table_3_missed_variant_summary.md",
+    table_3_headers,
+    table_3_rows,
+    "Table 3. Missed Variant Summary",
+)
+
+
+# ---------------------------------------------------------------------
+# Table 4 — Low-recall regions
+# ---------------------------------------------------------------------
+#
+# This table is generated only when the compact repository-level
+# low-recall result file exists.
+#
+# Expected file:
+#     results/low_recall_regions.csv
+#
+# ---------------------------------------------------------------------
+
+low_recall_file = RESULTS_DIR / "low_recall_regions.csv"
+
+if low_recall_file.exists():
+
+    low_rows = read_csv(low_recall_file)
+
+    required_columns = {
+        "region_id",
+        "coordinates",
+        "truth_total",
+        "project_total",
+        "missed",
+        "shared",
+        "recall_percent",
+        "precision_percent",
+        "f1_percent",
+    }
+
+    missing = required_columns - set(low_rows[0].keys())
+
+    if missing:
+        raise ValueError(
+            "results/low_recall_regions.csv is missing columns: "
+            + ", ".join(sorted(missing))
         )
 
-with open(OUT / "table_4_low_recall_regions.md", "w") as f:
-    f.write("# Table 4. Low-Recall Regions\n\n")
-    f.write("| Region | Coordinates | Truth total | Project total | Missed | Shared | Recall | Precision | F1 |\n")
-    f.write("|---|---|---:|---:|---:|---:|---:|---:|---:|\n")
-    for r in low_rows:
-        f.write(
-            f"| {r['region_id']} | {r['region']} | {r['normalized_truth_total']} | "
-            f"{r['normalized_project_total']} | {r['truth_only_missed']} | {r['shared']} | "
-            f"{r['recall_pct']}% | {r['precision_pct']}% | {r['f1_pct']}% |\n"
+    table_4_headers = [
+        "Region",
+        "Coordinates",
+        "Truth total",
+        "Project total",
+        "Missed",
+        "Shared",
+        "Recall",
+        "Precision",
+        "F1",
+    ]
+
+    table_4_rows = [
+        [
+            row["region_id"],
+            row["coordinates"],
+            row["truth_total"],
+            row["project_total"],
+            row["missed"],
+            row["shared"],
+            f'{row["recall_percent"]}%',
+            f'{row["precision_percent"]}%',
+            f'{row["f1_percent"]}%',
+        ]
+        for row in low_rows
+    ]
+
+    write_tsv(
+        OUT_DIR / "table_4_low_recall_regions.tsv",
+        table_4_headers,
+        table_4_rows,
+    )
+
+    write_markdown_table(
+        OUT_DIR / "table_4_low_recall_regions.md",
+        table_4_headers,
+        table_4_rows,
+        "Table 4. Low-Recall Regions",
+    )
+
+else:
+    print(
+        "INFO: results/low_recall_regions.csv not found. "
+        "Table 4 will be generated after the compact low-recall result "
+        "file is added."
+    )
+
+
+# ---------------------------------------------------------------------
+# Table 5 — bcftools isec vs RTG vcfeval discrepancy regions
+# ---------------------------------------------------------------------
+#
+# This table is generated only when the compact discrepancy result
+# file exists.
+#
+# Expected file:
+#     results/discrepancy_regions.csv
+#
+# ---------------------------------------------------------------------
+
+discrepancy_file = RESULTS_DIR / "discrepancy_regions.csv"
+
+if discrepancy_file.exists():
+
+    discrepancy_rows = read_csv(discrepancy_file)
+
+    required_columns = {
+        "region_id",
+        "bcftools_shared",
+        "rtg_tp",
+        "tp_difference",
+        "bcftools_fn",
+        "rtg_fn",
+        "fn_difference",
+        "bcftools_fp",
+        "rtg_fp",
+        "fp_difference",
+    }
+
+    missing = required_columns - set(discrepancy_rows[0].keys())
+
+    if missing:
+        raise ValueError(
+            "results/discrepancy_regions.csv is missing columns: "
+            + ", ".join(sorted(missing))
         )
 
-# ---------- Table 5: discrepancy regions ----------
-disc_file = Path("results/final_comparison/bcftools_vs_vcfeval_50_region_discrepancy.tsv")
-disc_rows = []
-with open(disc_file) as f:
-    reader = csv.DictReader(f, delimiter="\t")
-    for row in reader:
-        if int(row["fp_difference"]) != 0 or int(row["fn_difference"]) != 0 or int(row["tp_difference"]) != 0:
-            disc_rows.append(row)
+    table_5_headers = [
+        "Region",
+        "bcftools shared",
+        "RTG TP",
+        "TP difference",
+        "bcftools FN",
+        "RTG FN",
+        "FN difference",
+        "bcftools FP",
+        "RTG FP",
+        "FP difference",
+    ]
 
-with open(OUT / "table_5_bcftools_vs_rtg_discrepancy_regions.tsv", "w") as f:
-    f.write("Region\tbcftools shared\tRTG TP\tTP diff\tbcftools FN\tRTG FN\tFN diff\tbcftools FP\tRTG FP\tFP diff\n")
-    for r in disc_rows:
-        f.write(
-            f"{r['region_id']}\t{r['bcftools_shared']}\t{r['vcfeval_tp']}\t{r['tp_difference']}\t"
-            f"{r['bcftools_truth_only']}\t{r['vcfeval_fn']}\t{r['fn_difference']}\t"
-            f"{r['bcftools_project_only']}\t{r['vcfeval_fp']}\t{r['fp_difference']}\n"
-        )
+    table_5_rows = [
+        [
+            row["region_id"],
+            row["bcftools_shared"],
+            row["rtg_tp"],
+            row["tp_difference"],
+            row["bcftools_fn"],
+            row["rtg_fn"],
+            row["fn_difference"],
+            row["bcftools_fp"],
+            row["rtg_fp"],
+            row["fp_difference"],
+        ]
+        for row in discrepancy_rows
+    ]
 
-with open(OUT / "table_5_bcftools_vs_rtg_discrepancy_regions.md", "w") as f:
-    f.write("# Table 5. bcftools isec vs RTG vcfeval Discrepancy Regions\n\n")
-    f.write("| Region | bcftools shared | RTG TP | TP diff | bcftools FN | RTG FN | FN diff | bcftools FP | RTG FP | FP diff |\n")
-    f.write("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
-    for r in disc_rows:
-        f.write(
-            f"| {r['region_id']} | {r['bcftools_shared']} | {r['vcfeval_tp']} | {r['tp_difference']} | "
-            f"{r['bcftools_truth_only']} | {r['vcfeval_fn']} | {r['fn_difference']} | "
-            f"{r['bcftools_project_only']} | {r['vcfeval_fp']} | {r['fp_difference']} |\n"
-        )
+    write_tsv(
+        OUT_DIR / "table_5_bcftools_vs_rtg_discrepancy_regions.tsv",
+        table_5_headers,
+        table_5_rows,
+    )
 
-print("Publication-ready tables created in:", OUT)
-for path in sorted(OUT.glob("table_*")):
-    print(path)
+    write_markdown_table(
+        OUT_DIR / "table_5_bcftools_vs_rtg_discrepancy_regions.md",
+        table_5_headers,
+        table_5_rows,
+        "Table 5. bcftools isec vs RTG vcfeval Discrepancy Regions",
+    )
+
+else:
+    print(
+        "INFO: results/discrepancy_regions.csv not found. "
+        "Table 5 will be generated after the compact discrepancy result "
+        "file is added."
+    )
+
+
+# ---------------------------------------------------------------------
+# Completion
+# ---------------------------------------------------------------------
+
+print()
+print("Publication-ready tables generated in:")
+print(OUT_DIR.resolve())
+
+for path in sorted(OUT_DIR.iterdir()):
+    print(f"  - {path.name}")
