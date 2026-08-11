@@ -50,7 +50,7 @@ The corresponding normalized `bcftools isec` comparison identified:
 
 ## Principal error pattern
 
-Missed variants were strongly enriched for indels:
+Missed variants were overwhelmingly indel-associated.:
 
 - Deletions: 66
 - Insertions: 56
@@ -58,7 +58,7 @@ Missed variants were strongly enriched for indels:
 
 A total of 77 missed variants had difficult-region annotations.
 
-The results therefore indicate that the principal remaining limitation is not broad SNV detection, but sensitivity to indels and difficult genomic contexts.
+Within the evaluated benchmark, the dominant observed error category was indel detection, with substantial overlap between missed variants and annotated difficult genomic contexts.
 
 ## Scientific interpretation
 
