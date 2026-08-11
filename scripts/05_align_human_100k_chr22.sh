@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ============================================================
+# Benchmark-aware WGS Preventive Genomics
+# Step 05: 100k-read chr22 alignment
+# ============================================================
+
 SAMPLE="SRR2052337_100k_chr22"
 
 R1="data/human_wgs_fastq_test/SRR2052337_1.fastq.gz"
@@ -11,41 +16,60 @@ REF="reference/GRCh38_chr22/chr22.fa"
 OUTDIR="results/human_wgs_alignment_100k"
 LOGDIR="logs/human_wgs_alignment_100k"
 
-THREADS=1
-SORT_MEM="128M"
+THREADS="${THREADS:-1}"
+SORT_MEM="${SORT_MEM:-128M}"
 
-mkdir -p "$OUTDIR" "$LOGDIR" "$OUTDIR/tmp"
+BWA="${BWA:-bwa-mem2}"
+SAMTOOLS="${SAMTOOLS:-samtools}"
 
-echo "[INFO] Sample: $SAMPLE"
-echo "[INFO] R1: $R1"
-echo "[INFO] R2: $R2"
-echo "[INFO] Reference: $REF"
-echo "[INFO] Threads: $THREADS"
-echo "[INFO] Sort memory: $SORT_MEM"
+mkdir -p "${OUTDIR}" "${LOGDIR}" "${OUTDIR}/tmp"
 
-bwa-mem2 mem \
-  -t "$THREADS" \
-  -K 1000000 \
-  "$REF" \
-  "$R1" \
-  "$R2" \
-  2> "$LOGDIR/${SAMPLE}.bwa.log" \
-| /usr/bin/samtools sort \
-  -@ "$THREADS" \
-  -m "$SORT_MEM" \
-  -T "$OUTDIR/tmp/${SAMPLE}" \
-  -o "$OUTDIR/${SAMPLE}.sorted.bam" \
-  2> "$LOGDIR/${SAMPLE}.samtools_sort.log"
+echo "============================================================"
+echo "100k-read chr22 alignment"
+echo "============================================================"
 
-/usr/bin/samtools index "$OUTDIR/${SAMPLE}.sorted.bam"
+for tool in "${BWA}" "${SAMTOOLS}"; do
+    if ! command -v "${tool}" >/dev/null 2>&1; then
+        echo "[ERROR] Required tool not found: ${tool}"
+        exit 1
+    fi
+done
 
-/usr/bin/samtools flagstat \
-  "$OUTDIR/${SAMPLE}.sorted.bam" \
-  > "$OUTDIR/${SAMPLE}.flagstat.txt"
+for file in "${R1}" "${R2}" "${REF}"; do
+    if [[ ! -f "${file}" ]]; then
+        echo "[ERROR] Required input not found: ${file}"
+        exit 1
+    fi
+done
 
-/usr/bin/samtools stats \
-  "$OUTDIR/${SAMPLE}.sorted.bam" \
-  > "$OUTDIR/${SAMPLE}.samtools_stats.txt"
+BAM="${OUTDIR}/${SAMPLE}.sorted.bam"
 
-echo "[DONE] Alignment completed."
-echo "[DONE] Output BAM: $OUTDIR/${SAMPLE}.sorted.bam"
+"${BWA}" mem \
+    -t "${THREADS}" \
+    -K 1000000 \
+    "${REF}" \
+    "${R1}" \
+    "${R2}" \
+    2> "${LOGDIR}/${SAMPLE}.bwa.log" |
+"${SAMTOOLS}" sort \
+    -@ "${THREADS}" \
+    -m "${SORT_MEM}" \
+    -T "${OUTDIR}/tmp/${SAMPLE}" \
+    -o "${BAM}" -
+
+"${SAMTOOLS}" index "${BAM}"
+
+"${SAMTOOLS}" flagstat \
+    "${BAM}" \
+    > "${OUTDIR}/${SAMPLE}.flagstat.txt"
+
+"${SAMTOOLS}" stats \
+    "${BAM}" \
+    > "${OUTDIR}/${SAMPLE}.samtools_stats.txt"
+
+"${SAMTOOLS}" idxstats \
+    "${BAM}" \
+    > "${OUTDIR}/${SAMPLE}.idxstats.txt"
+
+echo "[DONE] chr22 100k-read alignment completed."
+echo "[OUTPUT] ${BAM}"
