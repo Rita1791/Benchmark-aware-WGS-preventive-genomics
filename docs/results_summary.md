@@ -65,7 +65,7 @@ These regions contained:
 
 ## 6. Main finding
 
-The dominant observed error pattern was indel-related: 122 of 123 truth-only variants in the normalized 50-region comparison were indels.
+The dominant error pattern was associated with indel detection rather than broad SNV failure.
 
 The results suggest that further workflow improvement should focus on:
 
