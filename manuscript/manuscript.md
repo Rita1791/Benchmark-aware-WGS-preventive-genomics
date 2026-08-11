@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Accurate variant calling is essential for downstream genomic interpretation, but reproducibility and benchmark validation remain critical requirements before research or clinical translation. This study developed and evaluated a reproducible WGS variant-calling validation workflow using Genome in a Bottle HG001 / NA12878 reference material and GRCh38 chromosome 22 high-confidence benchmark regions. The workflow was progressively evaluated across 5, 25, and 50 regional chr22 validation sets using normalized bcftools isec comparison and formal RTG vcfeval benchmarking. In the final 50-region normalized comparison, 2592 truth variants were evaluated, with 2469 shared variants, 123 truth-only missed variants, and 0 project-only extra variants, corresponding to 95.25% recall, 100.00% precision, and 97.57% F1. Formal RTG vcfeval benchmarking across the same 50 regions identified 2465 true positives, 4 false positives, and 127 false negatives, corresponding to 99.84% precision, 95.10% sensitivity, and 97.41% F-measure. Missed variants were dominated by indels, including 66 deletions and 56 insertions, with only one missed SNV. A total of 77 missed variants had difficult-region annotations. These results demonstrate a robust benchmark-aware regional validation framework and identify indel detection in difficult genomic contexts as the major remaining limitation.
+Accurate variant calling is essential for downstream genomic interpretation, but reproducibility and benchmark validation remain critical requirements before research or clinical translation. This study developed and evaluated a reproducible WGS variant-calling validation workflow using Genome in a Bottle HG001 / NA12878 reference material and GRCh38 chromosome 22 high-confidence benchmark regions. The workflow was progressively evaluated across 5, 25, and 50 regional chr22 validation sets using normalized bcftools isec comparison and formal RTG vcfeval benchmarking. In the final 50-region normalized comparison, 2592 truth variants were evaluated, with 2469 shared variants, 123 truth-only missed variants, and 0 project-only extra variants, corresponding to 95.25% recall, 100.00% precision, and 97.57% F1. Formal RTG vcfeval benchmarking across the same 50 regions identified 2465 true positives, 4 false positives, and 127 false negatives, corresponding to 99.84% precision, 95.10% sensitivity, and 97.41% F-measure. Missed variants were dominated by indels, including 66 deletions and 56 insertions, with only one missed SNV. A total of 77 missed variants had difficult-region annotations. These results demonstrate a a reproducible benchmark-aware regional validation framework and identify indel detection in difficult genomic contexts as the major remaining limitation.
 
 ## Keywords
 
@@ -28,7 +28,7 @@ In the 25-region benchmark, 1504 normalized truth variants were evaluated. The w
 
 In the final 50-region benchmark, 2592 normalized truth variants were evaluated. The workflow recovered 2469 shared variants, with 123 truth-only missed variants and 0 project-only extra variants. This resulted in 95.25% recall, 100.00% precision, and 97.57% F1.
 
-The benchmark remained stable as the number of evaluated regions increased. The 50-region result provided the strongest normalized comparison because it evaluated the largest number of truth variants and genomic contexts.
+Performance remained within a relatively narrow range across the evaluated benchmark scales, although recall decreased from 96.40% at 5 regions to 94.48% at 25 regions before increasing to 95.25% at 50 regions.
 
 ### Formal RTG vcfeval benchmarking
 
@@ -66,7 +66,7 @@ GIAB HG001 GRCh38 benchmark truth VCF and confident-region BED files were used a
 
 ### Regional benchmark selection
 
-Benchmark regions were selected from GIAB chr22 high-confidence intervals. The analysis was progressively scaled from 5 regions to 25 regions and finally to 50 chr22 regions. This stepwise design allowed the workflow to be tested first on a small validation set and then expanded to reduce cherry-picking bias and improve robustness.
+Benchmark regions were selected from GIAB chr22 high-confidence intervals. The analysis was progressively scaled from 5 regions to 25 regions and finally to 50 chr22 regions. "This stepwise design allowed the workflow to be tested initially on a small validation set and subsequently expanded to increase the number of evaluated genomic contexts.
 
 ### Read extraction and variant calling
 
