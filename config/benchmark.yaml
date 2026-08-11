@@ -1,1 +1,40 @@
+project:
+  name: "Benchmark-aware regional validation of a reproducible WGS variant-calling workflow"
+  sample: "HG001"
+  alternate_sample_name: "NA12878"
 
+reference:
+  genome_build: "GRCh38"
+  chromosome: "chr22"
+
+benchmark:
+  provider: "Genome in a Bottle"
+  sample: "HG001"
+  region_sets:
+    - name: "5-region"
+      n_regions: 5
+    - name: "25-region"
+      n_regions: 25
+    - name: "50-region"
+      n_regions: 50
+
+comparison:
+  normalized:
+    tool: "bcftools isec"
+
+  formal:
+    tool: "RTG vcfeval"
+
+analysis:
+  missed_variant_analysis: true
+  difficult_region_analysis: true
+  low_recall_analysis: true
+  discrepancy_analysis: true
+
+thresholds:
+  low_recall_percent: 92
+
+outputs:
+  results_directory: "results"
+  figures_directory: "figures"
+  manuscript_directory: "manuscript"
