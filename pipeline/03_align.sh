@@ -1,24 +1,51 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-mkdir -p data/bam logs
+REFERENCE="${REFERENCE:-references/GRCh38.fa}"
+TRIM_DIR="${TRIM_DIR:-data/trimmed_fastq}"
+BAM_DIR="${BAM_DIR:-data/bam}"
+QC_DIR="${QC_DIR:-results/alignment_qc}"
 
-REF="data/reference/test_ref.fa"
-TRIM_DIR="data/trimmed_fastq"
-BAM_DIR="data/bam"
+mkdir -p "${BAM_DIR}" "${QC_DIR}"
 
-for R1 in ${TRIM_DIR}/*_R1.trimmed.fastq.gz
-do
-    SAMPLE=$(basename "$R1" _R1.trimmed.fastq.gz)
+if [ ! -f "${REFERENCE}" ]; then
+    echo "ERROR: Reference genome not found: ${REFERENCE}" >&2
+    exit 1
+fi
 
-    bwa-mem2 mem ${REF} ${R1} \
-        2> logs/${SAMPLE}_bwa.log | \
-        samtools sort -o ${BAM_DIR}/${SAMPLE}.sorted.bam
+shopt -s nullglob
+R1_FILES=("${TRIM_DIR}"/*_R1.trimmed.fastq.gz)
 
-    samtools index ${BAM_DIR}/${SAMPLE}.sorted.bam
+if [ "${#R1_FILES[@]}" -eq 0 ]; then
+    echo "ERROR: No trimmed R1 FASTQ files found in ${TRIM_DIR}" >&2
+    exit 1
+fi
 
-    samtools flagstat ${BAM_DIR}/${SAMPLE}.sorted.bam > logs/${SAMPLE}_flagstat.txt
+for R1 in "${R1_FILES[@]}"; do
+
+    SAMPLE="$(basename "${R1}" _R1.trimmed.fastq.gz)"
+    R2="${TRIM_DIR}/${SAMPLE}_R2.trimmed.fastq.gz"
+
+    if [ ! -f "${R2}" ]; then
+        echo "ERROR: Missing paired R2 file for ${SAMPLE}" >&2
+        exit 1
+    fi
+
+    bwa-mem2 mem \
+        "${REFERENCE}" \
+        "${R1}" \
+        "${R2}" \
+        | samtools sort \
+            -o "${BAM_DIR}/${SAMPLE}.sorted.bam" -
+
+    samtools index \
+        "${BAM_DIR}/${SAMPLE}.sorted.bam"
+
+    samtools flagstat \
+        "${BAM_DIR}/${SAMPLE}.sorted.bam" \
+        > "${QC_DIR}/${SAMPLE}.flagstat.txt"
+
 done
 
-echo "Alignment completed successfully."
+echo "Paired-end alignment completed successfully."
