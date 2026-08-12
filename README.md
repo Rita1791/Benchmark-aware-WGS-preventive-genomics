@@ -122,7 +122,6 @@
 | **Research Status** | Active Computational Research |
 
 ### 🧭 Research Journey
-
 ``
 ⚙️ Configure
      ↓
@@ -141,7 +140,7 @@
 ♻️ Reproduce
 
 ---
-`
+
 ## 🔬 About This Research
 
 Variant calling does not end when a VCF file is produced.
