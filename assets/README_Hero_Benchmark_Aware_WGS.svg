@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+  <title id="title">Benchmark-Aware WGS — regional GIAB validation</title>
+  <desc id="desc">Swiss editorial-style animated research banner showing GIAB HG001, GRCh38 chromosome 22, progressive 5, 25 and 50 region benchmarking, RTG vcfeval metrics, and an indel-dominated error signature.</desc>
+
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#111111" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fadeRed" x1="0" x2="1">
+      <stop offset="0" stop-color="#E30613" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#E30613" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#E30613" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    text { font-family: Helvetica, Arial, sans-serif; fill: #101010; }
+    .micro { font-size: 13px; font-weight: 700; letter-spacing: 2.2px; }
+    .title { font-size: 72px; font-weight: 800; letter-spacing: -2.4px; }
+    .subtitle { font-size: 20px; font-weight: 400; letter-spacing: 0.15px; }
+    .label { font-size: 14px; font-weight: 700; letter-spacing: 1.1px; }
+    .small { font-size: 13px; font-weight: 500; }
+    .metric { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+    .metricLabel { font-size: 12px; font-weight: 700; letter-spacing: 1.35px; }
+    .helix { fill: none; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 11 10; animation: dash 8s linear infinite; }
+    .scan { animation: scan 5.2s ease-in-out infinite; }
+    .scaleDot { animation: scaleJourney 7s cubic-bezier(.4,0,.2,1) infinite; }
+    .hotspot { animation: pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .hotspot.h2 { animation-delay: .65s; }
+    .hotspot.h3 { animation-delay: 1.3s; }
+    .hotspot.h4 { animation-delay: 1.95s; }
+    .metricBar { animation: metricIn 5s ease-in-out infinite; transform-origin: left; }
+    @keyframes dash { to { stroke-dashoffset: -126; } }
+    @keyframes scan { 0%,100% { transform: translateY(-62px); opacity: 0; } 16% { opacity: .85; } 84% { opacity: .85; } 50% { transform: translateY(280px); } }
+    @keyframes scaleJourney { 0%,16% { transform: translateX(0); } 34%,50% { transform: translateX(142px); } 68%,84% { transform: translateX(284px); } 100% { transform: translateX(0); } }
+    @keyframes pulse { 0%,100% { transform: scale(.82); opacity: .38; } 50% { transform: scale(1.18); opacity: 1; } }
+    @keyframes metricIn { 0%,100% { transform: scaleX(.18); opacity: .45; } 45%,70% { transform: scaleX(1); opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      .helix, .scan, .scaleDot, .hotspot, .metricBar { animation: none !important; }
+    }
+  </style>
+
+  <rect width="1440" height="620" fill="#F4F4F1"/>
+  <rect width="1440" height="620" fill="url(#grid)"/>
+  <rect x="0" y="0" width="18" height="620" fill="#E30613"/>
+
+  <!-- Top editorial rail -->
+  <text x="62" y="48" class="micro">REGIONAL ANALYTICAL VALIDATION</text>
+  <text x="1378" y="48" class="micro" text-anchor="end">GIAB HG001 / GRCh38 · CHR 22</text>
+  <line x1="62" y1="66" x2="1378" y2="66" stroke="#101010" stroke-width="1.4"/>
+  <rect x="62" y="65" width="218" height="4" fill="#E30613"/>
+
+  <!-- Primary identity -->
+  <text x="62" y="157" class="title">BENCHMARK—</text>
+  <text x="62" y="229" class="title">AWARE WGS</text>
+  <text x="66" y="270" class="subtitle">Where small-variant calling succeeds — and where it breaks.</text>
+  <text x="66" y="307" class="label" fill="#E30613">BCFTOOLS ISEC  ×  RTG VCFEVAL  ×  REGIONAL ERROR ANALYSIS</text>
+
+  <!-- Stage expansion -->
+  <text x="66" y="366" class="micro">BENCHMARK SCALE</text>
+  <line x1="86" y1="407" x2="370" y2="407" stroke="#101010" stroke-width="2"/>
+  <circle cx="86" cy="407" r="20" fill="#F4F4F1" stroke="#101010" stroke-width="2"/>
+  <circle cx="228" cy="407" r="20" fill="#F4F4F1" stroke="#101010" stroke-width="2"/>
+  <circle cx="370" cy="407" r="20" fill="#F4F4F1" stroke="#101010" stroke-width="2"/>
+  <text x="86" y="412" class="label" text-anchor="middle">5</text>
+  <text x="228" y="412" class="label" text-anchor="middle">25</text>
+  <text x="370" y="412" class="label" text-anchor="middle">50</text>
+  <circle class="scaleDot" cx="86" cy="407" r="8" fill="#E30613" filter="url(#softGlow)"/>
+  <text x="86" y="445" class="small" text-anchor="middle">INITIAL</text>
+  <text x="228" y="445" class="small" text-anchor="middle">CHALLENGE</text>
+  <text x="370" y="445" class="small" text-anchor="middle">PRIMARY</text>
+
+  <!-- Divider -->
+  <line x1="500" y1="99" x2="500" y2="468" stroke="#101010" stroke-opacity="0.25"/>
+
+  <!-- Abstract chromosome / benchmark trace -->
+  <text x="544" y="125" class="micro">ERROR TRACE / CHROMOSOME 22</text>
+  <text x="1378" y="125" class="micro" text-anchor="end">122 OF 123 MISSES = INDELS</text>
+  <path class="helix" d="M600 178 C660 128,720 228,780 178 S900 128,960 178 S1080 228,1140 178 S1260 128,1320 178" stroke="#101010"/>
+  <path class="helix" d="M600 178 C660 228,720 128,780 178 S900 228,960 178 S1080 128,1140 178 S1260 228,1320 178" stroke="#E30613"/>
+  <g stroke="#101010" stroke-opacity="0.32" stroke-width="1.3">
+    <line x1="629" y1="157" x2="629" y2="199"/><line x1="690" y1="174" x2="690" y2="182"/>
+    <line x1="750" y1="164" x2="750" y2="192"/><line x1="811" y1="157" x2="811" y2="199"/>
+    <line x1="872" y1="174" x2="872" y2="182"/><line x1="932" y1="164" x2="932" y2="192"/>
+    <line x1="993" y1="157" x2="993" y2="199"/><line x1="1054" y1="174" x2="1054" y2="182"/>
+    <line x1="1114" y1="164" x2="1114" y2="192"/><line x1="1175" y1="157" x2="1175" y2="199"/>
+    <line x1="1236" y1="174" x2="1236" y2="182"/><line x1="1296" y1="164" x2="1296" y2="192"/>
+  </g>
+  <rect class="scan" x="584" y="120" width="752" height="4" fill="url(#fadeRed)"/>
+
+  <!-- Failure signature -->
+  <line x1="600" y1="287" x2="1320" y2="287" stroke="#101010" stroke-width="1.4"/>
+  <g>
+    <circle class="hotspot" cx="654" cy="287" r="10" fill="#E30613"/>
+    <circle class="hotspot h2" cx="793" cy="287" r="8" fill="#E30613"/>
+    <circle class="hotspot h3" cx="962" cy="287" r="12" fill="#E30613"/>
+    <circle class="hotspot h4" cx="1160" cy="287" r="7" fill="#E30613"/>
+  </g>
+  <text x="600" y="327" class="label">66 DELETIONS</text>
+  <text x="820" y="327" class="label">56 INSERTIONS</text>
+  <text x="1050" y="327" class="label">1 SNV</text>
+  <text x="1320" y="348" class="small" fill="#E30613" text-anchor="end">4 / 50 METHOD-DISCREPANT REGIONS</text>
+
+  <!-- Formal benchmark callout -->
+  <rect x="600" y="362" width="720" height="92" fill="none" stroke="#101010" stroke-width="1.5"/>
+  <rect x="600" y="362" width="12" height="92" fill="#E30613"/>
+  <text x="638" y="394" class="micro">PRIMARY FORMAL BENCHMARK</text>
+  <text x="638" y="431" class="subtitle">RTG vcfeval · 2,465 TP · 4 FP · 127 FN</text>
+  <text x="1290" y="415" font-size="56" font-weight="800" text-anchor="end">97.41</text>
+  <text x="1290" y="438" class="metricLabel" text-anchor="end">F–MEASURE / %</text>
+
+  <!-- Metric rail -->
+  <g transform="translate(62 505)">
+    <line x1="0" y1="0" x2="1316" y2="0" stroke="#101010" stroke-width="1.5"/>
+    <g transform="translate(0 0)">
+      <rect class="metricBar" x="0" y="0" width="270" height="6" fill="#E30613"/>
+      <text x="0" y="52" class="metric">99.84%</text>
+      <text x="0" y="78" class="metricLabel">RTG PRECISION</text>
+    </g>
+    <g transform="translate(340 0)">
+      <rect class="metricBar" x="0" y="0" width="270" height="6" fill="#E30613"/>
+      <text x="0" y="52" class="metric">95.10%</text>
+      <text x="0" y="78" class="metricLabel">RTG SENSITIVITY</text>
+    </g>
+    <g transform="translate(680 0)">
+      <rect class="metricBar" x="0" y="0" width="270" height="6" fill="#E30613"/>
+      <text x="0" y="52" class="metric">97.41%</text>
+      <text x="0" y="78" class="metricLabel">RTG F–MEASURE</text>
+    </g>
+    <g transform="translate(1020 0)">
+      <rect class="metricBar" x="0" y="0" width="296" height="6" fill="#E30613"/>
+      <text x="0" y="52" class="metric">122 / 123</text>
+      <text x="0" y="78" class="metricLabel">NORMALIZED MISSES = INDELS</text>
+    </g>
+  </g>
+
+  <text x="1378" y="603" class="small" text-anchor="end">RITIKA RAJENDRA RAWAT · PROJECT LEAD</text>
+</svg>
