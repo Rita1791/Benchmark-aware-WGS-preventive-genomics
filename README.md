@@ -236,7 +236,7 @@ Regional performance profile
 
 ---
 
-# 🧩 BLOCK 6 — Computational Workflow
+# 🧩 Computational Workflow
 
 ``
 ## 🔬 Computational Workflow
