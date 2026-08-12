@@ -721,7 +721,7 @@ Why are large resources absent?Reference genomes, truth sets, reads, and alignme
       Study design · Workflow development · Benchmarking strategy · Analysis · Interpretation · Visualization · Documentation<br /><br />
       <a href="https://github.com/Rita1791"><strong>GitHub ↗</strong></a>&nbsp;&nbsp;·&nbsp;&nbsp;
       <a href="https://in.linkedin.com/in/ritika-rawat-551107219"><strong>LinkedIn ↗</strong></a>&nbsp;&nbsp;·&nbsp;&nbsp;
-      <a href="mailto:ritikarvl2627@gmail.com?subject=Benchmark-Aware%20WGS%20Research%20Enquiry"><strong>Email ↗</strong></a>
+      <a href="mailto:ritika.rawat27@outlook.com?subject=Benchmark-Aware%20WGS%20Research%20Enquiry"><strong>Email ↗</strong></a>
     </td>
     <td width="50%" valign="top">
       <h3>Farheena Azim Faridi</h3>
@@ -733,7 +733,7 @@ Why are large resources absent?Reference genomes, truth sets, reads, and alignme
 </table>
 
 <p align="center">
-  <a href="mailto:ritikarvl2627@gmail.com?subject=Benchmark-Aware%20WGS%20Research%20Collaboration"><img src="https://img.shields.io/badge/EMAIL_THE_PROJECT_LEAD-E30613?style=for-the-badge&logo=gmail&logoColor=white" alt="Email the project lead" /></a>
+  <a href="mailto:ritika.rawat27@outlook.com?subject=Benchmark-Aware%20WGS%20Research%20Collaboration"><img src="https://img.shields.io/badge/EMAIL_THE_PROJECT_LEAD-E30613?style=for-the-badge&logo=gmail&logoColor=white" alt="Email the project lead" /></a>
   <a href="https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics/issues/new"><img src="https://img.shields.io/badge/OPEN_A_RESEARCH_DISCUSSION-111111?style=for-the-badge&logo=github&logoColor=white" alt="Open a research discussion" /></a>
 </p>
 
