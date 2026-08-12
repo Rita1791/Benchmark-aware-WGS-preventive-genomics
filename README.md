@@ -119,24 +119,21 @@
 | **Primary Analysis** | Regional Benchmark Validation |
 | **Research Status** | Active Computational Research |
 
-### 🧭 Research Journey
+## 🧭 Research Journey
 
-``
-⚙️ Configure
-     ↓
-🧬 Process
-     ↓
-🔬 Benchmark
-     ↓
-📊 Compare
-     ↓
-📍 Localize
-     ↓
-🧩 Investigate
-     ↓
-📈 Interpret
-     ↓
-♻️ Reproduce
+```mermaid
+flowchart LR
+    A["⚙️ Configure"] --> B["🧬 Process"]
+    B --> C["🔬 Benchmark"]
+    C --> D["📊 Compare"]
+    D --> E["📍 Localize"]
+    E --> F["🧩 Investigate"]
+    F --> G["📈 Interpret"]
+    G --> H["♻️ Reproduce"]
+
+    classDef step fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff;
+    
+    class A,B,C,D,E,F,G,H step;
 
 ---
 
@@ -158,26 +155,39 @@ the project asks:
 
 The analysis uses **GIAB HG001**, **GRCh38**, and **chromosome 22 high-confidence benchmark regions** to evaluate regional variant-calling performance using complementary benchmarking strategies.
 
-### 🔬 Core Scientific Principle
+### 🧬 Benchmark Framework
 
-``
-Variant Calling
-      ↓
-Benchmarking
-      ↓
-Performance Measurement
-      ↓
-Regional Investigation
-      ↓
-Discrepancy Analysis
-      ↓
-Scientific Interpretation
+```
+## 🧬 Benchmark Framework
+
+```mermaid
+flowchart TD
+    A["🧬 GIAB HG001<br/>GRCh38 · chr22<br/>High-confidence regions"]
+    
+    A --> B["📍 Regional Truth Sets"]
+    
+    B --> C["🔬 Variant-Call Comparison"]
+    
+    C --> D["📊 Benchmark Metrics"]
+    
+    D --> E["📈 Regional Performance Profile"]
+
+    E --> F["🔎 Missed-Variant Analysis"]
+    
+    F --> G["🧩 Discrepancy Investigation"]
+
+    classDef source fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff;
+    classDef analysis fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#ffffff;
+    classDef result fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff;
+    
+    class A source;
+    class B,C,D analysis;
+    class E,F,G result;
 
 ---
 
 # 🧩 Research Objectives + Study Design
 
-``
 ## 🧬 Research Objectives
 
 ### 01 · Benchmark
@@ -214,86 +224,76 @@ The project uses a **multi-scale regional validation strategy**.
 | **25 regions** | Intermediate-resolution evaluation |
 | **50 regions** | Fine regional characterization |
 
-### 🧬 Benchmark Framework
+## 🧬 Benchmark Framework
 
-``
-GIAB HG001
-     +
-GRCh38
-     +
-chr22 high-confidence regions
-     ↓
-Regional truth sets
-     ↓
-Variant-call comparison
-     ↓
-Benchmark metrics
-     ↓
-Regional performance profile
+```mermaid
+flowchart TD
+
+    A["🧬 GIAB HG001<br/>GRCh38 · chr22<br/>High-confidence Regions"]
+    
+    A --> B["📍 Regional Truth Sets"]
+    
+    B --> C["🔬 Variant-Call Comparison"]
+    
+    C --> D["📊 Benchmark Metrics"]
+    
+    D --> E["📈 Regional Performance Profile"]
+
+    classDef source fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff;
+    classDef process fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#ffffff;
+    classDef output fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff;
+
+    class A source;
+    class B,C,D process;
+    class E output;
 
 ---
 
-# 🧩 Computational Workflow
-
-``
 ## 🔬 Computational Workflow
 
-The workflow follows a structured FASTQ-to-benchmark analysis pathway.
+The workflow follows a structured **FASTQ-to-benchmark analysis pathway**, integrating sequence processing, variant calling, VCF processing, regional benchmarking, and downstream interpretation.
 
-``
-┌──────────────────────┐
-│      FASTQ Data      │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│   Quality Control    │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│    Read Alignment    │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│    BAM Processing    │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│    Variant Calling   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ VCF Normalization &  │
-│      Filtering       │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Regional Benchmarking│
-└──────────┬───────────┘
-           │
-      ┌────┴────┐
-      ▼         ▼
-┌──────────┐ ┌────────────┐
-│ bcftools │ │    RTG     │
-│   isec   │ │  vcfeval   │
-└────┬─────┘ └─────┬──────┘
-     │             │
-     └──────┬──────┘
-            ▼
-┌──────────────────────┐
-│ Result Integration   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Statistical &        │
-│ Regional Analysis    │
-└──────────────────────┘
+```mermaid
+flowchart LR
+
+    A["🧬 FASTQ<br/>Raw Sequencing Data"]
+    B["🧪 Quality Control<br/>Read Quality Assessment"]
+    C["🧭 Read Alignment<br/>Reference Mapping"]
+    D["🧬 BAM Processing<br/>Aligned Read Preparation"]
+    E["🔬 Variant Calling<br/>Candidate Variant Generation"]
+    F["⚙️ VCF Normalization<br/>Representation Standardization"]
+    G["🔎 Variant Filtering<br/>Quality-Based Selection"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+
+    G --> H["📍 Regional<br/>Benchmarking"]
+
+    H --> I["🔀 bcftools isec<br/>Normalized VCF Comparison"]
+    H --> J["⚖️ RTG vcfeval<br/>Formal Benchmarking"]
+
+    I --> K["📊 Result Integration"]
+    J --> K
+
+    K --> L["📈 Statistical &<br/>Regional Analysis"]
+
+    L --> M["🔎 Missed-Variant<br/>Analysis"]
+    L --> N["📍 Low-Recall<br/>Regional Analysis"]
+    L --> O["🧩 Error & Discrepancy<br/>Analysis"]
+
+    classDef input fill:#161b22,stroke:#58a6ff,stroke-width:2px,color:#ffffff;
+    classDef processing fill:#161b22,stroke:#a371f7,stroke-width:2px,color:#ffffff;
+    classDef benchmark fill:#161b22,stroke:#f0883e,stroke-width:2px,color:#ffffff;
+    classDef analysis fill:#161b22,stroke:#3fb950,stroke-width:2px,color:#ffffff;
+
+    class A input;
+    class B,C,D,E,F,G processing;
+    class H,I,J benchmark;
+    class K,L,M,N,O analysis;
 
 ---
 
@@ -330,7 +330,6 @@ Regional performance profile
 
 # 🧩 Benchmark Evaluation
 
-``
 ## 📏 Benchmark-Scale Evaluation
 
 The workflow evaluates performance at multiple regional scales rather than relying exclusively on whole-region aggregate metrics.
@@ -375,7 +374,6 @@ Scientific Interpretation
 
 # 🧩 Comparison + Results
 
-``
 ## ⚖️ Normalized Comparison vs Formal Benchmarking
 
 Two complementary comparison strategies are used.
@@ -450,7 +448,6 @@ The analysis examines:
 
 The objective is to distinguish between:
 
-``
 True workflow misses
         vs.
 Apparent misses caused by
@@ -477,7 +474,6 @@ The analysis examines:
 
 The objective is to distinguish between:
 
-``
 True workflow misses
         vs.
 Apparent misses caused by
@@ -485,9 +481,6 @@ representation / comparison differences
 
 ---
 
-# 🧩 Error + Outputs
-
-``
 ## 🧩 Error and Discrepancy Analysis
 
 Benchmark discrepancies are categorized to distinguish different sources of apparent error.
@@ -594,10 +587,8 @@ Publication Output
 
 # 🧩 Repository Structure + Documentation
 
-``
 ## 🗂️ Repository Structure
 
-``
 .
 ├── config/
 │   └── benchmark.yaml
@@ -637,7 +628,6 @@ Publication Output
 
 # 🧩 Researcher + Perspective
 
-``
 ## 👩‍🔬 About the Researcher
 
 ### Ritika Rajendra Rawat
@@ -681,7 +671,6 @@ REPRODUCE
 
 # 🧩 Limitations + Future Research
 
-``
 ## ⚠️ Scope and Limitations
 
 This project should be interpreted within the scope of the evaluated dataset, genomic region, and benchmarking framework.
