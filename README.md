@@ -46,8 +46,6 @@
 
 </p>
 
----
-
 > 🧭 **Research in one line:**  
 > A reproducible WGS variant-calling workflow is evaluated against GIAB HG001 using regional validation, normalized VCF comparison, formal `RTG vcfeval` benchmarking, and targeted discrepancy analysis.
 
@@ -122,6 +120,7 @@
 | **Research Status** | Active Computational Research |
 
 ### 🧭 Research Journey
+
 ``
 ⚙️ Configure
      ↓
