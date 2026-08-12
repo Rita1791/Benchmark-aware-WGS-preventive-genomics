@@ -377,7 +377,7 @@ Developed within the research and computational environment of **Nainsense Labs 
 
 If you use this repository, workflow, or derived analysis, cite the metadata in [`CITATION.cff`](CITATION.cff):
 
-> Rawat, R. R. (2026). *Benchmark-aware regional validation of a reproducible WGS variant-calling workflow using GIAB HG001 chr22 reference regions* [Software].
+> Rawat, R. R. (2026). *Benchmark-aware regional validation of a reproducible WGS variant-calling workflow using GIAB HG001 chr22 reference regions* ubuntu-24.04.
 
 GitHub will expose **Cite this repository** when `CITATION.cff` is present.
 
