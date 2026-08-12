@@ -1,136 +1,118 @@
-<div align="center">
-
-🧬 Benchmark-Aware WGS
-
-High accuracy is the headline. The error pattern is the finding.
-
-<p>
-  Regional analytical validation of a short-read small-variant workflow using<br />
-  <strong>GIAB HG001 / NA12878</strong> · <strong>GRCh38 chromosome 22</strong> · <strong>5 → 25 → 50 regions</strong>
-</p>
-
-<p>
-  <a href="#results-in-60-seconds">
-    <img src="https://img.shields.io/badge/EXPLORE_RESULTS-0F766E?style=for-the-badge&logo=databricks&logoColor=white" alt="Explore benchmark results" />
-  </a>
-  <a href="results/publication_ready/README.md">
-    <img src="https://img.shields.io/badge/OPEN_EVIDENCE-1D4ED8?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Open publication-ready evidence" />
-  </a>
-  <a href="docs/reviewer_summary.md">
-    <img src="https://img.shields.io/badge/REVIEWER_BRIEF-6D28D9?style=for-the-badge&logo=academia&logoColor=white" alt="Open reviewer summary" />
-  </a>
-  <a href="CITATION.cff">
-    <img src="https://img.shields.io/badge/CITE_PROJECT-B45309?style=for-the-badge" alt="Cite this project" />
-  </a>
-</p>
-
-<p>
-  <a href="environment.yml"><img src="https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11" /></a>
-  <a href="config/benchmark.yaml"><img src="https://img.shields.io/badge/GIAB-HG001-0057B8?style=flat-square" alt="GIAB HG001" /></a>
-  <a href="config/benchmark.yaml"><img src="https://img.shields.io/badge/Reference-GRCh38_chr22-F28C28?style=flat-square" alt="GRCh38 chromosome 22" /></a>
-  <a href="#reproducibility"><img src="https://img.shields.io/badge/Status-Research_Workflow-6F42C1?style=flat-square" alt="Research workflow" /></a>
-  <a href="#scientific-boundaries"><img src="https://img.shields.io/badge/Clinical_Use-Not_Validated-C62828?style=flat-square" alt="Not clinically validated" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-2EA44F?style=flat-square" alt="MIT License" /></a>
-</p>
-
-<p>
-  <a href="https://github.com/Rita1791"><img src="https://img.shields.io/badge/GitHub-Rita1791-181717?style=flat-square&logo=github&logoColor=white" alt="Ritika Rawat on GitHub" /></a>
-  <a href="https://in.linkedin.com/in/ritika-rawat-551107219"><img src="https://img.shields.io/badge/LinkedIn-Ritika_Rawat-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="Ritika Rawat on LinkedIn" /></a>
-  <a href="mailto:ritika.rawat27@outlook.com?subject=Benchmark-Aware%20WGS%20Research%20Enquiry"><img src="https://img.shields.io/badge/Email-Connect_with_the_Researcher-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Connect with the researcher by email" /></a>
-</p>
-
-<strong><code>bcftools isec</code> + RTG <code>vcfeval</code> + regional error analysis</strong>
-
-</div>
+<h1 align="center">Benchmark-Aware WGS</h1>
 
 <p align="center">
-  <a href="results/publication_ready/figures/figure_1_benchmark_scale_performance.png">
-    <img src="results/publication_ready/figures/figure_1_benchmark_scale_performance.png" alt="Recall, precision and F1 across the 5-region, 25-region and 50-region benchmark scopes" width="92%" />
+  <strong>A regional GIAB study of where small-variant calling succeeds—and where it breaks.</strong>
+</p>
+
+<p align="center">
+  HG001 / NA12878 · GRCh38 chromosome 22 · 5 → 25 → 50 regions<br />
+  <code>bcftools isec</code> + RTG <code>vcfeval</code> + regional error analysis
+</p>
+
+<p align="center">
+  <a href="#01--the-question">
+    <img src="assets/README_Hero_Benchmark_Aware_WGS.gif" alt="Animated Benchmark-Aware WGS research overview" width="100%" />
   </a>
 </p>
 
 <p align="center">
-  <sub>👆 Select the figure to inspect the full-resolution evidence.</sub>
+  <sub>Animated research overview · <a href="assets/README_Hero_Benchmark_Aware_WGS.svg">open the editable vector master</a></sub>
 </p>
 
-[!IMPORTANT]This is a regional analytical-validation study, not a clinical genomics product. It evaluates selected GIAB HG001 high-confidence regions on chromosome 22; it does not establish whole-genome or clinical performance.
+<p align="center">
+  <a href="#02--the-answer-in-60-seconds"><img src="https://img.shields.io/badge/READ_THE_RESULT-E30613?style=for-the-badge" alt="Read the result" /></a>
+  <a href="results/publication_ready/README.md"><img src="https://img.shields.io/badge/OPEN_THE_EVIDENCE-111111?style=for-the-badge&logo=databricks&logoColor=white" alt="Open the evidence" /></a>
+  <a href="#06--reproduce-the-study"><img src="https://img.shields.io/badge/REPRODUCE-FFFFFF?style=for-the-badge&logo=anaconda&logoColor=111111" alt="Reproduce the study" /></a>
+  <a href="#09--connect"><img src="https://img.shields.io/badge/CONNECT_WITH_RESEARCHERS-E30613?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect with the researchers" /></a>
+</p>
 
-<a id="navigate"></a>
+<p align="center">
+  <a href="config/benchmark.yaml"><img src="https://img.shields.io/badge/GIAB-HG001-111111?style=flat-square" alt="GIAB HG001" /></a>
+  <a href="config/benchmark.yaml"><img src="https://img.shields.io/badge/Reference-GRCh38_chr22-111111?style=flat-square" alt="GRCh38 chromosome 22" /></a>
+  <a href="environment.yml"><img src="https://img.shields.io/badge/Python-3.11-111111?style=flat-square&logo=python&logoColor=white" alt="Python 3.11" /></a>
+  <a href="#07--reproducibility-audit"><img src="https://img.shields.io/badge/Status-Research_Workflow-E30613?style=flat-square" alt="Research workflow" /></a>
+  <a href="#08--scientific-boundary"><img src="https://img.shields.io/badge/Clinical_Use-Not_Validated-E30613?style=flat-square" alt="Not clinically validated" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-111111?style=flat-square" alt="MIT License" /></a>
+</p>
 
-🧭 Choose your route
+[!IMPORTANT]Scope before score. This repository reports regional analytical validation within selected GIAB HG001 high-confidence regions on chromosome 22. It is not whole-genome validation, a clinical diagnostic pipeline, or evidence of clinical sensitivity or specificity.
+
+<a id="navigator"></a>
+
+Research navigator
 
 <table>
   <tr>
-    <td align="center" width="33%">
-      <strong>🎯 <a href="#research-question">Understand the question</a></strong><br />
-      Why one benchmark score is not enough
+    <td width="33%" valign="top">
+      <strong>01 — <a href="#01--the-question">QUESTION</a></strong><br /><br />
+      Why a high aggregate score is not the end of a benchmark.
     </td>
-    <td align="center" width="33%">
-      <strong>📊 <a href="#results-in-60-seconds">Inspect the result</a></strong><br />
-      Read the benchmark in sixty seconds
+    <td width="33%" valign="top">
+      <strong>02 — <a href="#02--the-answer-in-60-seconds">RESULT</a></strong><br /><br />
+      The formal benchmark and the failure signature in one minute.
     </td>
-    <td align="center" width="33%">
-      <strong>🧪 <a href="#workflow">Follow the workflow</a></strong><br />
-      Trace FASTQ to regional error analysis
+    <td width="33%" valign="top">
+      <strong>03 — <a href="#03--experimental-design">DESIGN</a></strong><br /><br />
+      The staged regional experiment and two comparison lenses.
     </td>
   </tr>
   <tr>
-    <td align="center" width="33%">
-      <strong>🖼️ <a href="#visual-evidence">Open the figures</a></strong><br />
-      View every defensible result at full size
+    <td width="33%" valign="top">
+      <strong>04 — <a href="#04--visual-evidence">FIGURES</a></strong><br /><br />
+      Full-resolution, evidence-linked result figures.
     </td>
-    <td align="center" width="33%">
-      <strong>🧾 <a href="#evidence-explorer">Audit the evidence</a></strong><br />
-      Jump directly to CSV, TSV, methods, and code
+    <td width="33%" valign="top">
+      <strong>05 — <a href="#05--evidence-index">EVIDENCE</a></strong><br /><br />
+      Direct routes to compact data, methods, code, and limitations.
     </td>
-    <td align="center" width="33%">
-      <strong>👩‍💻 <a href="#connect">Connect with the researchers</a></strong><br />
-      Contact the project lead or inspect contributions
+    <td width="33%" valign="top">
+      <strong>09 — <a href="#09--connect">RESEARCHERS</a></strong><br /><br />
+      Roles, contributions, and verified contact routes.
     </td>
   </tr>
 </table>
 
-<a id="research-question"></a>
+<a id="01--the-question"></a>
 
-🎯 The research question
+01 — The question
 
-Most variant-calling benchmarks end with a single aggregate score. That score is useful—but incomplete.
+Most variant-calling benchmarks stop at a single score. This study does not.
 
-When a WGS small-variant workflow performs well overall, which variants are still missed, where do those misses occur, and does the benchmarking method change the conclusion?
+When a short-read WGS workflow performs well overall, which variants are still missed, where do those misses occur, and does the benchmarking method change the conclusion?
 
-The first five-region result was not treated as the final answer. The same benchmark sample was challenged at progressively broader regional scopes:
+The first result was deliberately challenged at broader regional scopes:
 
 <div align="center">
 
-5 regions → 25 regions → 50 regions
+5 REGIONS → 25 REGIONS → 50 REGIONS
 
 initial validation → broader challenge → primary regional analysis
 
 </div>
 
-[!NOTE]These are nested evaluation scopes from the same benchmark sample—not independent biological replicates.
+The three scopes are progressive expansions within the same benchmark genome. They are not independent samples or biological replicates.
 
-<a id="results-in-60-seconds"></a>
+<a id="02--the-answer-in-60-seconds"></a>
 
-⚡ The result in 60 seconds
+02 — The answer in 60 seconds
 
 <table>
   <tr>
     <td align="center" width="20%">
       <a href="results/benchmark_metrics.csv"><strong>2,592</strong></a><br />
-      <sub>truth variants<br />in 50 regions</sub>
-    </td>
-    <td align="center" width="20%">
-      <a href="results/final_summary.csv"><strong>95.10%</strong></a><br />
-      <sub>formal RTG<br />sensitivity</sub>
+      <sub>truth variants<br />50-region scope</sub>
     </td>
     <td align="center" width="20%">
       <a href="results/final_summary.csv"><strong>99.84%</strong></a><br />
-      <sub>formal RTG<br />precision</sub>
+      <sub>RTG formal<br />precision</sub>
+    </td>
+    <td align="center" width="20%">
+      <a href="results/final_summary.csv"><strong>95.10%</strong></a><br />
+      <sub>RTG formal<br />sensitivity</sub>
     </td>
     <td align="center" width="20%">
       <a href="results/final_summary.csv"><strong>97.41%</strong></a><br />
-      <sub>formal RTG<br />F-measure</sub>
+      <sub>RTG formal<br />F-measure</sub>
     </td>
     <td align="center" width="20%">
       <a href="results/variant_class_summary.csv"><strong>122 / 123</strong></a><br />
@@ -139,131 +121,11 @@ initial validation → broader challenge → primary regional analysis
   </tr>
 </table>
 
-The result is not “the pipeline is perfect.”
+One-sentence result
 
-The formal RTG benchmark remained strong, but the normalized error profile exposed a specific weakness:
+The workflow achieved strong regional performance, but its residual error was not random: 122 of 123 normalized truth-only misses were insertions or deletions, identifying indel sensitivity in difficult local contexts as the principal optimization target.
 
-66 deletions were missed.
-
-56 insertions were missed.
-
-Only 1 missed variant was an SNV.
-
-The narrative analysis records 77 of 123 misses in annotated difficult contexts.
-
-10 regions were documented below the configured 92% recall threshold.
-
-bcftools isec and RTG vcfeval differed in 4 of 50 regions.
-
-[!TIP]The next optimization target is not “variant calling” in general. It is indel sensitivity in difficult local contexts.
-
-The first three statements above are directly rebuildable from committed compact CSVs. The difficult-region, low-recall, and region-discrepancy statements are preserved in the analysis documentation, but their optional compact region-level source files are not currently committed. See Reproducibility.
-
-<a id="workflow"></a>
-
-🧪 The experiment in one view
-
-flowchart TB
-    A["🧬 Paired-end WGS reads"] --> B["🔍 QC + trimming"]
-    B --> C["🧭 GRCh38 alignment"]
-    C --> D["🧪 Small-variant calling"]
-    D --> E["🧹 Filter + normalize"]
-    E --> F{"Two benchmark lenses"}
-    F --> G["bcftools isec<br/>record-level concordance"]
-    F --> H["RTG vcfeval<br/>formal comparison"]
-    G --> I["📊 Regional evidence"]
-    H --> I
-    I --> J["Misses · contexts · discrepancies"]
-
-<details>
-<summary><strong>🔬 Open the complete method in plain language</strong></summary>
-
-<br />
-
-Inspect paired-end reads with FastQC and MultiQC.
-
-Trim and clean the reads with fastp.
-
-Align reads to GRCh38 with BWA-MEM2.
-
-Process alignment files with samtools.
-
-Call small variants with bcftools mpileup + bcftools call.
-
-Apply QUAL >= 30 and DP >= 10 filters.
-
-Normalize truth and query VCFs using the matching GRCh38 reference.
-
-Compare normalized records with bcftools isec.
-
-Run the primary formal comparison with RTG vcfeval.
-
-Characterize missed variants by class, region, difficult-context overlap, and method disagreement.
-
-Method routes: experimental design · methodology · configuration · data provenance
-
-</details>
-
-<details>
-<summary><strong>⚙️ Open the exact benchmark configuration</strong></summary>
-
-<br />
-
-Component
-
-Configured study setting
-
-Benchmark genome
-
-GIAB HG001 / NA12878
-
-Truth release
-
-GIAB v4.2.1
-
-Reference
-
-GRCh38
-
-Scope
-
-Selected high-confidence chr22 regions
-
-Regional stages
-
-5, 25, and 50 regions
-
-Caller
-
-bcftools mpileup + bcftools call
-
-Calling model
-
-Multiallelic
-
-Filters
-
-QUAL >= 30; DP >= 10
-
-Record comparison
-
-bcftools isec after normalization
-
-Formal benchmark
-
-RTG vcfeval
-
-Low-recall threshold
-
-92%
-
-Open config/benchmark.yaml →
-
-</details>
-
-<a id="benchmark-performance"></a>
-
-📈 Performance under increasing scope
+Staged normalized comparison
 
 Scope
 
@@ -330,16 +192,14 @@ F1
 97.57%
 
 <p align="center">
-  <a href="results/publication_ready/tables/table_1_benchmark_scale_comparison.tsv"><strong>Open machine-readable Table 1 →</strong></a>
-  &nbsp;·&nbsp;
-  <a href="results/benchmark_metrics.csv"><strong>Open source metrics →</strong></a>
+  <a href="results/benchmark_metrics.csv"><strong>Source CSV</strong></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="results/publication_ready/tables/table_1_benchmark_scale_comparison.tsv"><strong>Machine-readable Table 1</strong></a>
 </p>
 
-The apparent 100% precision belongs only to the normalized record-level comparison inside these selected regions. It is not a clinical specificity estimate and does not survive unchanged under RTG's more representation-aware matching.
+Formal comparison: two matching philosophies
 
-Two tools, two matching philosophies
-
-50-region comparison
+50-region benchmark
 
 TP / shared
 
@@ -381,237 +241,309 @@ Primary RTG vcfeval
 
 97.41%
 
-<p align="center">
-  <a href="results/publication_ready/tables/table_2_formal_rtg_vcfeval_result.tsv"><strong>Open formal RTG table →</strong></a>
-  &nbsp;·&nbsp;
-  <a href="results/final_summary.csv"><strong>Compare both methods →</strong></a>
-</p>
+[!NOTE]The normalized 100% precision is a record-level result inside selected HG001 chr22 high-confidence regions. It is not a clinical specificity estimate. RTG vcfeval, the primary formal benchmark, was slightly more conservative.
 
 <details>
-<summary><strong>🤔 Why can the methods disagree after normalization?</strong></summary>
+<summary><strong>Why can the methods disagree after VCF normalization?</strong></summary>
 
 <br />
 
-bcftools isec compares normalized VCF records directly. RTG vcfeval performs a more representation-aware truth-versus-query evaluation. Equivalent biological variation can still be encoded differently in VCF, so the benchmark logic can reclassify a small number of records.
+bcftools isec directly compares normalized VCF records. RTG vcfeval performs a more representation-aware truth-versus-query comparison. Biologically equivalent variation can still be encoded differently, allowing the matching method to reclassify a small number of records.
 
-Here, RTG reported four fewer true positives, four more false negatives, and four false positives. That is why RTG is treated as the primary formal benchmark.
+Here, RTG reported four fewer true positives, four additional false negatives, and four false positives.
 
 </details>
 
-<a id="error-fingerprint"></a>
-
-🔎 The error fingerprint
+Failure signature
 
 pie showData
-    title Composition of 123 normalized truth-only misses
+    title Normalized truth-only misses (n = 123)
     "Deletions" : 66
     "Insertions" : 56
     "SNVs" : 1
 
 Signal
 
-Observed evidence
+Observation
 
-Defensible interpretation
-
-Truth-only misses
-
-123
-
-A residual sensitivity gap remains
+Interpretation boundary
 
 Missed indels
 
 122 / 123
 
-The normalized error is overwhelmingly indel-associated
+The normalized residual error is overwhelmingly indel-associated
 
 Documented difficult-context overlap
 
 77 / 123
 
-Many misses occurred in annotated difficult contexts; formal enrichment was not tested
+Descriptive overlap; not a formal enrichment test
 
 Documented low-recall regions
 
 10
 
-Aggregate performance hides local weaknesses
+Aggregate scores conceal regional weakness
 
 Documented method-discrepant regions
 
 4 / 50
 
-Matching logic affected some regional classifications
+Benchmark logic changes some classifications
 
-<details>
-<summary><strong>🧬 What can—and cannot—be inferred from 77 difficult-context overlaps?</strong></summary>
+The first row is directly reconstructable from committed compact data. The remaining region/context statements are preserved in the analysis documentation, but their optional compact region-level inputs are not currently committed.
+
+<a id="03--experimental-design"></a>
+
+03 — Experimental design
+
+flowchart TB
+    A["GIAB HG001 truth<br/>v4.2.1 · GRCh38"] --> B["Paired-end WGS<br/>QC · trim · align"]
+    B --> C["Small variants<br/>call · filter · normalize"]
+    C --> D{"Two benchmark lenses"}
+    D --> E["bcftools isec<br/>record concordance"]
+    D --> F["RTG vcfeval<br/>formal validation"]
+    E --> G["Regional evidence<br/>errors · contexts · discrepancies"]
+    F --> G
+
+<details open>
+<summary><strong>Method, from reads to evidence</strong></summary>
 
 <br />
 
-The overlap is descriptively important, but it is not a statistical enrichment result. A valid enrichment claim would require an appropriate genomic background, the proportion of callable truth variants within difficult contexts, and a prespecified statistical comparison.
+Inspect paired-end reads with FastQC and MultiQC.
 
-Read the error analysis →
+Trim and clean reads with fastp.
+
+Align to GRCh38 with BWA-MEM2.
+
+Process alignment files with samtools.
+
+Call small variants using bcftools mpileup + bcftools call.
+
+Apply QUAL >= 30 and DP >= 10 filters.
+
+Normalize truth and query VCFs against the same reference.
+
+Compare normalized records using bcftools isec.
+
+Run the primary formal comparison using RTG vcfeval.
+
+Characterize errors by variant class, region, context, and benchmark disagreement.
 
 </details>
 
-<a id="visual-evidence"></a>
+<details>
+<summary><strong>Exact configured study setting</strong></summary>
 
-🖼️ Visual evidence
+<br />
 
-<p align="center">Select a figure to open it at full resolution.</p>
+Component
+
+Setting
+
+Benchmark sample
+
+GIAB HG001 / NA12878
+
+Truth release
+
+GIAB v4.2.1
+
+Reference
+
+GRCh38 chromosome 22
+
+Scope
+
+Selected high-confidence regions
+
+Regional stages
+
+5, 25, and 50 regions
+
+Caller
+
+bcftools mpileup + bcftools call
+
+Calling model
+
+Multiallelic
+
+Filters
+
+QUAL >= 30; DP >= 10
+
+Normalized comparison
+
+bcftools isec
+
+Formal benchmark
+
+RTG vcfeval
+
+Low-recall threshold
+
+92%
+
+Open the canonical configuration →
+
+</details>
+
+<a id="04--visual-evidence"></a>
+
+04 — Visual evidence
+
+<p align="center">Select any panel to inspect the full-resolution figure.</p>
 
 <table>
   <tr>
     <td width="50%" align="center">
       <a href="results/publication_ready/figures/figure_1_benchmark_scale_performance.png">
-        <img src="results/publication_ready/figures/figure_1_benchmark_scale_performance.png" alt="Performance across increasing benchmark scopes" width="100%" />
+        <img src="results/publication_ready/figures/figure_1_benchmark_scale_performance.png" alt="Variant-calling performance across benchmark scales" width="100%" />
       </a><br />
-      <strong>📈 Scale test</strong><br />
-      <sub>Recall, precision, and F1 across 5, 25, and 50 regions</sub>
+      <strong>01 / Scale stability</strong><br />
+      <sub>Recall, precision, and F1 across expanding scopes</sub>
     </td>
     <td width="50%" align="center">
       <a href="results/publication_ready/figures/figure_2_bcftools_vs_rtg_vcfeval.png">
-        <img src="results/publication_ready/figures/figure_2_bcftools_vs_rtg_vcfeval.png" alt="Comparison of bcftools isec and RTG vcfeval" width="100%" />
+        <img src="results/publication_ready/figures/figure_2_bcftools_vs_rtg_vcfeval.png" alt="Normalized comparison versus RTG vcfeval" width="100%" />
       </a><br />
-      <strong>⚖️ Method test</strong><br />
-      <sub>Normalized record matching versus formal benchmarking</sub>
+      <strong>02 / Benchmark agreement</strong><br />
+      <sub>Record-level matching versus formal evaluation</sub>
     </td>
   </tr>
   <tr>
     <td colspan="2" align="center">
       <a href="results/publication_ready/figures/figure_3_missed_variant_type_distribution.png">
-        <img src="results/publication_ready/figures/figure_3_missed_variant_type_distribution.png" alt="Distribution of missed deletions, insertions and SNVs" width="62%" />
+        <img src="results/publication_ready/figures/figure_3_missed_variant_type_distribution.png" alt="Distribution of missed variant classes" width="62%" />
       </a><br />
-      <strong>🧩 Failure-mode test</strong><br />
+      <strong>03 / Error composition</strong><br />
       <sub>Nearly every normalized miss was an insertion or deletion</sub>
     </td>
   </tr>
 </table>
 
-[!NOTE]The committed figure_4_low_recall_regions.png is a placeholder because results/low_recall_regions.csv is absent. It is intentionally excluded from this evidence gallery.
+[!CAUTION]The committed figure_4_low_recall_regions.png is a placeholder because its compact source CSV is absent. It is deliberately excluded from the evidence gallery.
 
-<a id="evidence-explorer"></a>
+<a id="05--evidence-index"></a>
 
-🧾 Evidence explorer
+05 — Evidence index
 
-You want to inspect…
+Research route
 
-Open this
+Direct evidence
 
-Evidence type
+Role
 
-Headline staged metrics
+Headline metrics
 
 results/benchmark_metrics.csv
 
-Compact source CSV
+Compact staged-benchmark source
 
-Formal RTG result
+Formal comparison
 
 results/final_summary.csv
 
-Compact source CSV
+isec versus RTG metrics
 
-Missed-variant classes
+Error classes
 
 results/variant_class_summary.csv
 
-Compact source CSV
+Missed deletions, insertions, and SNVs
 
-Consolidated interpretation
+Result interpretation
 
 docs/results_summary.md
 
-Results narrative
+Consolidated research narrative
 
-Study logic and endpoints
+Experimental logic
 
 docs/experimental_design.md
 
-Experimental design
+Scope, endpoints, and progression
 
-Indel and context analysis
+Error analysis
 
 docs/error_analysis.md
 
-Error interpretation
+Indels, contexts, and discrepancies
 
-Dataset identity
+Provenance
 
 docs/data_provenance.md
 
-Provenance record
+Dataset and reference identity
 
-Known scope limits
+Limitations
 
 docs/limitations.md
 
-Scientific boundaries
+Scientific and clinical boundaries
 
-Pipeline code
+Processing code
 
 pipeline/
 
-Modular FASTQ → VCF stages
+Modular QC → VCF stages
 
 Analysis code
 
 scripts/
 
-Benchmarking, aggregation, figures
+Benchmarking, aggregation, and figures
 
-Research chronology
+Research record
 
 docs/lab_notebook/
 
-Dated research record
+Dated development history
 
-Manuscript draft
+Manuscript
 
 manuscript/manuscript.md
 
-Research narrative
+Draft research output
 
 <details>
-<summary><strong>🗂️ Open the repository anatomy</strong></summary>
+<summary><strong>Repository anatomy</strong></summary>
 
 Benchmark-aware-WGS-preventive-genomics/
-├── config/       # Benchmark identity, thresholds, and settings
-├── pipeline/     # QC, trimming, alignment, and variant calling
-├── scripts/      # Benchmarking, aggregation, analysis, and figures
-├── docs/         # Design, provenance, limitations, and lab notebook
-├── results/      # Compact metrics, tables, and rendered figures
-├── reports/      # FastQC, fastp, and MultiQC reports
-├── manuscript/   # Draft research material
-└── tests/        # Lightweight structural/configuration checks
+├── config/       benchmark identity, thresholds, settings
+├── pipeline/     QC, trimming, alignment, variant calling
+├── scripts/      benchmarking, aggregation, analysis, figures
+├── docs/         design, provenance, limitations, lab notebook
+├── results/      compact metrics, tables, rendered figures
+├── reports/      FastQC, fastp, and MultiQC reports
+├── manuscript/   draft research material
+└── tests/        structural and configuration checks
 
 </details>
 
-<a id="quick-start"></a>
+<a id="06--reproduce-the-study"></a>
 
-🚀 Quick start
+06 — Reproduce the study
 
-1 · Clone and create the environment
+Rebuild compact evidence
 
 git clone https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics.git
 cd Benchmark-aware-WGS-preventive-genomics
+
 conda env create -f environment.yml
 conda activate benchmark-aware-wgs
-
-2 · Rebuild the committed core tables and figures
 
 python scripts/19_create_publication_tables.py
 python scripts/20_create_publication_figures.py
 
-These scripts rebuild the core staged-benchmark tables and Figures 1–3 from committed compact CSVs. The low-recall and discrepancy outputs require optional region-level inputs that are not currently committed.
+This rebuilds core staged tables and Figures 1–3 from committed compact CSVs. It does not recreate the missing optional region-level outputs.
 
-3 · Run the modular FASTQ → chr22 VCF stages on your own data
+Run modular FASTQ → chr22 VCF stages
 
-Input reads should follow SAMPLE_R1.fastq.gz and SAMPLE_R2.fastq.gz naming.
-
-RAW_DIR=/path/to/fastq \
-bash pipeline/01_qc.sh
+RAW_DIR=/path/to/fastq bash pipeline/01_qc.sh
 
 RAW_DIR=/path/to/fastq \
 TRIM_DIR=/path/to/trimmed \
@@ -628,20 +560,18 @@ VCF_DIR=/path/to/vcf \
 REGION=chr22 \
 bash pipeline/04_variant_calling.sh
 
-[!CAUTION]The reference FASTA must be indexed for BWA-MEM2 and samtools. A complete benchmark also requires matched GIAB truth resources and RTG reference preparation; the four commands above do not recreate the full study.
-
 <details>
-<summary><strong>📦 External resources required for full benchmarking</strong></summary>
+<summary><strong>External resources required for full benchmarking</strong></summary>
 
 <br />
 
 Matching GRCh38 reference FASTA and indexes
 
-GIAB HG001 v4.2.1 GRCh38 small-variant truth VCF and index
+GIAB HG001 v4.2.1 GRCh38 truth VCF and index
 
 Corresponding GIAB high-confidence BED
 
-HG001/NA12878 reads or the documented alignment resource
+HG001/NA12878 reads or documented alignment resource
 
 RTG-compatible sequence dictionary
 
@@ -651,106 +581,102 @@ Authoritative starting points: NIST Genome in a Bottle · bcftools · RTG Tools 
 
 </details>
 
-<a id="reproducibility"></a>
+<a id="07--reproducibility-audit"></a>
 
-🧪 Reproducibility dashboard
+07 — Reproducibility audit
 
 Capability
 
 Status
 
-Honest interpretation
+Interpretation
 
 Inspect headline metrics
 
-✅
+●
 
-Supported by committed compact CSVs
+Ready from committed compact CSVs
 
-Rebuild staged tables and Figures 1–3
+Rebuild Tables 1–2 and Figures 1–3
 
-✅
+●
 
-Supported by committed scripts and compact inputs
+Ready from committed inputs and scripts
 
 Run modular FASTQ → chr22 VCF stages
 
-🟡
+◐
 
-Requires user-supplied data, paths, and reference indexes
+Requires external data, paths, and indexed reference
 
 Rebuild low-recall Figure 4
 
-❌
+○
 
-results/low_recall_regions.csv is absent; committed image is a placeholder
+Source results/low_recall_regions.csv is absent
 
 Rebuild region-discrepancy outputs
 
-❌
+○
 
-Compact discrepancy rows are absent from the committed TSV
+Compact discrepancy rows are not committed
 
-Recreate the complete 50-region isec + RTG study from a clean clone
+Recreate full 50-region isec + RTG study
 
-🟡
+◐
 
-External resources and manual orchestration remain necessary
+External resources and manual orchestration remain
 
-Verify the exact historical software stack
+Verify exact historical tool versions
 
-❌
+○
 
-Core versions remain TBD in docs/software_versions.md
+Core versions remain TBD
 
-Run all committed tests successfully
+Use for clinical diagnosis
 
-❌
+○
 
-The structure test expects an absent reference_datasets/ directory
+Not validated
 
-Use for diagnosis or treatment decisions
-
-❌
-
-Not clinically validated
+<sub>● ready · ◐ partial · ○ not ready</sub>
 
 <details>
-<summary><strong>🧱 Open the known technical gaps</strong></summary>
+<summary><strong>Known technical gaps</strong></summary>
 
 <br />
 
-No single portable Snakemake or Nextflow workflow orchestrates the complete benchmark.
+No portable Snakemake or Nextflow workflow orchestrates the complete study.
 
-Several development scripts still depend on local paths and historical working directories.
+Some scripts retain local-path and historical-workspace assumptions.
 
-Exact tool versions, input URLs, download dates, and checksums are incomplete.
+Exact tool versions, URLs, dates, and checksums are incomplete.
 
-table_3_missed_variant_summary.tsv still contains a placeholder for the difficult-region count.
+Table 3 contains a placeholder for the difficult-region count.
 
-table_4_low_recall_regions.tsv contains placeholder rows.
+Table 4 contains placeholder rows; Table 5 contains only its header.
 
-table_5_bcftools_vs_rtg_discrepancy_regions.tsv contains only a header.
+The structure test expects an absent reference_datasets/ directory.
 
-The tests verify repository structure/configuration, not biological correctness or end-to-end execution.
+Current tests do not establish biological correctness or clean-clone execution.
 
-Read the reproducibility notes →
+Read the reproducibility record →
 
 </details>
 
-<a id="scientific-boundaries"></a>
+<a id="08--scientific-boundary"></a>
 
-⚠️ What this project proves—and does not prove
+08 — Scientific boundary
 
-✅ Supported
+This repository supports
 
-❌ Not supported
+This repository does not support
 
 Regional analytical validation
 
 Whole-genome performance claims
 
-Evaluation in selected HG001 chr22 high-confidence regions
+Selected HG001 chr22 high-confidence regions
 
 Multi-sample clinical validation
 
@@ -758,126 +684,78 @@ Normalized isec and formal RTG comparison
 
 Clinical sensitivity or specificity
 
-Descriptive error analysis by variant class and context
+Descriptive error analysis
 
-Statistical enrichment without a genomic background
+Statistical enrichment without a background model
 
-A research foundation for broader benchmarking
+A foundation for broader benchmarking
 
-Pathogenicity, disease risk, diagnosis, or treatment advice
+Pathogenicity, disease-risk, diagnosis, or treatment claims
 
-The repository name uses preventive genomics as a longer-term application context. The current implementation ends at small-variant analytical benchmarking and regional error analysis.
-
-❓ Frequently asked questions
+The term preventive genomics describes a longer-term application context. The implementation currently ends at regional small-variant benchmarking and error analysis.
 
 <details>
-<summary><strong>Does 100% normalized precision mean the workflow is clinically accurate?</strong></summary>
+<summary><strong>Frequently asked questions</strong></summary>
 
 <br />
 
-No. It is a record-level result inside selected HG001 chromosome 22 high-confidence regions. RTG precision was 99.84% in the same regional scope. Neither value is a clinical specificity estimate.
+Does normalized 100% precision mean clinical accuracy?No. It is a regional record-level result. RTG precision was 99.84% in the same scope, and neither number is clinical specificity.
+
+Are the 5-, 25-, and 50-region stages replicates?No. They are nested expansions of one benchmark sample.
+
+Can the full study run with one command?No. Compact outputs can be rebuilt, but complete benchmarking still requires external resources and manual orchestration.
+
+Why are large resources absent?Reference genomes, truth sets, reads, and alignments are large and externally governed. The repository preserves compact evidence and computational logic.
 
 </details>
 
-<details>
-<summary><strong>Why benchmark 5, 25, and 50 regions?</strong></summary>
+<a id="09--connect"></a>
 
-<br />
-
-The staged design tests whether an encouraging small-scope result remains stable as more variants and contexts are introduced. The scopes are nested evaluation stages, not biological replicates.
-
-</details>
-
-<details>
-<summary><strong>Can the full study be recreated with one command?</strong></summary>
-
-<br />
-
-No. Core tables and Figures 1–3 can be regenerated, and FASTQ-to-VCF stages are modular. The complete 50-region benchmark still requires external datasets, RTG preparation, local paths, and manual orchestration.
-
-</details>
-
-<details>
-<summary><strong>Why are large genomic resources not bundled?</strong></summary>
-
-<br />
-
-Reference genomes, truth resources, reads, and alignments are large and externally governed. The repository preserves code, compact outputs, and documentation while directing users to authoritative sources.
-
-</details>
-
-🛣️ Roadmap
-
-Pin every software version and record all external input checksums.
-
-Replace local path assumptions with configuration-driven execution.
-
-Add a portable Snakemake or Nextflow workflow.
-
-Commit explicit region definitions and compact region-level source outputs.
-
-Replace placeholder Tables 3–5 and Figure 4 with generated evidence.
-
-Repair tests and add fixture-based CI execution.
-
-Compare additional small-variant callers.
-
-Expand beyond selected chromosome 22 regions.
-
-Validate additional GIAB samples and independent datasets.
-
-Add stratified evaluation for difficult contexts and variant classes.
-
-<a id="connect"></a>
-
-👩‍💻 Connect with the researchers
+09 — Connect
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h3>🧬 Ritika Rajendra Rawat</h3>
+      <h3>Ritika Rajendra Rawat</h3>
       <strong>Project Lead · Bioinformatics Research Assistant · Bioinformatics Lead</strong><br /><br />
       Study design · Workflow development · Benchmarking strategy · Analysis · Interpretation · Visualization · Documentation<br /><br />
-      <a href="https://github.com/Rita1791"><strong>GitHub ↗</strong></a> ·
-      <a href="https://in.linkedin.com/in/ritika-rawat-551107219"><strong>LinkedIn ↗</strong></a> ·
-      <a href="mailto:ritika.rawat27@outlook.com?subject=Benchmark-Aware%20WGS%20Research%20Enquiry"><strong>Email ↗</strong></a>
+      <a href="https://github.com/Rita1791"><strong>GitHub ↗</strong></a>&nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="https://in.linkedin.com/in/ritika-rawat-551107219"><strong>LinkedIn ↗</strong></a>&nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="mailto:ritikarvl2627@gmail.com?subject=Benchmark-Aware%20WGS%20Research%20Enquiry"><strong>Email ↗</strong></a>
     </td>
     <td width="50%" valign="top">
-      <h3>🔬 Farheena Azim Faridi</h3>
+      <h3>Farheena Azim Faridi</h3>
       <strong>Contributor · Bioinformatics Research Intern · M.Sc. Bioinformatics</strong><br /><br />
       Workflow support · Benchmarking assistance · Testing · Refinement · Documentation<br /><br />
-      <a href="CONTRIBUTORS.md"><strong>View verified contribution statement →</strong></a>
+      <a href="CONTRIBUTORS.md"><strong>Verified contribution statement →</strong></a>
     </td>
   </tr>
 </table>
 
 <p align="center">
-  <a href="mailto:ritika.rawat27@outlook.com?subject=Benchmark-Aware%20WGS%20Research%20Collaboration">
-    <img src="https://img.shields.io/badge/CONNECT_WITH_THE_PROJECT_LEAD-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email the project lead" />
-  </a>
-  <a href="https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics/issues/new">
-    <img src="https://img.shields.io/badge/OPEN_A_RESEARCH_DISCUSSION-181717?style=for-the-badge&logo=github&logoColor=white" alt="Open a GitHub issue" />
-  </a>
+  <a href="mailto:ritikarvl2627@gmail.com?subject=Benchmark-Aware%20WGS%20Research%20Collaboration"><img src="https://img.shields.io/badge/EMAIL_THE_PROJECT_LEAD-E30613?style=for-the-badge&logo=gmail&logoColor=white" alt="Email the project lead" /></a>
+  <a href="https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics/issues/new"><img src="https://img.shields.io/badge/OPEN_A_RESEARCH_DISCUSSION-111111?style=for-the-badge&logo=github&logoColor=white" alt="Open a research discussion" /></a>
 </p>
 
-Developed within the research and computational environment of Nainsense Labs Private Limited. Detailed roles are recorded in CONTRIBUTORS.md.
+Developed within the research and computational environment of Nainsense Labs Private Limited. See CONTRIBUTORS.md for transparent attribution.
 
-📖 Citation & license
+Citation
 
-If this repository or its analysis contributes to your work, use GitHub's Cite this repository menu or the metadata in CITATION.cff:
+Use GitHub's Cite this repository menu or CITATION.cff:
 
 Rawat, R. R. (2026). Benchmark-aware regional validation of a reproducible WGS variant-calling workflow using GIAB HG001 chr22 reference regions [Software].
 
 Released under the MIT License.
 
-<div align="center">
+<p align="center">
+  <strong>HIGH ACCURACY IS THE BEGINNING OF THE INVESTIGATION — NOT THE END.</strong><br />
+  <sub>Built to turn a benchmark score into a traceable evidence trail.</sub>
+</p>
 
-🧬 High accuracy is the beginning of the investigation—not the end.
-
-<sub>Built to turn a benchmark score into a traceable evidence trail.</sub>
-
-<br /><br />
-
-<a href="#navigate">Back to the project navigator ↑</a> · <a href="#connect">Connect with the researchers</a> · <a href="https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics">Star the repository ⭐</a>
-
-</div>
+<p align="center">
+  <a href="#navigator">Research navigator ↑</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="#09--connect">Connect with researchers</a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://github.com/Rita1791/Benchmark-aware-WGS-preventive-genomics">Star the repository</a>
+</p>
